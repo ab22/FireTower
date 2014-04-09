@@ -47,16 +47,26 @@
                 return;
             }
             navigator.camera.getPicture(
-                successCallback,
+                function (imageData) {
+                    $scope.base64foto = imageData;
+                    $scope.foto = "data:image/jpeg;base64," + imageData;
+                },
                 function(err) {
                 },
                 options);
         };
 
         $scope.createDisaster = function() {
+            if ($scope.severity == 0) {
+                showMessage('Severity', '¿Qué tan Severo es el fuego?');
+                return;
+            }
+            
             $scope.loading = $ionicLoading.show({
                 content: 'Guardando reporte...',
                 showBackdrop: false
+            });
+
             });
 
             DisasterService.CreateDisaster({
