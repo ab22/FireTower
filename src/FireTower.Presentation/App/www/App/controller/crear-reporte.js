@@ -4,7 +4,9 @@
         var modelId = null;
         var userId = null;
         var pubnub = PUBNUB.init({
-            subscribe_key: 'sub-c-e379a784-bff9-11e3-a219-02ee2ddab7fe'
+            subscribe_key: 'sub-c-e379a784-bff9-11e3-a219-02ee2ddab7fe',
+            origin: 'firetowerapidev.apphb.com',
+            ssl: false
         });
         var init = function() {
             $scope.takePicture();
@@ -58,7 +60,6 @@
             UserService.getUser()
                 .success(function(response) {
                     userId = response.userId;
-                    console.log('&&&&&&&&&&&&&&&%&%&%&%&%&%&%&%&%&%&%&%&&%&%&% USER ID ' + userId);
                     pubnub.subscribe({
                         channel: response.userId,
                         message: function (model) {
@@ -76,12 +77,15 @@
                             pubnub.unsubscribe({
                                 channel: userId,
                             });
+                        },
+                        error: function (error) {
+                            console.log('@@@@@@@@@@@@@@@@@@@@@@ Error :/ PubNub : ' + error);
+
                         }
                     });
                 })
-                .error(function(error) {
+                .error(function(error, err) {
                     $scope.loading.hide();
-                    console.log('&&&&&&&&&&&&&&&%&%&%&%&%&%&%&%&%&%&%&%&&%&%&% ERROR '+ error);
                     showMessage('Error', 'No hemos podido guardar el reporte. Estas conectado a internet?');
                 });
 
@@ -91,7 +95,6 @@
                 Longitude: $scope.location.longitude
             })
                 .success(function(response) {
-                    console.log('&&&&&&&&&&&&&&&%&%&%&%&%&%&%&%&%&%&%&%&&%&%&% Disaster Creado ');
                 })
                 .error(function(error) {
                     showMessage('Error', 'Error creando el reporte.');
@@ -100,7 +103,6 @@
 
         var showDetails = function() {
             $scope.loading.hide();
-            console.log('&&&&&&&&&&&&&&&%&%&%&%&%&%&%&%&%&%&%&%&&%&%&% Todo Cheque ');
             showMessage('Exito!', 'Reporte creado exitosamente!');
             $location.path('/app/reporte/' + modelId);
         };

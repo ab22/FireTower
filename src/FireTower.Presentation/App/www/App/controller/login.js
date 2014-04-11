@@ -1,5 +1,5 @@
 ﻿/// <reference path="login.js" />
-angular.module('firetower').controller('LoginController', ['$scope', '$timeout', '$location', 'userManagement', 'loginService', function ($scope, $timeout, $location, user, loginService) {
+angular.module('firetower').controller('LoginController', ['$scope', '$timeout', '$location', 'userManagement', 'loginService', '$ionicLoading', function ($scope, $timeout, $location, user, loginService, $ionicLoading) {
     $scope.logged = false;
     $scope.salutation = false;
     $scope.byebye = false;
