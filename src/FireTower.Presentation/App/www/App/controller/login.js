@@ -20,13 +20,19 @@ angular.module('firetower').controller('LoginController', ['$scope', '$timeout',
     // BASIC LOGIN
     $scope.data = { };
     $scope.basicLogin = function () {
+        $scope.loading = $ionicLoading.show({
+            content: 'Iniciando Sesion...',
+            showBackdrop: false
+        });
         var email = $scope.data.email;
         var password = $scope.data.password;
         loginService.authenticate(email, password).success(function (response) {
             var token = response.token;
             localStorage.setItem("firetowertoken", token);
+            $scope.loading.hide();
             $location.path("/app/reportes");
-        }).error(function () {
+        }).error(function (error) {
+            $scope.loading.hide();
             $location.path("/error");
         });
     };
