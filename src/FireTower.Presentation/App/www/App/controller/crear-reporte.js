@@ -58,13 +58,15 @@
             UserService.getUser()
                 .success(function(response) {
                     userId = response.userId;
-
+                    console.log('&&&&&&&&&&&&&&&%&%&%&%&%&%&%&%&%&%&%&%&&%&%&% USER ID ' + userId);
                     pubnub.subscribe({
                         channel: response.userId,
-                        message: function(model) {
+                        message: function (model) {
+                            console.log('&&&&&&&&&&&&&&&%&%&%&%&%&%&%&%&%&%&%&%&&%&%&% SUBIENDO LA IMAGEN, TAM: ' + $scope.base64foto.length);
                             DisasterService.SaveImageToDisaster(model.Id, { Base64Image: $scope.base64foto })
                                 .success(function() {
                                     modelId = model.Id;
+                                    console.log('&&&&&&&&&&&&&&&%&%&%&%&%&%&%&%&%&%&%&%&&%&%&% IMAGEN SUBIDA ');
                                     showDetails();
                                 })
                                 .error(function() {
@@ -79,6 +81,7 @@
                 })
                 .error(function(error) {
                     $scope.loading.hide();
+                    console.log('&&&&&&&&&&&&&&&%&%&%&%&%&%&%&%&%&%&%&%&&%&%&% ERROR '+ error);
                     showMessage('Error', 'No hemos podido guardar el reporte. Estas conectado a internet?');
                 });
 
@@ -88,7 +91,7 @@
                 Longitude: $scope.location.longitude
             })
                 .success(function(response) {
-
+                    console.log('&&&&&&&&&&&&&&&%&%&%&%&%&%&%&%&%&%&%&%&&%&%&% Disaster Creado ');
                 })
                 .error(function(error) {
                     showMessage('Error', 'Error creando el reporte.');
@@ -97,6 +100,7 @@
 
         var showDetails = function() {
             $scope.loading.hide();
+            console.log('&&&&&&&&&&&&&&&%&%&%&%&%&%&%&%&%&%&%&%&&%&%&% Todo Cheque ');
             showMessage('Exito!', 'Reporte creado exitosamente!');
             $location.path('/app/reporte/' + modelId);
         };
