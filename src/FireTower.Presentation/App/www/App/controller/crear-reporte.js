@@ -33,6 +33,10 @@
         });
 
         $scope.takePicture = function() {
+            var successCallback = function (imageData) {
+                $scope.base64foto = imageData;
+            };
+
             var options = {
                 quality: 50,
                 destinationType: destinationType,
@@ -43,9 +47,7 @@
                 return;
             }
             navigator.camera.getPicture(
-                function(imageData) {
-                    $scope.base64foto = imageData;
-                },
+                successCallback,
                 function(err) {
                 },
                 options);
