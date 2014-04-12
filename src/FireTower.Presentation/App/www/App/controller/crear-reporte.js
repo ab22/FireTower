@@ -2,13 +2,8 @@
     .controller('NewReportController', ['$scope', '$ionicPopup', 'DisasterService', 'PictureService', '$location', '$ionicLoading', 'UserService', function($scope, $ionicPopup, DisasterService, PictureService, $location, $ionicLoading, UserService) {
 
         var modelId = null;
-        var userId = null;
-        var pubnub = PUBNUB.init({
-            subscribe_key: 'sub-c-e379a784-bff9-11e3-a219-02ee2ddab7fe',
-            origin: 'firetowerapidev.apphb.com',
-            ssl: false
-        });
-        var init = function() {
+
+        var init = function () {
             $scope.takePicture();
 
             if (navigator.geolocation) {
@@ -18,12 +13,11 @@
             $scope.base64foto = PictureService.getDefaultPictureWithoutDataType();
         };
 
-        $scope.data = {};
-        $scope.obj;
+        $scope.data = { };
+        $scope.obj = { };
         var pictureSource;
         var destinationType;
-        var url;
-
+        
         ionic.Platform.ready(function() {
             if (!navigator.camera) {
                 return;
@@ -33,10 +27,6 @@
         });
 
         $scope.takePicture = function() {
-            var successCallback = function (imageData) {
-                $scope.base64foto = imageData;
-            };
-
             var options = {
                 quality: 50,
                 destinationType: destinationType,
@@ -47,7 +37,7 @@
                 return;
             }
             navigator.camera.getPicture(
-                function (imageData) {
+                function(imageData) {
                     $scope.base64foto = imageData;
                     $scope.foto = "data:image/jpeg;base64," + imageData;
                 },
@@ -57,16 +47,9 @@
         };
 
         $scope.createDisaster = function() {
-            if ($scope.severity == 0) {
-                showMessage('Severity', '¿Qué tan Severo es el fuego?');
-                return;
-            }
-            
             $scope.loading = $ionicLoading.show({
                 content: 'Guardando reporte...',
                 showBackdrop: false
-            });
-
             });
 
             DisasterService.CreateDisaster({
@@ -74,13 +57,11 @@
                 Latitude: $scope.location.latitude,
                 Longitude: $scope.location.longitude,
                 FirstImageBase64: $scope.base64foto
-            })
-                .success(function (response) {
-                    showDetails();
-                })
-                .error(function(error) {
-                    showMessage('Error', 'Error creando el reporte.');
-                });
+            }).success(function() {
+                showDetails();
+            }).error(function() {
+                showMessage('Error', 'Error creando el reporte.');
+            });
         };
 
         var showDetails = function() {
@@ -103,10 +84,6 @@
                     alert('Geocoder failed due to: ' + status);
                 }
             });
-        };
-
-        var addImageToDisaster = function(id) {
-            DisasterService.SaveImageToDisaster(id, $scope.foto);
         };
 
         var getCurrentPosition = function(position) {
@@ -141,7 +118,7 @@
             coords: { latitude: 15.22, longitude: -89.88 },
             options: { draggable: true },
             events: {
-                dragend: function(marker, eventName, args) {
+                dragend: function(marker) {
                     this.coords.latitude = marker.getPosition().lat();
                     this.coords.longitude = marker.getPosition().lng();
 
