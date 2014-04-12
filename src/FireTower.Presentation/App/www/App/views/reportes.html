@@ -5,26 +5,25 @@
     <ion-content>
         
         <div class="list card" ng-repeat="reporte in reportes | reverse">
-            <div class="item item-avatar">
-                <!--<img src="avatar.jpg">-->
-                <h2>{{reporte.LocationDescription}}</h2>
-                <p>{{reporte.CreatedDate.$dateformatted}}</p>
-                <p><span>Severidad: </span>{{reporte.SeverityAverage}}</p>
+            <div ng-click="viewReport(reporte.DisasterId)">
+                <div class="item item-avatar">
+                    <!--<img src="avatar.jpg">-->
+                    <h2>{{reporte.LocationDescription}}</h2>
+                    <p>{{reporte.CreatedDate.$dateformatted}}</p>
+                    <p><span>Severidad: </span>{{reporte.SeverityAverage}}</p>
+                </div>
+                <div class="item item-image card-image">
+                    <img ng-src="{{reporte.Images[0]}}">
+                </div>
             </div>
-            <div class="item item-image card-image">
-                <img ng-src="{{reporte.Images[0]}}">
-            </div>
-            <a class="item item-icon-left positive" href="#/app/reporte/{{reporte.DisasterId}}" >
-                Detalle del incendio
-            </a>            
         </div>
         <br/>
         <br/>
         <br/>
         <div ng-show="reportes != null && reportes != undefined && reportes.length == 0" class="card">
-          <div class="item item-text-wrap">
-            <h1>No hay incendios</h1>
-          </div>
+            <div class="item item-text-wrap">
+                <h1>No hay incendios</h1>
+            </div>
         </div>
     </ion-content>
     <div ng-click="crearReporte()" class="bar bar-footer bar-positive">
