@@ -43,19 +43,15 @@ namespace FireTower.API.AAT
             return restResponse.Data;
         }
 
-        protected static void RegisterUser()
+        protected static long RegisterUser()
         {
-                Client.Execute("/user/facebook", Method.POST,
-                                                               new NewUserRequest
-                                                                  {
-                                                                      FirstName = "Byron",
-                                                                      LastName = "Sommardahl",
-                                                                      Name = "Byron Sommardahl",
-                                                                      FacebookId = 123456,
-                                                                      Locale = "es_ES",
-                                                                      Username = "bsommardahl",
-                                                                      Verified = true
-                                                                  });
+            var newUserRequest = new NewUserRequest
+                                     {
+                                         FirstName = "Byron", LastName = "Sommardahl", Name = "Byron Sommardahl", FacebookId = 123456, Locale = "es_ES", Username = "bsommardahl", Verified = true
+                                     };
+            Client.Execute("/user/facebook", Method.POST,
+                                                               newUserRequest);
+            return newUserRequest.FacebookId;
         }
 
 
