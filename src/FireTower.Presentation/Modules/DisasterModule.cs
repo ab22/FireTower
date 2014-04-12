@@ -23,7 +23,7 @@ namespace FireTower.Presentation.Modules
                         var req = this.Bind<CreateNewDisasterRequest>();
                         commandDispatcher.Dispatch(this.UserSession(),
                                                    new CreateNewDisaster(req.LocationDescription,
-                                                                         req.Latitude, req.Longitude));
+                                                                         req.Latitude, req.Longitude, req.FirstImageBase64));
                         return new Response().WithStatusCode(HttpStatusCode.OK);
                     };
 

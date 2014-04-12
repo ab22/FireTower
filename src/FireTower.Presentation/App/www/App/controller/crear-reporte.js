@@ -59,44 +59,14 @@
                 showBackdrop: false
             });
 
-            UserService.getUser()
-                .success(function(response) {
-                    userId = response.userId;
-                    pubnub.subscribe({
-                        channel: response.userId,
-                        message: function (model) {
-                            console.log('&&&&&&&&&&&&&&&%&%&%&%&%&%&%&%&%&%&%&%&&%&%&% SUBIENDO LA IMAGEN, TAM: ' + $scope.base64foto.length);
-                            DisasterService.SaveImageToDisaster(model.Id, { Base64Image: $scope.base64foto })
-                                .success(function() {
-                                    modelId = model.Id;
-                                    console.log('&&&&&&&&&&&&&&&%&%&%&%&%&%&%&%&%&%&%&%&&%&%&% IMAGEN SUBIDA ');
-                                    showDetails();
-                                })
-                                .error(function() {
-                                    $scope.loading.hide();
-                                    showMessage('Error', 'El Reporte fue creado, pero no se ha podido cargar la foto');
-                                });                            
-                            pubnub.unsubscribe({
-                                channel: userId,
-                            });
-                        },
-                        error: function (error) {
-                            console.log('@@@@@@@@@@@@@@@@@@@@@@ Error :/ PubNub : ' + error);
-
-                        }
-                    });
-                })
-                .error(function(error, err) {
-                    $scope.loading.hide();
-                    showMessage('Error', 'No hemos podido guardar el reporte. Estas conectado a internet?');
-                });
-
             DisasterService.CreateDisaster({
                 LocationDescription: $scope.LocationDescription,
                 Latitude: $scope.location.latitude,
-                Longitude: $scope.location.longitude
+                Longitude: $scope.location.longitude,
+                FirstImageBase64: $scope.base64foto
             })
-                .success(function(response) {
+                .success(function (response) {
+                    showDetails();
                 })
                 .error(function(error) {
                     showMessage('Error', 'Error creando el reporte.');
