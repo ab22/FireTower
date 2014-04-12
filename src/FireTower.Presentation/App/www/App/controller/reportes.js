@@ -1,6 +1,10 @@
 angular.module('firetower')
     .controller('ReportesController', ['$scope', '$ionicLoading', 'data', 'Math', '$ionicPopup', '$http', '$location', function($scope, $ionicLoading, data, Math, $ionicPopup, $http, $location) {
 
+        $scope.viewReport = function(disasterId) {
+            $location.path("/app/reporte/" + disasterId);
+        };
+        
         var getAllReports = function() {
             $scope.loading = $ionicLoading.show({
                 content: 'Cargando datos de incendios...',
