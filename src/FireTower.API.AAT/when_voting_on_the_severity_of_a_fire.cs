@@ -26,7 +26,7 @@ namespace FireTower.API.AAT
                 {
                     _token = Login().Token;
                     _locationName = "Santa Ana"+ new Random().Next(9999999);
-                    Client.Post("/disasters", new CreateNewDisaster(_locationName, 123.45, 456.32),
+                    Client.Post("/disasters", new CreateNewDisaster(_locationName, 123.45, 456.32, "first image base 64"),
                                 _token);
 
                     var db = MongoDatabase();
