@@ -16,8 +16,6 @@ namespace FireTower.API.AAT
         Establish context =
             () =>
                 {
-                    RegisterUser();
-
                     _token = Login().Token;
 
                     _url = string.Format("http://{0}.url.com", new Random().Next(9999999));
