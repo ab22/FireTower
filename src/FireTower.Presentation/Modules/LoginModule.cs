@@ -50,7 +50,8 @@ namespace FireTower.Presentation.Modules
                         {
                             var user =
                                 readOnlyRepository.First<User>(
-                                    x => x.Email == loginInfo.Email && x.EncryptedPassword == encryptedPassword.Password);
+                                    x => x.Email == loginInfo.Email 
+                                        && x.EncryptedPassword == encryptedPassword.Password);
 
                             //if (!user.Activated) throw new ForbiddenRequestException();
 

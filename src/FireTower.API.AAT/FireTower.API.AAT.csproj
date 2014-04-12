@@ -82,9 +82,12 @@
     <Compile Include="when_creating_an_account.cs" />
     <Compile Include="when_creating_a_new_disaster.cs" />
     <Compile Include="when_getting_me.cs" />
+    <Compile Include="when_logging_in_email_address_and_password.cs" />
     <Compile Include="when_logging_in_with_correct_credentials.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="when_logging_in_with_incorrect_credentials.cs" />
+    <Compile Include="when_logging_in_with_unknown_email_address.cs" />
+    <Compile Include="when_logging_in_with_upper_case_email_address_and_password.cs" />
     <Compile Include="when_posting_a_command_from_the_queue.cs" />
     <Compile Include="when_verifying_an_account_with_invalid_code.cs" />
     <Compile Include="when_voting_on_the_severity_of_a_fire.cs" />
