@@ -142,7 +142,7 @@
 
             $scope.map = {
                 center: $scope.location,
-                zoom: 17
+                zoom: 15
             };
 
             var lat = $scope.location.latitude;
@@ -172,7 +172,7 @@
 
         $scope.map = {
             center: $scope.location,
-            zoom: 17
+            zoom: 15
         };
 
         var showMessage = function(title, message) {
