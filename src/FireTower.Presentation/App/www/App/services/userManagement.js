@@ -1,7 +1,8 @@
 ﻿angular.module('firetower').factory('userManagement', ['$http', '$location', function userManagementFactory($http, $location) {
     var user;
-    //var baseUrl = 'http://firetowerapidev.apphb.com/';
-    var baseUrl = '';
+
+    var baseUrl = 'http://firetowerapidev.apphb.com';
+    //var baseUrl = '';
     
     return {
         setUser: function(facebookUser) {

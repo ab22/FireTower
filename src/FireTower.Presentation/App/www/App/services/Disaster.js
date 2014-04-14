@@ -2,8 +2,8 @@
     .factory('DisasterService', ['$http', function ($http) {
         var factory = {};
         var token = localStorage.getItem('firetowertoken');
-        //var baseUrl = 'http://firetowerapidev.apphb.com';
-        var baseUrl = '';
+        var baseUrl = 'http://firetowerapidev.apphb.com';
+        //var baseUrl = '';
 
         factory.SaveSeverity = function (severity) {
             severity.token = token;
