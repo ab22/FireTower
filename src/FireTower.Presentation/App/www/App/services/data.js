@@ -7,9 +7,13 @@
         var db = 'appharbor_ab50c767-930d-4b7d-9571-dd2a0b62d5a9';
         var collection = 'DisasterViewModel';
 
-        factory.getAllReports = function() {
+        factory.getAllReports = function () {
             var url = baseUrl + db + '/collections/' + collection + '?apiKey=' + apiKey;
-            console.log(url);
+            return $http.get(url);
+        };
+
+        factory.getMyLastReport = function (userId) {
+            var url = baseUrl + db + '/collections/' + collection + '?apiKey=' + apiKey + '&q={"UserId":"'+userId+'"}&l=1&s={"CreatedDate":-1}';            
             return $http.get(url);
         };
 

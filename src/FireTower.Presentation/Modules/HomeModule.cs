@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Nancy;
+using Nancy.Responses;
 
 namespace FireTower.Presentation.Modules
 {
@@ -15,7 +16,7 @@ namespace FireTower.Presentation.Modules
 
         void RedirectIndex()
         {
-            Get["/"] = _ => View["index.html"];
+            Get["/"] = _ => new RedirectResponse("/app/www/index.html");
         }
     }
 }

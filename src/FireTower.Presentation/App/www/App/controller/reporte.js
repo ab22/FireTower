@@ -1,5 +1,5 @@
 ﻿angular.module('firetower')
-    .controller('ReporteController', ['$scope', '$stateParams', '$ionicLoading', 'data', 'Math', 'DisasterService', '$ionicPopup', '$http', function($scope, $stateParams, $ionicLoading, data, Math, DisasterService, $ionicPopup, $http) {
+    .controller('ReporteController', ['$location', '$scope', '$stateParams', '$ionicLoading', 'data', 'Math', 'DisasterService', '$ionicPopup', '$http', function ($location, $scope, $stateParams, $ionicLoading, data, Math, DisasterService, $ionicPopup, $http) {
 
         $scope.startCount = 5;
         var disasterId = -1;
@@ -54,16 +54,13 @@
 
                 DisasterService.SaveImageToDisaster(disasterId, { Base64Image: base64foto })
                     .success(function() {
+                        $scope.reporte.Images.push("data:image/jpeg;base64," + base64foto);
                         $scope.loading.hide();
                     })
                     .error(function() {
                         $scope.loading.hide();
                         showMessage('Error', 'La foto no se pudo ser guardada.');
                     });
-                
-                //refresh photos
-
-
             };
 
             var options = {
@@ -73,6 +70,8 @@
                 encodingType: 0
             };
             if (!navigator.camera) {
+                var photo = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAABLElEQVR42qSTQStFURSFP7f3XygyoAwoYSYMPCIpk2egMFSmUvwCRpSRDIwYGbwyVuYykB9y914m951z7nHe6J26dc9u77XXWmdvJLF7/audqx9JYuvyW92LL0li8K2df2r17CPEVk7ftXTclyQqAMmRCwC5I3fS42a4W7y74VYDNAAuJA8AaXIsSACsDgAdAJeFrnnyoMBygKZJJ3b1It0AmsTMDPdEgrujJqHEwCxqznMaD2KgyCDRnEuo8qJhHvx/hcQDbzGoix5Yi4G1TcwZWNEDKwJU+WDkhg2ToDaD+M65YcVB8jg3Y5IY5VQAyyf9gLJw+CqAuYNnAczsPQpgevtBU937kDexcdssj8Ti0ZskMd97CRs3u//U2sjJzbtwH1+/Cf8jS/gbAMmWc42HzdIjAAAAAElFTkSuQmCC";
+                successCallback(photo);
                 return;
             }
             navigator.camera.getPicture(
@@ -101,7 +100,8 @@
                 .success(function(data) {
                     formatAndBindData(data[0]);
                 })
-                .error(function(error) {
+                .error(function (error) {
+                    $location.path('/app');
                     console.log(error);
                 });
 
