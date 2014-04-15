@@ -1,6 +1,6 @@
 ﻿angular.module('firetower')
-    .factory('data', ['$http', function($http) {
-        var factory = {};
+    .factory('data', ['$http', 'settings', function($http, settings) {
+        var factory = { };
 
         var apiKey = 'Edc1w2R7eTgTWs5fUOrbiI8-xkDkPznM';
         var baseUrl = 'https://api.mongolab.com/api/1/databases/';
@@ -9,18 +9,22 @@
 
         factory.getAllReports = function() {
             var url = baseUrl + db + '/collections/' + collection + '?apiKey=' + apiKey;
-            console.log(url);
             return $http.get(url);
         };
 
-        factory.getReportById = function (id) {
+        factory.getMyLastReport = function(userId) {
+            var url = baseUrl + db + '/collections/' + collection + '?apiKey=' + apiKey + '&q={"UserId":"' + userId + '"}&l=1&s={"CreatedDate":-1}';
+            return $http.get(url);
+        };
+
+        factory.getReportById = function(id) {
             var query = '?q={"DisasterId": "' + id + '"}';
             return $http.get(baseUrl + db + '/collections/' + collection + query + '&apiKey=' + apiKey);
         };
 
         factory.getUser = function() {
             var token = localStorage.getItem('firetowertoken');
-            return $http.get('/me?token=' + token);
+            return $http.get(settings.baseUrl + '/me?token=' + token);
         };
 
         return factory;
