@@ -2,6 +2,7 @@
     .service('settings', [function () {
 
         var baseUrl = 'http://firetowerapidev.apphb.com';
+        baseUrl = 'http://firetowerapidev-apphb-com-qu6vdqb9312c.runscope.net/';
         if (document.location.hostname == "localhost")
             baseUrl = 'http://localhost:38397';
 
