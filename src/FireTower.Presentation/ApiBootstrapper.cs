@@ -7,6 +7,7 @@ using FireTower.Domain;
 using FireTower.Domain.Exceptions;
 using FireTower.Infrastructure;
 using FireTower.Infrastructure.Exceptions;
+using FireTower.Presentation.Logging;
 using Nancy;
 using Nancy.Authentication.Stateless;
 using Nancy.Bootstrapper;
@@ -186,13 +187,6 @@ namespace FireTower.Presentation
                     .WithStatusCode(HttpStatusCode.Unauthorized);
             }
 
-            if (err is NotImplementedException)
-            {
-                return ctx.Response
-                    .WithStringContents(err.Message)
-                    .WithStatusCode(HttpStatusCode.NotImplemented);
-            }
-
             if (err is UnauthorizedAccessException)
             {
                 return ctx.Response
@@ -214,12 +208,25 @@ namespace FireTower.Presentation
                     .WithStatusCode(HttpStatusCode.Unauthorized);
             }
 
-            string exceptionText = AddException(err);
-            return new Response()
-                .WithStringContents(
-                    string.Format("The {0} request to '{1}' resulted in an unhandled exception!\r\n\r\n{2}",
-                                  ctx.Request.Method, ctx.Request.Url, exceptionText))
-                .WithStatusCode(HttpStatusCode.InternalServerError);
+            //if we get to this point, we need to log the exception...
+            var exceptionFormatterLogger = new ExceptionFormatterLogger();            
+            exceptionFormatterLogger.LogException(err, ctx);
+
+            if (err is NotImplementedException)
+            {
+                return ctx.Response
+                    .WithStringContents(err.Message)
+                    .WithStatusCode(HttpStatusCode.NotImplemented);
+            }
+            else
+            {
+                string exceptionText = AddException(err);
+                return ctx.Response
+                    .WithStringContents(
+                        string.Format("The {0} request to '{1}' resulted in an unhandled exception!\r\n\r\n{2}",
+                                      ctx.Request.Method, ctx.Request.Url, exceptionText))
+                    .WithStatusCode(HttpStatusCode.InternalServerError);
+            }
         }
 
         static string AddException(Exception ex)

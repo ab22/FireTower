@@ -57,6 +57,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\BlingBag.1.3.1.1\lib\net40\BlingBag.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="MongoDB.Bson">
       <HintPath>..\packages\mongocsharpdriver.1.8.3\lib\net35\MongoDB.Bson.dll</HintPath>
@@ -224,6 +227,8 @@
     <Compile Include="ICommandDeserializer.cs" />
     <Compile Include="InvalidCommandObjectException.cs" />
     <Compile Include="JsonCommandDeserializer.cs" />
+    <Compile Include="Logging\ExceptionFormatterLogger.cs" />
+    <Compile Include="Logging\HipChatLogAppender.cs" />
     <Compile Include="Modules\HomeModule.cs" />
     <Compile Include="Modules\DisasterModule.cs" />
     <Compile Include="Modules\ImageModule.cs" />
@@ -268,6 +273,7 @@
     <Content Include="Content\fonts\ionicons.eot" />
     <Content Include="Content\fonts\ionicons.ttf" />
     <Content Include="Content\fonts\ionicons.woff" />
+    <Content Include="logging.config" />
     <None Include="web.config.default" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
