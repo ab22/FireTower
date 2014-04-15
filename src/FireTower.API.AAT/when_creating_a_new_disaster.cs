@@ -6,7 +6,7 @@ using RestSharp;
 
 namespace FireTower.API.AAT
 {
-    public class when_creating_a_new_disaster : given_an_api_server_context<CurrentlyDeveloping>
+    public class when_creating_a_new_disaster : given_an_api_server_context<DeployedToQA>
     {
         static Guid _token;
         static IRestResponse _result;
