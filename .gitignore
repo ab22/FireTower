@@ -62,5 +62,8 @@ database_deployment
 # Office Temp Files
 ~$*
 
+#Webstorm files
+src/FireTower.Presentation/App/.idea
+
 #Cordova Platforms
 #src/FireTower.Presentation/App/platforms/

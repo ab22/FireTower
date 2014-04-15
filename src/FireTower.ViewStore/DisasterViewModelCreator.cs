@@ -19,7 +19,7 @@ namespace FireTower.ViewStore
 
         public void Handle(NewDisasterCreated @event)
         {
-            var vm =_repository.Create(new DisasterViewModel(@event.DisasterId, @event.CreatedDate, @event.LocationDescription,
+            var vm =_repository.Create(new DisasterViewModel(@event.UserId, @event.DisasterId, @event.CreatedDate, @event.LocationDescription,
                                                      @event.Latitude, @event.Longitude));
         }
 

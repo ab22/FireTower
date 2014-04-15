@@ -1,6 +1,11 @@
-﻿angular.module('firetower').factory('userManagement', ['$http', '$location', function userManagementFactory($http, $location) {
+﻿angular.module('firetower').factory('userManagement', ['$http', '$location', 'settings', function userManagementFactory($http, $location, settings) {
     var user;
-    var baseUrl = 'http://firetowerapidev.apphb.com/';
+
+    var clearUser = function() {
+        var token = 'firetowertoken';
+        if (token in localStorage) localStorage.removeItem(token);
+        $location.path('/app/');
+    };
     
     return {
         setUser: function(facebookUser) {
@@ -11,11 +16,11 @@
                 $location.path('/app/reportes');
             };
 
-            $http.post(baseUrl + '/login/facebook', { FacebookId: parseInt(facebookUser.id) })
+            $http.post(settings.baseUrl + '/login/facebook', { FacebookId: parseInt(facebookUser.id) })
                 .success(loginSuccess)
                 .error(function(xhr, statusCode) {
                     if (statusCode == "401") {
-                        $http.post(baseUrl + '/user/facebook', {
+                        $http.post(settings.baseUrl + '/user/facebook', {
                             FirstName: facebookUser.first_name,
                             LastName: facebookUser.last_name,
                             Name: facebookUser.name,
@@ -24,7 +29,7 @@
                             Username: facebookUser.username,
                             Verified: facebookUser.verified
                         }).success(function() {
-                            $http.post(baseUrl + '/login/facebook', { FacebookId: parseInt(facebookUser.id) })
+                            $http.post(settings.baseUrl + '/login/facebook', { FacebookId: parseInt(facebookUser.id) })
                                 .success(loginSuccess);
                         });
                     }
@@ -36,12 +41,12 @@
         },
         logoutUser: function () {            
             if (user != undefined) {
-                $http.post(baseUrl + '/logout', { FacebookId: parseInt(user.id) });
+                $http.post(settings.baseUrl + '/logout', { FacebookId: parseInt(user.id) });
             }
-            
-            var token = 'firetowertoken';
-            if (token in localStorage) localStorage.removeItem(token);
-            $location.path('/app/');
+            clearUser();
+        },
+        clearUser: function () {
+            clearUser();
         }
     };
 }]);

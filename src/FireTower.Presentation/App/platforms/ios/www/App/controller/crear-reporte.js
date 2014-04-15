@@ -1,50 +1,75 @@
 ﻿angular.module('firetower')
-    .controller('NewReportController', ['$scope', '$ionicPopup', 'DisasterService', 'PictureService', '$location', '$ionicLoading', 'UserService', function($scope, $ionicPopup, DisasterService, PictureService, $location, $ionicLoading, UserService) {
+    .controller('NewReportController', ['$location', 'data', '$scope', '$ionicPopup', 'DisasterService', 'PictureService', 'LocationService', '$ionicLoading', 'UserService', function($location, viewModels, $scope, $ionicPopup, DisasterService, PictureService, LocationService, $ionicLoading, UserService) {
 
-        var modelId = null;
+        var setDisasterPosition = function(lat, lng) {
+            $scope.location = { latitude: lat, longitude: lng };
+            LocationService.getLocationAddress(lat, lng)
+                .then(function(locationData) {
+                    $scope.LocationDescription = locationData.address;                    
+                });            
+        };
 
-        var init = function () {
-            $scope.takePicture();
+        var initializeMap = function () {
+            $scope.location = { latitude: 0, longitude: 0 };
 
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(getCurrentPosition, positionFailure);
-            }
+            $scope.map = {
+                center: $scope.location,
+                zoom: 1,
+                maptype: "satellite"
+            };
 
-            $scope.base64foto = PictureService.getDefaultPictureWithoutDataType();
+            $scope.marker = {
+                coords: { latitude: 0, longitude: 0 },
+                options: { draggable: true },
+                events: {
+                    dragend: function (marker) {
+                        this.coords.latitude = marker.getPosition().lat();
+                        this.coords.longitude = marker.getPosition().lng();
+                        setDisasterPosition(marker.getPosition().lat(), marker.getPosition().lng());
+                    }
+                }
+            };
+        };
+        
+        var init = function() {
+
+            initializeMap();
+            
+            PictureService.takePicture().then(function(data) {
+                $scope.base64foto = data.base64;
+                $scope.foto = data.imageUrl;
+            }).finally(function() {
+
+                LocationService.getCurrentPosition()
+                    .catch(function(err) {
+                        alert("Lo sentimos, pero no se puede crear un reporte sin ubicacion.");
+                        $location.path('/app');
+                    })
+                    .then(function(locationData) {
+                        
+                        setDisasterPosition(locationData.lat, locationData.lng);
+
+                        $scope.map = {
+                            center: $scope.location,
+                            zoom: 15,
+                            maptype: "satellite"
+                        };
+
+                        $scope.marker.coords = {
+                            latitude: $scope.location.latitude,
+                            longitude: $scope.location.longitude
+                        };                        
+                    });
+            });
         };
 
         $scope.data = { };
         $scope.obj = { };
-        var pictureSource;
-        var destinationType;
-        
-        ionic.Platform.ready(function() {
-            if (!navigator.camera) {
-                return;
-            }
-            pictureSource = navigator.camera.PictureSourceType.CAMERA;
-            destinationType = navigator.camera.DestinationType.DATA_URL;
-        });
 
-        $scope.takePicture = function() {
-            var options = {
-                quality: 50,
-                destinationType: destinationType,
-                sourceType: pictureSource,
-                encodingType: 0
-            };
-            if (!navigator.camera) {
-                return;
-            }
-            navigator.camera.getPicture(
-                function(imageData) {
-                    $scope.base64foto = imageData;
-                    $scope.foto = "data:image/jpeg;base64," + imageData;
-                },
-                function(err) {
-                },
-                options);
-        };
+        ionic.Platform.ready(function() {
+            PictureService.init();            
+            init();
+        });
 
         $scope.createDisaster = function() {
             $scope.loading = $ionicLoading.show({
@@ -52,84 +77,49 @@
                 showBackdrop: false
             });
 
-            DisasterService.CreateDisaster({
+            var action = DisasterService.CreateDisaster({
                 LocationDescription: $scope.LocationDescription,
                 Latitude: $scope.location.latitude,
                 Longitude: $scope.location.longitude,
                 FirstImageBase64: $scope.base64foto
-            }).success(function() {
-                showDetails();
-            }).error(function() {
-                showMessage('Error', 'Error creando el reporte.');
+            });
+
+            action
+                .success(function() {
+                    queryNewestDisasterUntilWeFindThisOne();
+                })
+                .error(function () {
+                    showMessage('Error', 'Error creando el reporte.');
+                })
+                .finally(function () {
+                    $scope.loading.hide();
+                });
+        };
+
+        var queryNewestDisasterUntilWeFindThisOne = function() {
+            $scope.loading = $ionicLoading.show({
+                content: 'Terminando reporte...',
+                showBackdrop: false
+            });
+
+            viewModels.getUser().success(function(me) {
+                var interval = setInterval(function() {
+                    viewModels.getMyLastReport(me.userId).success(function(lastReport) {
+                        if (lastReport.length == 0) return;
+
+                        if (moment(lastReport[0].CreatedDate.$date).add('seconds', 10) > moment()) {
+                            clearInterval(interval);
+                            showDetails(lastReport[0].DisasterId);
+                        }
+                    });
+                }, 1000);
             });
         };
 
-        var showDetails = function() {
+        var showDetails = function(disasterId) {
             $scope.loading.hide();
             showMessage('Exito!', 'Reporte creado exitosamente!');
-            $location.path('/app/reporte/' + modelId);
-        };
-
-        var getLocationAddress = function(latLng) {
-            var geocoder = new google.maps.Geocoder();
-
-            geocoder.geocode({ 'latLng': latLng }, function(results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[1]) {
-                        $scope.LocationDescription = results[1].formatted_address;
-                    } else {
-                        alert('No results found');
-                    }
-                } else {
-                    alert('Geocoder failed due to: ' + status);
-                }
-            });
-        };
-
-        var getCurrentPosition = function(position) {
-            $scope.location = {
-                latitude: position.coords.latitude,
-                longitude: position.coords.longitude
-            };
-
-            $scope.marker.coords = {
-                latitude: $scope.location.latitude,
-                longitude: $scope.location.longitude
-            };
-
-            $scope.map = {
-                center: $scope.location,
-                zoom: 15
-            };
-
-            var lat = $scope.location.latitude;
-            var lng = $scope.location.longitude;
-            var latlng = new google.maps.LatLng(lat, lng);
-
-            getLocationAddress(latlng);
-        };
-
-        var positionFailure = function(error) {
-            console.log(error.message);
-        };
-
-        $scope.location = { latitude: 15.22, longitude: -89.88 };
-        $scope.marker = {
-            coords: { latitude: 15.22, longitude: -89.88 },
-            options: { draggable: true },
-            events: {
-                dragend: function(marker) {
-                    this.coords.latitude = marker.getPosition().lat();
-                    this.coords.longitude = marker.getPosition().lng();
-
-                    getLocationAddress(marker.getPosition());
-                }
-            }
-        };
-
-        $scope.map = {
-            center: $scope.location,
-            zoom: 15
+            $location.path('/app/reporte/' + disasterId);
         };
 
         var showMessage = function(title, message) {
@@ -138,6 +128,4 @@
                 content: message
             });
         };
-
-        init();
     }]);

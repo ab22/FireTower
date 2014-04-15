@@ -80,6 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="after_creating_adding_an_image_to_an_existing_disaster.cs" />
     <Compile Include="after_creating_a_new_disaster.cs" />
     <Compile Include="after_voting_on_a_severity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
