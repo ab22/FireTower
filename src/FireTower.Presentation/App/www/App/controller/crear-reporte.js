@@ -45,8 +45,6 @@
                 $scope.foto = data.imageUrl;
             }).finally(function() {
 
-                alert("Picture taken...");
-
                 LocationService.getCurrentPosition()
                     .catch(function(err) {
                         alert("Lo sentimos, pero no se puede crear un reporte sin ubicacion.");
