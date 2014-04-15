@@ -37,5 +37,13 @@
 
     <body ng-app="firetower">
         <ion-nav-view></ion-nav-view>
+        
+        <script type='text/javascript'>
+            window.onerror = function (msg, url, line) {
+                alert("Error: " + msg + "\nurl: " + url + "\nline #: " + line);
+                var suppressErrorAlert = true;
+                return suppressErrorAlert;
+            };
+        </script>
     </body>
 </html>
