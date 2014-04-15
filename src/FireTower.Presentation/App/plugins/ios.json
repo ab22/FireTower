@@ -15,17 +15,19 @@
                 "false": 1
             },
             "AssetsLibrary.framework": {
-                "false": 1
+                "false": 3
             },
             "MobileCoreServices.framework": {
-                "false": 1
+                "false": 2
             }
         },
         "config.xml": {
             "/*": {
                 "<feature name=\"Camera\"><param name=\"ios-package\" value=\"CDVCamera\" /></feature>": 1,
                 "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>": 1,
-                "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>": 1
+                "<feature name=\"Geolocation\"><param name=\"ios-package\" value=\"CDVLocation\" /></feature>": 1,
+                "<feature name=\"File\"><param name=\"ios-package\" value=\"CDVFile\" /><param name=\"onload\" value=\"true\" /></feature>": 1,
+                "<feature name=\"FileTransfer\"><param name=\"ios-package\" value=\"CDVFileTransfer\" /></feature>": 1
             }
         }
     },
@@ -38,7 +40,14 @@
         },
         "org.apache.cordova.geolocation": {
             "PACKAGE_NAME": "com.acklenavenue.FireTower"
+        },
+        "org.apache.cordova.file-transfer": {
+            "PACKAGE_NAME": "com.acklenavenue.FireTower"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "org.apache.cordova.file": {
+            "PACKAGE_NAME": "com.acklenavenue.FireTower"
+        }
+    }
 }
