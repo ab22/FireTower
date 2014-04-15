@@ -10,7 +10,6 @@
         };
 
         var initializeMap = function () {
-            alert("Initializing map...");
             $scope.location = { latitude: 0, longitude: 0 };
 
             $scope.map = {
@@ -34,13 +33,9 @@
         
         var init = function() {
 
-            alert("Initializing view...");
-            
             initializeMap();
             
             PictureService.takePicture().then(function (data) {
-                alert("Picture taken...");
-
                 $scope.base64foto = data.base64;
                 $scope.foto = data.imageUrl;
             }).finally(function() {
@@ -52,8 +47,6 @@
                     })
                     .then(function(locationData) {
                         
-                        alert("Setting map location...");
-
                         setDisasterPosition(locationData.lat, locationData.lng);
 
                         $scope.map = {
@@ -73,9 +66,7 @@
         $scope.data = { };
         $scope.obj = { };
 
-        alert("Waiting for ionic...");
         ionic.Platform.ready(function() {
-            alert("Ionic ready. Initializing...");
             PictureService.init();
             init();
         });
