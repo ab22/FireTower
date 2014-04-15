@@ -20,11 +20,15 @@
 
         factory.CreateDisaster = function (newDisaster) {
             newDisaster.token = token;
+            alert(settings.baseUrl + '/Disasters' + " json: " + JSON.stringify(newDisaster));
+            alert("Image size: " + newDisaster.FirstImageBase64.length);
             return $http.post(settings.baseUrl + '/Disasters', newDisaster);
         };
 
         factory.SaveImageToDisaster = function (disasterId, base64Image) {
             base64Image.token = token;
+            throw new Error("Test");
+            alert(settings.baseUrl + '/disasters/' + disasterId + '/image -- Image size: ' + base64Image.length);
             return $http.post(settings.baseUrl + '/disasters/' + disasterId + '/image', base64Image);
         };
 
