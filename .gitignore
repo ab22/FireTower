@@ -63,4 +63,4 @@ database_deployment
 ~$*
 
 #Cordova Platforms
-src/FireTower.Presentation/App/platforms/
+#src/FireTower.Presentation/App/platforms/
