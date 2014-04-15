@@ -75,8 +75,10 @@
         $scope.data = { };
         $scope.obj = { };
 
+        alert("Waiting for ionic...");
         ionic.Platform.ready(function() {
-            PictureService.init();            
+            alert("Ionic ready. Initializing...");
+            PictureService.init();
             init();
         });
 
