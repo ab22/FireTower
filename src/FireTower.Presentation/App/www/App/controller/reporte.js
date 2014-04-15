@@ -4,10 +4,6 @@
         $scope.startCount = 5;
         var disasterId = -1;
 
-        $scope.test = function() {
-            alert('');
-        };
-
         $scope.filedStars = [];
         $scope.blankStars = [];
         $scope.Severities = [1, 2, 3, 4, 5];
@@ -25,7 +21,10 @@
                 Severity: severityScore
             })
                 .success(function(response) {
-                    alert(response);
+                    $ionicPopup.alert({
+                        title: 'Exito',
+                        content: 'Su voto ha sido registrado.'
+                    });
                 })
                 .error(function(error) {
                     alert(error);

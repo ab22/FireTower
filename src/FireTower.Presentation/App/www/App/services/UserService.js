@@ -1,11 +1,9 @@
 ﻿angular.module('firetower')
-    .factory('UserService', ['$http', function($http) {
+    .factory('UserService', ['$http', 'settings', function($http, settings) {
         var factory = { };
-        var baseUrl = 'http://firetowerapidev.apphb.com/';
-        //var baseUrl = '';
         factory.getUser = function() {
             var token = localStorage.getItem('firetowertoken');
-            return $http.get(baseUrl + '/me?token=' + token);
+            return $http.get(settings.baseUrl + '/me?token=' + token);
         };
 
         return factory;

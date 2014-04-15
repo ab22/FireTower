@@ -1,11 +1,9 @@
 ﻿angular.module('firetower')
-    .service('loginService', ['$q', '$http', function ($q, $http) {
-        var baseUrl = 'http://firetowerapidev.apphb.com';
-        //var baseUrl = '';
-
+    .service('loginService', ['$q', '$http','settings', function ($q, $http, settings) {
+        
         return {
             authenticate: function (email, password) {
-                return $http.post(baseUrl + "/login", { email: email, password: password });
+                return $http.post(settings.baseUrl + "/login", { email: email, password: password });
             }
         };
     }]);

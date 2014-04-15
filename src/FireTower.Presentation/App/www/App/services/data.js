@@ -1,5 +1,5 @@
 ﻿angular.module('firetower')
-    .factory('data', ['$http', function($http) {
+    .factory('data', ['$http', 'settings', function($http, settings) {
         var factory = { };
 
         var apiKey = 'Edc1w2R7eTgTWs5fUOrbiI8-xkDkPznM';
@@ -23,11 +23,8 @@
         };
 
         factory.getUser = function() {
-            var baseApiUrl = 'http://firetowerapidev.apphb.com';
-            //var baseApiUrl = '';
-
             var token = localStorage.getItem('firetowertoken');
-            return $http.get(baseApiUrl + '/me?token=' + token);
+            return $http.get(settings.baseUrl + '/me?token=' + token);
         };
 
         return factory;
