@@ -6,7 +6,8 @@
         
         return {
             init: function () {
-                if (!navigator.camera) {                    
+                if (!navigator.camera) {
+                    alert("No camera!");
                     navigator.camera = {
                         PictureSourceType: { CAMERA: "CAMERA" },
                         DestinationType: { DATA_URL: "DATA_URL" },
@@ -30,8 +31,10 @@
                     encodingType: 0
                 };
 
+                alert("PictureService: getting picture");
                 navigator.camera.getPicture(
                     function (base64) {
+                        alert("PictureService: got picture");
                         def.resolve({
                             base64: base64,
                             imageUrl: "data:image/jpeg;base64," + base64
