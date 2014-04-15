@@ -1,5 +1,5 @@
 ﻿angular.module('firetower')
-    .controller('ReporteController', ['$location', '$scope', '$stateParams', '$ionicLoading', 'data', 'Math', 'DisasterService', '$ionicPopup', '$http', function ($location, $scope, $stateParams, $ionicLoading, data, Math, DisasterService, $ionicPopup, $http) {
+    .controller('ReporteController', ['$location', '$scope', '$stateParams', '$ionicLoading', 'data', 'Math', 'DisasterService', '$ionicPopup', '$http', function($location, $scope, $stateParams, $ionicLoading, data, Math, DisasterService, $ionicPopup, $http) {
 
         $scope.startCount = 5;
         var disasterId = -1;
@@ -99,7 +99,7 @@
                 .success(function(data) {
                     formatAndBindData(data[0]);
                 })
-                .error(function (error) {
+                .error(function(error) {
                     $location.path('/app');
                     console.log(error);
                 });
@@ -217,6 +217,10 @@
                 });
 
             console.log($scope.hasBeenPutOut);
+        };
+
+        $scope.backToReportes = function() {
+            $location.path('/reportes');
         };
         init();
     }]);
