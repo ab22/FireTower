@@ -48,7 +48,8 @@
                                 complete = e.loaded / e.total;
                             } else {
                                 complete++;
-                            }                            
+                            }
+                            $scope.percentComplete = complete * 100;
                             $scope.imageUploadingMessage = 'Guardando foto... ' + complete + "%";
                         };
 
