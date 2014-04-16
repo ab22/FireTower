@@ -110,6 +110,7 @@
 
             var formatAndBindData = function(data) {
                 disasterId = data.DisasterId;
+                alert("Disaster " + disasterId);
                 var formattedDate = data.CreatedDate.$date;
                 formattedDate = moment((new Date()).toLocaleDateString()).fromNow();
                 data.CreatedDate.$dateformatted = formattedDate;
