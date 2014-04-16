@@ -85,17 +85,21 @@
                 };
 
                 var action = disasterService.CreateDisaster(newDisaster);
-                alert(action.then);
-                alert(action.success);
+                alert(action.catch);
+                alert(action.finally);
                 action
-                    .then(function () {
-                        alert("disaster created. Querying newest disasters...");
+                    .then(function (resp) {
+                        alert("Disaster created. Querying newest disasters... " + JSON.stringify(resp));
                         queryNewestDisasterUntilWeFindThisOne();
-                    })
+                    });
+                
+                action
                     .catch(function (err) {
                         alert("Error creating disaster: " + JSON.stringify(err));
                         showMessage('Error', 'Error creando el reporte.');
-                    })
+                    });
+
+                action
                     .finally(function() {
                         $scope.loading.hide();
                     });
