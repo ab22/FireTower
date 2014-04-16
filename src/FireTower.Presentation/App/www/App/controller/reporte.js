@@ -1,6 +1,44 @@
 ﻿angular.module('firetower')
+<<<<<<< HEAD
+    .controller('ReporteController', ['$location', '$scope', '$stateParams', '$ionicLoading', 'data', 'Math', 'DisasterService', '$ionicPopup', '$http', function($location, $scope, $stateParams, $ionicLoading, data, Math, DisasterService, $ionicPopup, $http) {
+
+        $scope.Menu
+        $scope.startCount = 5;
+        var disasterId = -1;
+
+        $scope.filedStars = [];
+        $scope.blankStars = [];
+        $scope.Severities = [1, 2, 3, 4, 5];
+
+        var getArray = function(n, startingNumber) {
+            var arr = [];
+            for (var i = 0; i < n; i++)
+                arr.push(startingNumber++);
+            return arr;
+        };
+
+        $scope.saveSeverity = function(severityScore) {
+            DisasterService.SaveSeverity({
+                DisasterId: disasterId,
+                Severity: severityScore
+            })
+                .success(function(response) {
+                    $ionicPopup.alert({
+                        title: 'Exito',
+                        content: 'Su voto ha sido registrado.'
+                    });
+                })
+                .error(function(error) {
+                    alert(error);
+                });
+        };
+
+        var pictureSource;
+        var destinationType;
+=======
     .controller('ReporteController', ['PictureService', '$location', '$scope', '$stateParams', '$ionicLoading', 'data', 'Math', 'DisasterService', '$ionicPopup', '$http',
         function(pictureService, $location, $scope, $stateParams, $ionicLoading, data, math, disasterService, $ionicPopup, $http) {
+>>>>>>> master
 
             $scope.startCount = 5;
             var disasterId = -1;
