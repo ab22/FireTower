@@ -77,12 +77,15 @@
                     showBackdrop: false
                 });
 
-                var action = disasterService.CreateDisaster({
+                var newDisaster = {
                     LocationDescription: $scope.LocationDescription,
                     Latitude: $scope.location.latitude,
                     Longitude: $scope.location.longitude,
                     ImageUri: $scope.imageUri
-                });
+                };
+
+                alert("Creating disaster: " + JSON.stringify(newDisaster));
+                var action = disasterService.CreateDisaster(newDisaster);
 
                 action
                     .success(function () {
