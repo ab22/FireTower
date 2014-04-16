@@ -6,10 +6,9 @@
                 $scope.location = { latitude: lat, longitude: lng };
                 locationService.getLocationAddress(lat, lng)
                     .then(function (locationData) {
-                        alert(JSON.stringify(locationData));
+                        alert("locationData " + JSON.stringify(locationData));
                         $scope.LocationDescription = locationData.address;
                     }).catch(function (err) {
-                        alert(JSON.stringify(err));
                         alert("Lo sentimos, pero no se puede crear un reporte sin ubicacion.");
                         $location.path('/app');
                     });
