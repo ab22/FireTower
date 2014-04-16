@@ -47,3 +47,9 @@
     font-weight: bold;
     font-size: 18px;
 }
+
+#loginContent{
+    background-color: #ffa10c;
+    background-size:cover;
+    position:fixed;
+}

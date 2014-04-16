@@ -47,6 +47,7 @@
 		12C934959EB7426FB2FBDC51 /* CDVLocalFilesystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EBE0E967E0145A38D5BEB0F /* CDVLocalFilesystem.m */; };
 		440771F86CA94D708F6C4DD9 /* CDVAssetLibraryFilesystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B468EF2A0844AB7A9012E62 /* CDVAssetLibraryFilesystem.m */; };
 		EE9A59D9494249D8ABBAF04C /* CDVFileTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3E06B03044A249188AD98D7B /* CDVFileTransfer.m */; };
+		BCB42B5467D44351B17BDC9C /* CDVStatusBar.m in Sources */ = {isa = PBXBuildFile; fileRef = A44B32A73FB842EC9980D244 /* CDVStatusBar.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +130,8 @@
 		70C130310BAE467995DFCFE9 /* CDVAssetLibraryFilesystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVAssetLibraryFilesystem.h"; path = "org.apache.cordova.file/CDVAssetLibraryFilesystem.h"; sourceTree = "<group>"; fileEncoding = 4; };
 		3E06B03044A249188AD98D7B /* CDVFileTransfer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVFileTransfer.m"; path = "org.apache.cordova.file-transfer/CDVFileTransfer.m"; sourceTree = "<group>"; fileEncoding = 4; };
 		3D3D4823F0E1429DB04FA89D /* CDVFileTransfer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVFileTransfer.h"; path = "org.apache.cordova.file-transfer/CDVFileTransfer.h"; sourceTree = "<group>"; fileEncoding = 4; };
+		A44B32A73FB842EC9980D244 /* CDVStatusBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = "CDVStatusBar.m"; path = "org.apache.cordova.statusbar/CDVStatusBar.m"; sourceTree = "<group>"; fileEncoding = 4; };
+		77FBD56DDFD64D119EFFE489 /* CDVStatusBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "CDVStatusBar.h"; path = "org.apache.cordova.statusbar/CDVStatusBar.h"; sourceTree = "<group>"; fileEncoding = 4; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,6 +271,8 @@
 				70C130310BAE467995DFCFE9 /* CDVAssetLibraryFilesystem.h */,
 				3E06B03044A249188AD98D7B /* CDVFileTransfer.m */,
 				3D3D4823F0E1429DB04FA89D /* CDVFileTransfer.h */,
+				A44B32A73FB842EC9980D244 /* CDVStatusBar.m */,
+				77FBD56DDFD64D119EFFE489 /* CDVStatusBar.h */,
 			);
 			name = Plugins;
 			path = FireTower/Plugins;
@@ -475,6 +480,7 @@
 				12C934959EB7426FB2FBDC51 /* CDVLocalFilesystem.m in Sources */,
 				440771F86CA94D708F6C4DD9 /* CDVAssetLibraryFilesystem.m in Sources */,
 				EE9A59D9494249D8ABBAF04C /* CDVFileTransfer.m in Sources */,
+				BCB42B5467D44351B17BDC9C /* CDVStatusBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
