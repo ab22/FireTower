@@ -41,12 +41,6 @@
                 $scope.imageUploadingMessage = 'Guardando foto... ';
                 pictureService.takePicture()
                     .then(function (imageUri) {
-                        $scope.loading = $ionicLoading.show({
-                            content: $scope.imageUploadingMessage,
-                            showBackdrop: false
-                        });
-
-                        alert("Working with image " + imageUri);
                         var progress = function (e) {
                             if (e.lengthComputable) {
                                 $scope.imageUploadProgress = e.loaded / e.total;
@@ -56,17 +50,20 @@
                             $scope.imageUploadingMessage = 'Guardando foto... ' + $scope.imageUploadProgress + "%";
                         };
 
-                        alert("Waiting 5 seconds...");
+                        $scope.loading = $ionicLoading.show({
+                            content: $scope.imageUploadingMessage,
+                            showBackdrop: false
+                        });
+
                         setTimeout(function () {
-                            alert("Done waiting. Saving image...");
                             var save = disasterService.SaveImageToDisaster(disasterId, imageUri, progress);
 
                             save.then(function() {
                                 $scope.reporte.Images.push(imageUri);
                                 alert("success");
                             }).catch(function(err) {
-                                showMessage('Error', 'La foto no se pudo ser guardada.');
                                 alert("error: " + err);
+                                showMessage('Error', 'La foto no se pudo ser guardada.');                                
                             }).finally(function() {
                                 $scope.loading.hide();
                             });

@@ -14,7 +14,7 @@
             ft.upload(fileUri, encodeURI(targetUrl), function (r) {
                 def.resolve(r);
             }, function (e) {
-                alert("Error uploading file: " + e);
+                alert("Error uploading file: " + JSON.stringify(e));
                 def.reject(e);
             }, options);
             return def.promise;
