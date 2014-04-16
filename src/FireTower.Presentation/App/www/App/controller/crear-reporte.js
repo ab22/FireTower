@@ -84,9 +84,12 @@
             var fetchToken;
 
             $scope.createDisaster = function() {
-                $scope.loading = $ionicLoading.show({
+                $scope.uploadIndicator = $ionicLoading.show({
                     content: 'Guardando reporte...',
-                    showBackdrop: false
+                    animation: 'fade-in',
+                    showBackdrop: false,
+                    maxWidth: 200,
+                    showDelay: 500
                 });
 
                 fetchToken = makeid();
@@ -100,22 +103,24 @@
                 };
 
                 disasterService.CreateDisaster(newDisaster)
-                    .then(function() {
-                        queryNewestDisasterUntilWeFindThisOne();
+                    .then(function () {
+                        $scope.uploadIndicator.hide();
+                        queryNewestDisasterUntilWeFindThisOne();                        
                     })
                     .catch(function(err) {
-                        alert("Error creating disaster: " + JSON.stringify(err));
                         showMessage('Error', 'Error creando el reporte.');
-                    })
-                    .finally(function() {
-                        $scope.loading.hide();
+                        $scope.uploadIndicator.hide();
                     });
             };
 
             var queryNewestDisasterUntilWeFindThisOne = function() {
-                $scope.loading = $ionicLoading.show({
+
+                $scope.terminandoIndicator = $ionicLoading.show({
                     content: 'Terminando reporte...',
-                    showBackdrop: false
+                    animation: 'fade-in',
+                    showBackdrop: false,
+                    maxWidth: 200,
+                    showDelay: 500
                 });
 
                 var interval = setInterval(function() {
@@ -123,13 +128,13 @@
                         if (lastReport.length == 0) return;
 
                         clearInterval(interval);
+                        $scope.terminandoIndicator.hide();
                         showDetails(lastReport[0].DisasterId);
                     });
                 }, 1000);
             };
 
             var showDetails = function(disasterId) {
-                $scope.loading.hide();
                 showMessage('Exito!', 'Reporte creado exitosamente!');
                 $location.path('/app/reporte/' + disasterId);
             };
