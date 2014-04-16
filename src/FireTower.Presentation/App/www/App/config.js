@@ -2,8 +2,31 @@ angular.module('firetower', ['ionic', 'google-maps'])
     .run(function($ionicPlatform) {
         $ionicPlatform.ready(function() {
             if (window.StatusBar) {
-                //StatusBar.styleDefault();
                 StatusBar.hide();
+            }
+            
+            if (!ionic.Platform.isCordova()) {
+                
+                function loadScript(url, callback) {
+                    // Adding the script tag to the head as suggested before
+                    var head = document.getElementsByTagName('head')[0];
+                    var script = document.createElement('script');
+                    script.type = 'text/javascript';
+                    script.src = url;
+
+                    // Then bind the event to the callback function.
+                    // There are several events for cross browser compatibility.
+                    script.onreadystatechange = callback;
+                    script.onload = callback;
+
+                    // Fire the loading
+                    head.appendChild(script);
+                }
+
+                loadScript("app/js/cordova-2.0.0.js", function () {
+                    alert("Loaded cordova-2.0.0.js");
+                });
+
             }
         });
     })
@@ -24,7 +47,7 @@ angular.module('firetower', ['ionic', 'google-maps'])
     .config(['$httpProvider', function($httpProvider) {
         $httpProvider.interceptors.push(['$q', '$location', function($q, $location) {
             return {
-                'request': function (config) {
+                'request': function(config) {
                     console.log(config.method + " " + config.url);
                     return config || $q.when(config);
                 }

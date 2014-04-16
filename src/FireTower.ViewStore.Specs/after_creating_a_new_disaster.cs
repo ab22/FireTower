@@ -15,7 +15,7 @@ namespace FireTower.ViewStore.Specs
         static IViewModelRepository _viewModelRepository;
 
         static readonly NewDisasterCreated NewDisasterCreated =
-            new NewDisasterCreated(Guid.NewGuid(), Guid.NewGuid(), DateTime.Now, "Santa Ana", 1234.43, 12321.43);
+            new NewDisasterCreated(Guid.NewGuid(), Guid.NewGuid(), DateTime.Now, "Santa Ana", 1234.43, 12321.43, "fetchToken");
 
         static INotificationPublisher _notificationPublisher;
 
@@ -40,6 +40,7 @@ namespace FireTower.ViewStore.Specs
                                                             NewDisasterCreated.CreatedDate,
                                                             NewDisasterCreated.LocationDescription,
                                                             NewDisasterCreated.Latitude,
-                                                            NewDisasterCreated.Longitude))));
+                                                            NewDisasterCreated.Longitude,
+                                                            NewDisasterCreated.FetchToken))));
     }
 }

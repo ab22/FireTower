@@ -1,16 +1,17 @@
 using System;
+using System.IO;
 
 namespace FireTower.Domain.Commands
 {
     public class AddImageToDisaster
     {
         public readonly Guid DisasterId;
-        public readonly string Base64ImageString;
+        public readonly MemoryStream ImageStream;
 
-        public AddImageToDisaster(Guid disasterId, string base64ImageString)
+        public AddImageToDisaster(Guid disasterId, MemoryStream imageStream)
         {
             DisasterId = disasterId;
-            Base64ImageString = base64ImageString;
+            ImageStream = imageStream;
         }
     }
 }
