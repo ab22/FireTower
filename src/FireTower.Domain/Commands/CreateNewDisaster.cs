@@ -1,18 +1,24 @@
-﻿namespace FireTower.Domain.Commands
+﻿using System.IO;
+
+namespace FireTower.Domain.Commands
 {
     public class CreateNewDisaster
     {
-        public CreateNewDisaster(string locationDescription, double lat, double lng, string firstImageBase64)
+        public readonly string FetchToken;
+
+        public CreateNewDisaster(string locationDescription, double lat, double lng, MemoryStream fileStream,
+                                 string fetchToken)
         {
+            FetchToken = fetchToken;
             LocationDescription = locationDescription;
             Latitude = lat;
             Longitude = lng;
-            FirstImageBase64 = firstImageBase64;
+            ImageStream = fileStream;
         }
 
         public string LocationDescription { get; private set; }
         public double Latitude { get; private set; }
         public double Longitude { get; private set; }
-        public string FirstImageBase64 { get; private set; }
+        public MemoryStream ImageStream { get; private set; }
     }
 }

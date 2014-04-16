@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using FireTower.Domain.CommandHandlers;
 using FireTower.Domain.Commands;
 using FireTower.Domain.Entities;
@@ -29,10 +30,10 @@ namespace FireTower.Domain.Specs
                     _imageRepository = Mock.Of<IImageRepository>();
                     _commandHandler = new DisasterImageAdder(_readOnlyRepo, _imageRepository);
 
-                    _command = new AddImageToDisaster(Guid.NewGuid(), "image string");
+                    _command = new AddImageToDisaster(Guid.NewGuid(), new MemoryStream());
 
                     _imageUrl = new Uri("http://www.something.com/imageUrl" + new Random().Next(99999999));
-                    Mock.Get(_imageRepository).Setup(x => x.Save(_command.Base64ImageString)).Returns(_imageUrl);
+                    Mock.Get(_imageRepository).Setup(x => x.Save(_command.ImageStream)).Returns(_imageUrl);
 
                     _disaster = new Disaster(DateTime.Now, "somewhere", 1, 2);
                     Mock.Get(_readOnlyRepo).Setup(x => x.GetById<Disaster>(_command.DisasterId)).Returns(_disaster);

@@ -122,8 +122,6 @@
     <Compile Include="Users\given_a_user_module_context.cs" />
     <Compile Include="Users\given_a_verification_module_context.cs" />
     <Compile Include="Users\when_sending_disaster_email.cs" />
-    <Compile Include="when_adding_an_image_to_a_disaster.cs" />
-    <Compile Include="when_creating_a_disaster.cs" />
     <Compile Include="when_deserializing_a_command_with_invalid_json.cs" />
     <Compile Include="when_deserializing_a_command_with_invalid_type.cs" />
     <Compile Include="when_deserializing_a_command_with_missing_type_property.cs" />

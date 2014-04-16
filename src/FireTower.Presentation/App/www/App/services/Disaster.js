@@ -1,8 +1,8 @@
 ﻿angular.module('firetower')
-    .factory('DisasterService', ['$http','settings', function ($http, settings) {
+    .factory('DisasterService', ['UploadService', '$http', 'settings', function (upload, $http, settings) {
         var factory = {};
         var token = localStorage.getItem('firetowertoken');
-        
+
         factory.SaveSeverity = function (severity) {
             severity.token = token;
             return $http.post(settings.baseUrl + '/votes/severity', severity);
@@ -18,18 +18,15 @@
             return $http.post(settings.baseUrl + '/votes/putout', putOutRequest);
         };
 
-        factory.CreateDisaster = function (newDisaster) {
+        factory.CreateDisaster = function (newDisaster, onProgress) {
+            var imageUri = newDisaster.ImageUri;
+            delete newDisaster.ImageUri;
             newDisaster.token = token;
-            alert(settings.baseUrl + '/Disasters' + " json: " + JSON.stringify(newDisaster));
-            alert("Image size: " + newDisaster.FirstImageBase64.length);
-            return $http.post(settings.baseUrl + '/Disasters', newDisaster);
+            return upload.uploadImage(settings.baseUrl + '/Disasters', imageUri, newDisaster, onProgress);
         };
 
-        factory.SaveImageToDisaster = function (disasterId, base64Image) {
-            base64Image.token = token;
-            throw new Error("Test");
-            alert(settings.baseUrl + '/disasters/' + disasterId + '/image -- Image size: ' + base64Image.length);
-            return $http.post(settings.baseUrl + '/disasters/' + disasterId + '/image', base64Image);
+        factory.SaveImageToDisaster = function (disasterId, imageUri, onProgress) {            
+            return upload.uploadImage(settings.baseUrl + '/disasters/' + disasterId + '/image', imageUri, { token: token }, onProgress);
         };
 
         return factory;

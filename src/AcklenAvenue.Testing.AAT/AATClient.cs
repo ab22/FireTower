@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Reflection;
@@ -47,6 +49,42 @@ namespace AcklenAvenue.Testing.AAT
             {
                 browser.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(token.Value.ToString());
             }
+            return ExecuteRequest(browser, request);
+        }
+
+        private byte[] GetFile(string url)
+        {
+            HttpWebRequest httpWebRequest = (HttpWebRequest)HttpWebRequest.Create(url);
+            HttpWebResponse httpWebReponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            Stream stream = httpWebReponse.GetResponseStream();
+            using (var ms = new MemoryStream())
+            {
+                Image.FromStream(stream).Save(ms, System.Drawing.Imaging.ImageFormat.Gif);
+                return ms.ToArray();
+            }
+        }
+
+        public IRestResponse UploadFile(string resource, string url, Guid token, object payload = null)
+        {
+            RestClient browser = GetRestClient();
+            var request = new RestRequest(resource, Method.POST)
+                               {
+                                   JsonSerializer = new RestSharpJsonNetSerializer(),
+                                   RequestFormat = DataFormat.Json
+                               };
+            
+            request.AddFile("image", GetFile(url), "someFilename");
+            
+            if (payload != null)
+            {
+                foreach(var property in payload.GetType().GetProperties())
+                {
+                    request.AddParameter(property.Name, property.GetValue(payload));
+                }
+            }
+                
+
+            browser.Authenticator = new OAuth2AuthorizationRequestHeaderAuthenticator(token.ToString());
             return ExecuteRequest(browser, request);
         }
 

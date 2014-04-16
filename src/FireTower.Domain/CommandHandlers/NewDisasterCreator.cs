@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using FireTower.Domain.Commands;
 using FireTower.Domain.Entities;
 using FireTower.Domain.Events;
@@ -42,13 +43,13 @@ namespace FireTower.Domain.CommandHandlers
             var newDisaster = _writeableRepository.Create(itemToCreate);
             NotifyObservers(new NewDisasterCreated(u.User.Id, newDisaster.Id, newDisaster.CreatedDate,
                                                    c.LocationDescription,
-                                                   c.Latitude, c.Longitude));
+                                                   c.Latitude, c.Longitude, c.FetchToken));
             return newDisaster;
         }
 
         void AddImage(CreateNewDisaster c, UserSession u, Disaster newDisaster)
         {
-            Uri imageUrl = _imageRepository.Save(c.FirstImageBase64);
+            Uri imageUrl = _imageRepository.Save(c.ImageStream);
             newDisaster.AddImage(imageUrl.ToString());
             NotifyObservers(new NewImageAddedToDisaster(u.User.Id, newDisaster.Id, imageUrl.ToString()));
         }

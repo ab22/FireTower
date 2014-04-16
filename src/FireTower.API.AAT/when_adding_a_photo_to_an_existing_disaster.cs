@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using AcklenAvenue.Testing.AAT;
-using FireTower.Domain.Commands;
 using FireTower.Presentation.Requests;
 using FireTower.ViewStore;
 using Machine.Specifications;
@@ -16,8 +15,8 @@ namespace FireTower.API.AAT
         static string _disasterId;
         static IRestResponse _result;
         static string _locationDescription;
-        static string _imageString;
         static int _imageCount;
+        static string _imageUrl;
 
         Establish context =
             () =>
@@ -26,10 +25,16 @@ namespace FireTower.API.AAT
 
                     int rnd = new Random().Next(999999999);
                     _locationDescription = "Santa Ana " + rnd;
-                    _imageString = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAABLElEQVR42qSTQStFURSFP7f3XygyoAwoYSYMPCIpk2egMFSmUvwCRpSRDIwYGbwyVuYykB9y914m951z7nHe6J26dc9u77XXWmdvJLF7/audqx9JYuvyW92LL0li8K2df2r17CPEVk7ftXTclyQqAMmRCwC5I3fS42a4W7y74VYDNAAuJA8AaXIsSACsDgAdAJeFrnnyoMBygKZJJ3b1It0AmsTMDPdEgrujJqHEwCxqznMaD2KgyCDRnEuo8qJhHvx/hcQDbzGoix5Yi4G1TcwZWNEDKwJU+WDkhg2ToDaD+M65YcVB8jg3Y5IY5VQAyyf9gLJw+CqAuYNnAczsPQpgevtBU937kDexcdssj8Ti0ZskMd97CRs3u//U2sjJzbtwH1+/Cf8jS/gbAMmWc42HzdIjAAAAAElFTkSuQmCC";
-                    Client.Post("/disasters",
-                                new CreateNewDisaster(_locationDescription, 123.45, 456.32, _imageString),
-                                _token);
+                    _imageUrl = "http://www.wildlandfire.com/pics/wall/wildfire_elkbath.jpg";
+                    Client.UploadFile("/disasters",
+                                      _imageUrl,
+                                      _token,
+                                      new CreateNewDisasterRequest
+                                          {
+                                              LocationDescription = _locationDescription,
+                                              Latitude = 123.45,
+                                              Longitude = 456.32
+                                          });
 
                     IQueryable<DisasterViewModel> disasterViewModelCollection =
                         MongoDatabase().GetCollection<DisasterViewModel>("DisasterViewModel").AsQueryable();
@@ -42,8 +47,7 @@ namespace FireTower.API.AAT
         Because of =
             () =>
             _result =
-            Client.Post("/disasters/" + _disasterId + "/image",
-                        new AddImageRequest {Base64Image = _imageString}, _token);
+            Client.UploadFile("/disasters/" + _disasterId + "/image", _imageUrl, _token);
 
         It should_add_a_photo_url_to_the_disaster_model =
             () =>

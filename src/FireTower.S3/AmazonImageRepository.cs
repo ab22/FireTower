@@ -14,14 +14,13 @@ namespace FireTower.S3
 
         #region IImageRepository Members
 
-        public Uri Save(string base64ImageString)
+        public Uri Save(MemoryStream imageStream)
         {
             string url;
             using (IAmazonS3 client = new AmazonS3Client(AccessKey, SecretKey, RegionEndpoint.USEast1))
             {
-                MemoryStream ms = GetMemoryStreamFromBase64(base64ImageString);
                 Guid imageFilename = Guid.NewGuid();
-                PutObjectRequest request = BuildRequest(imageFilename, ms);
+                PutObjectRequest request = BuildRequest(imageFilename, imageStream);
                 client.PutObject(request);
                 url = "https://s3.amazonaws.com/FireTower_DisasterImages/disasters/" + imageFilename.ToString();
             }
@@ -40,13 +39,6 @@ namespace FireTower.S3
                                   InputStream = ms
                               };
             return request;
-        }
-
-        static MemoryStream GetMemoryStreamFromBase64(string base64ImageString)
-        {
-            byte[] data = Convert.FromBase64String(base64ImageString);
-            var ms = new MemoryStream(data);
-            return ms;
         }
     }
 }
