@@ -35,6 +35,8 @@ end
 
 task :installios do
   Dir.chdir('src/FireTower.Presentation/app') do
+    FileUtils.mkdir("plugins")
+    FileUtils.mkdir("platforms") 
     sh "cordova platform add ios"
     sh "cordova plugin add org.apache.cordova.device"
     sh "cordova plugin add org.apache.cordova.camera"
