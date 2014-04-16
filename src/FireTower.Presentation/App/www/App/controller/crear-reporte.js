@@ -102,15 +102,11 @@
                 disasterService.CreateDisaster(newDisaster)
                     .then(function() {
                         queryNewestDisasterUntilWeFindThisOne();
-                    });
-
-                action
+                    })
                     .catch(function(err) {
                         alert("Error creating disaster: " + JSON.stringify(err));
                         showMessage('Error', 'Error creando el reporte.');
-                    });
-
-                action
+                    })
                     .finally(function() {
                         $scope.loading.hide();
                     });
