@@ -1,0 +1,36 @@
+﻿<ion-view title="Reporte de Incendios" class="slide-left-right" hide-back-button="true">
+    <ion-nav-buttons side="left">
+        <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+    <ion-content>
+        
+        <div style="margin-top: 0; margin-bottom:0" class="list card" ng-repeat="reporte in reportes | reverse">
+            <div ng-click="viewReport(reporte.DisasterId)">
+                <div style="height: 35%" class="item item-image">
+                    <img class="full-image" ng-src="{{reporte.Images[0]}}">
+                    <span class="custombadge">{{reporte.SeverityAverage}}</span>
+                    <!--<p><span>Severidad: </span></p>-->
+                </div>
+                <div class="row item">
+                    <div class="col col-67">
+                        <h2>{{reporte.LocationDescription}}</h2>
+                    </div>
+                    <div class="col">
+                        <p style="text-align: end">{{reporte.CreatedDate.$dateformatted}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <div ng-show="reportes != null && reportes != undefined && reportes.length == 0" class="card">
+            <div class="item item-text-wrap">
+                <h1>No hay incendios</h1>
+            </div>
+        </div>
+    </ion-content>
+    <div ng-click="crearReporte()" class="bar bar-footer bar-positive">
+        <h1 class="title">Denunciar un nuevo incendio</h1>
+    </div>
+</ion-view>

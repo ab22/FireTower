@@ -1,0 +1,55 @@
+﻿.angular-google-map-container{
+    height: 81%
+}
+
+.card-image {
+    height: 200px;
+}
+
+.facebook_button {
+    display: inline-block;
+
+    background: #627aac url(facebook_small.png) left no-repeat;
+
+    border-top: 1px solid #29447e;
+    border-right: 1px solid #29447e;
+    border-bottom: 1px solid #1a356e;
+    border-left: none;
+
+    height: 40px;
+
+    padding-right: 7px;
+    padding-left: 29px;
+
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+    text-decoration: none;
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+    line-height: 22px;
+
+    cursor: pointer;
+}
+
+.custombadge{
+    color:white;
+    background-color:red;
+    border: solid 1px white;
+    bottom: 15px;
+    right: 15px;
+    z-index: 1;
+    position:absolute;
+    border-radius: 30px;
+    width:50px;
+    height:50px;
+    text-align: center;
+    padding-top: 10px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#loginContent{
+    background-color: #ffa10c;
+    background-size:cover;
+    position:fixed;
+}

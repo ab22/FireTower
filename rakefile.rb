@@ -27,6 +27,12 @@ task :compile do
 	sh "#{MSBUILD_PATH} /p:Configuration=#{CONFIG} /p:OutDir=\"#{BUILD_PATH}/\" /p:PostBuildEvent=\"\" #{SOLUTION_PATH}"	
 end
 
+task :emulateios do
+  Dir.chdir('src/FireTower.Presentation/app') do
+    sh "ionic emulate ios"
+  end
+end
+
 task :installios do
   Dir.chdir('src/FireTower.Presentation/app') do
     sh "cordova platform add ios"
