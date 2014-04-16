@@ -49,5 +49,7 @@
 }
 
 #loginContent{
-    background-image: url('../../res/screens/ios/Default@2x~iphone.png');
+    background-color: #ffa10c;
+    background-size:cover;
+    position:fixed;
 }
