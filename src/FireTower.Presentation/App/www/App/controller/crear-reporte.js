@@ -88,11 +88,11 @@
                 var action = disasterService.CreateDisaster(newDisaster);
 
                 action
-                    .success(function () {
+                    .then(function () {
                         alert("disaster created. Querying newest disasters...");
                         queryNewestDisasterUntilWeFindThisOne();
                     })
-                    .error(function (err) {
+                    .catch(function (err) {
                         alert("Error creating disaster: " + JSON.stringify(err));
                         showMessage('Error', 'Error creando el reporte.');
                     })
