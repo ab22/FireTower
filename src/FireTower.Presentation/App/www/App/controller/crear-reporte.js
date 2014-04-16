@@ -5,9 +5,10 @@
             var setDisasterPosition = function(lat, lng) {
                 $scope.location = { latitude: lat, longitude: lng };
                 locationService.getLocationAddress(lat, lng)
-                    .then(function (locationDescription) {
+                    .then(function(locationDescription) {
                         $scope.LocationDescription = locationDescription;
-                    }).catch(function () {
+                        $scope.readyToCreate = true;
+                    }).catch(function() {
                         alert("Lo sentimos, pero no se puede crear un reporte sin ubicacion.");
                         $location.path('/app');
                     });
@@ -35,35 +36,45 @@
                 };
             };
 
-            var init = function() {
-
-                initializeMap();
-
-                pictureService.takePicture().then(function(imageUri) {
+            var takePicture = function(source) {
+                return pictureService.takePicture(source).then(function(imageUri) {
                     $scope.imageUri = imageUri;
-                }).finally(function() {
-
-                    locationService.getCurrentPosition()
-                        .catch(function(err) {
-                            alert("Lo sentimos, pero no se puede crear un reporte sin ubicacion.");
-                            $location.path('/app');
-                        })
-                        .then(function(locationData) {
-
-                            setDisasterPosition(locationData.lat, locationData.lng);
-
-                            $scope.map = {
-                                center: $scope.location,
-                                zoom: 15,
-                                maptype: "satellite"
-                            };
-
-                            $scope.marker.coords = {
-                                latitude: $scope.location.latitude,
-                                longitude: $scope.location.longitude
-                            };
-                        });
                 });
+            };
+
+            var getLocation = function() {
+                locationService.getCurrentPosition()
+                    .catch(function(err) {
+                        alert("Lo sentimos, pero no se puede crear un reporte sin ubicacion.");
+                        $location.path('/app');
+                    })
+                    .then(function(locationData) {
+
+                        setDisasterPosition(locationData.lat, locationData.lng);
+
+                        $scope.map = {
+                            center: $scope.location,
+                            zoom: 15,
+                            maptype: "satellite"
+                        };
+
+                        $scope.marker.coords = {
+                            latitude: $scope.location.latitude,
+                            longitude: $scope.location.longitude
+                        };
+                    });
+            };
+
+            $scope.setImageSource = function (source) {
+                $scope.imageSource = source;
+                takePicture(source)
+                    .then(function() {
+                        getLocation();
+                    });
+            };
+            
+            var init = function() {
+                initializeMap();
             };
 
             $scope.data = { };
@@ -106,9 +117,9 @@
                 };
 
                 disasterService.CreateDisaster(newDisaster)
-                    .then(function () {
+                    .then(function() {
                         $scope.uploadIndicator.hide();
-                        queryNewestDisasterUntilWeFindThisOne();                        
+                        queryNewestDisasterUntilWeFindThisOne();
                     })
                     .catch(function(err) {
                         showMessage('Error', 'Error creando el reporte.');

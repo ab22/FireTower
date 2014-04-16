@@ -1,19 +1,19 @@
-<ion-view title="Donde es el incendio?">
-    <!--<ion-nav-buttons side="left">-->
-        <!--<button menu-toggle="left" class="button button-icon icon ion-navicon"></button>-->
-    <!--</ion-nav-buttons>-->
-    <ion-content class="has-header">
+<ion-view title="Reportar un incendio">
+    <ion-content class="has-header" ng-show="imageSource">
         Arrastra el pin con tu dedo hacia la ubicacion del incendio.
-            <div class="item item-text-wrap">
-                {{LocationDescription}}
-            </div>
-            <google-map center="map.center" zoom="map.zoom" draggable="true" maptype="map.maptype">
-                <markers>
-                    <marker coords="marker.coords" options="marker.options" events="marker.events"></marker>
-                </markers>
-            </google-map>
+        <div class="item item-text-wrap">
+            {{LocationDescription}}
+        </div>
+        <google-map center="map.center" zoom="map.zoom" draggable="true" maptype="map.maptype">
+            <markers>
+                <marker coords="marker.coords" options="marker.options" events="marker.events"></marker>
+            </markers>
+        </google-map>
     </ion-content>
-    <div ng-click="createDisaster()" style="margin-bottom: 20px" class="bar bar-footer bar-positive">
-        <h1 class="title">Reportalo!</h1>
+
+    <div style="margin-bottom: 20px" class="bar bar-footer">
+        <button ng-hide="imageSource" class="button button-block button-positive" ng-click="setImageSource('camera')">Camera</button>
+        <button ng-hide="imageSource" class="button button-block button-calm" ng-click="setImageSource('library')">Biblioteca</button>
+        <button ng-show="readyToCreate" class="button button-block button-positive" ng-click="createDisaster()">Reportalo!</button>        
     </div>   
 </ion-view>
