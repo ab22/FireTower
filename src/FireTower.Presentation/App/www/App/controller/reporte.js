@@ -55,11 +55,13 @@
                 };
                 
                 disasterService.SaveImageToDisaster(disasterId, imageUri, progress)
-                    .success(function() {
+                    .then(function() {
                         $scope.reporte.Images.push(imageUri);
+                        alert("success");
                     })
-                    .error(function() {
+                    .catch(function(err) {
                         showMessage('Error', 'La foto no se pudo ser guardada.');
+                        alert("error: " + err);
                     })
                     .finally(function() {
                         $scope.loading.hide();
