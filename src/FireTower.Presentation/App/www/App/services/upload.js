@@ -9,12 +9,10 @@
             options.mimeType = "image/jpeg";
             options.params = payload;
 
-            alert("Starting upload...");
-
             var ft = new FileTransfer();
             ft.onprogress = onProgress;
-            alert("Uploading to " + encodeURI(targetUrl));
             ft.upload(fileUri, encodeURI(targetUrl), function (r) {
+                alert("Uploaded to " + encodeURI(targetUrl) + " - " + JSON.stringify(r));
                 def.resolve(r);
             }, function (e) {
                 alert("Error uploading file: " + JSON.stringify(e));
