@@ -29,18 +29,6 @@
 
 @implementation MainViewController
 
-- (void)viewDidLayoutSubviews{
-    
-    if ([self respondsToSelector:@selector(topLayoutGuide)]) // iOS 7 or above
-    {
-        CGFloat top = self.topLayoutGuide.length;
-        if(self.webView.frame.origin.y == 0){
-            // We only want to do this once, or if the view has somehow been "restored" by other code.
-            self.webView.frame = CGRectMake(self.webView.frame.origin.x, self.webView.frame.origin.y + top, self.webView.frame.size.width, self.webView.frame.size.height - top);
-        }
-    }
-}
-
 - (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];

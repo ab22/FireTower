@@ -1,6 +1,5 @@
 MSBUILD_PATH = "C:/Windows/Microsoft.NET/Framework/v4.0.30319/msbuild.exe"
 MSPEC_PATH = "src/packages/Machine.Specifications.0.7.0/tools/mspec-clr4.exe"
-MSTEST_PATH = File.join(ENV['VS110COMNTOOLS'], '..', 'IDE', 'mstest.exe')
 BUILD_PATH = File.expand_path('build')
 DATABASE_DEPLOYMENT_PATH = File.expand_path('database_deployment')
 DEPLOY_PATH = File.expand_path('deploy')
@@ -26,6 +25,18 @@ end
 task :compile do
 	puts 'Compiling solution...'
 	sh "#{MSBUILD_PATH} /p:Configuration=#{CONFIG} /p:OutDir=\"#{BUILD_PATH}/\" /p:PostBuildEvent=\"\" #{SOLUTION_PATH}"	
+end
+
+task :installios do
+  Dir.chdir('src/FireTower.Presentation/app') do
+    sh "cordova platform add ios"
+    sh "cordova plugin add org.apache.cordova.device"
+    sh "cordova plugin add org.apache.cordova.camera"
+    sh "cordova plugin add org.apache.cordova.file"
+    sh "cordova plugin add org.apache.cordova.file-transfer"
+    sh "cordova plugin add org.apache.cordova.geolocation"
+    sh "cordova plugin add org.apache.cordova.statusbar"
+  end
 end
 
 task :specs do
