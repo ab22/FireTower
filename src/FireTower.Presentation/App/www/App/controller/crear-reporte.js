@@ -84,9 +84,8 @@
                     ImageUri: $scope.imageUri
                 };
 
-                alert("Creating disaster: " + JSON.stringify(newDisaster));
                 var action = disasterService.CreateDisaster(newDisaster);
-
+                alert(JSON.stringify(action));
                 action
                     .then(function () {
                         alert("disaster created. Querying newest disasters...");
