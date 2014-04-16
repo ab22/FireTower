@@ -21,6 +21,11 @@
     <add name="remote" connectionString="Server=d74a82c5-7b26-4e18-b80e-a2ff01357bd3.sqlserver.sequelizer.com;Database=dbd74a82c57b264e18b80ea2ff01357bd3;User ID=gjcjuajzyluzrjdz;Password=wtRoeis77HjpaPzYpKxMoaHQzjmjCvFZZv2WTHygegynXi3ra7Qe6DPvSbW35hBJ;" providerName="System.Data.SqlClient" />
   </connectionStrings>
   <system.webServer>
+    <security>
+      <requestFiltering>
+        <requestLimits maxAllowedContentLength="10741824" />
+      </requestFiltering>
+    </security>
     <validation validateIntegratedModeConfiguration="false" />
     <httpErrors existingResponse="PassThrough" />
     <handlers>
