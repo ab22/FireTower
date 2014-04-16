@@ -41,7 +41,8 @@
                 $scope.imageUploadingMessage = 'Guardando foto... ';
                 pictureService.takePicture()
                     .then(function(imageUri) {
-                        var progress = function(e) {
+                        var progress = function (e) {
+                            alert(JSON.stringify(e));
                             if (e.lengthComputable) {
                                 $scope.imageUploadProgress = e.loaded / e.total;
                             } else {
