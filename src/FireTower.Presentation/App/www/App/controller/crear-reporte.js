@@ -122,7 +122,6 @@
                     viewModels.getDisasterByFetchToken(fetchToken).success(function(lastReport) {
                         if (lastReport.length == 0) return;
 
-                        alert("Found it!");
                         clearInterval(interval);
                         showDetails(lastReport[0].DisasterId);
                     });

@@ -40,8 +40,8 @@
 
                 $scope.imageUploadingMessage = 'Guardando foto... ';
                 pictureService.takePicture()
-                    .then(function (imageUri) {
-                        var progress = function (e) {
+                    .then(function(imageUri) {
+                        var progress = function(e) {
                             if (e.lengthComputable) {
                                 $scope.imageUploadProgress = e.loaded / e.total;
                             } else {
@@ -55,19 +55,18 @@
                             showBackdrop: false
                         });
 
-                        setTimeout(function () {
-                            var save = disasterService.SaveImageToDisaster(disasterId, imageUri, progress);
+                        var save = disasterService.SaveImageToDisaster(disasterId, imageUri, progress);
+                        alert(save.then);
+                        save.then(function() {
+                            $scope.reporte.Images.push(imageUri);
+                            alert("success");
+                        }).catch(function(err) {
+                            alert("error: " + err);
+                            showMessage('Error', 'La foto no se pudo ser guardada.');
+                        }).finally(function() {
+                            $scope.loading.hide();
+                        });
 
-                            save.then(function() {
-                                $scope.reporte.Images.push(imageUri);
-                                alert("success");
-                            }).catch(function(err) {
-                                alert("error: " + err);
-                                showMessage('Error', 'La foto no se pudo ser guardada.');                                
-                            }).finally(function() {
-                                $scope.loading.hide();
-                            });
-                        }, 5000);
                     });
             };
 
@@ -86,7 +85,7 @@
                 });
 
                 data.getReportById($stateParams.reporteId)
-                    .success(function (data) {
+                    .success(function(data) {
                         formatAndBindData(data[0]);
                     })
                     .error(function(error) {
@@ -108,11 +107,8 @@
                 };
             };
 
-            var formatAndBindData = function (data) {
-                alert(JSON.stringify(data));
-
+            var formatAndBindData = function(data) {
                 disasterId = data.DisasterId;
-                alert("Disaster " + disasterId);
                 var formattedDate = data.CreatedDate.$date;
                 formattedDate = moment((new Date()).toLocaleDateString()).fromNow();
                 data.CreatedDate.$dateformatted = formattedDate;
