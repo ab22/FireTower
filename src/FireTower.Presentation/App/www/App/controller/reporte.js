@@ -55,13 +55,9 @@
                             showBackdrop: false
                         });
 
-                        var save = disasterService.SaveImageToDisaster(disasterId, imageUri, progress);
-                        alert(save.then);
-                        save.then(function() {
+                        disasterService.SaveImageToDisaster(disasterId, imageUri, progress).then(function() {
                             $scope.reporte.Images.push(imageUri);
-                            alert("success");
-                        }).catch(function(err) {
-                            alert("error: " + err);
+                        }).catch(function() {
                             showMessage('Error', 'La foto no se pudo ser guardada.');
                         }).finally(function() {
                             $scope.loading.hide();
