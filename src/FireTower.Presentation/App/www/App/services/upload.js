@@ -2,6 +2,7 @@
     .factory('UploadService', ['$q', function($q) {
 
         var uploadImage = function (targetUrl, fileUri, payload, onProgress) {
+            alert("Starting upload...");
             var def = $q.defer();
             var options = new FileUploadOptions();
             options.fileKey = "file";
