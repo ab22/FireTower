@@ -38,7 +38,7 @@
             if (!navigator.camera) {
                 return;
             }
-            pictureSource = navigator.camera.PictureSourceType.CAMERA;
+            pictureSource = navigator.camera.PictureSourceType.PHOTOLIBRARY;
             destinationType = navigator.camera.DestinationType.DATA_URL;
         });
 
