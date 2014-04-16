@@ -57,9 +57,12 @@
                         <i class="icon">{{value}}</i>
                     </a>
                 </div>
-                <a class="item item-icon-left ion-ios7-camera-outline" ng-click="takePhoto()">
-                    Tomar foto {{imageUploadingMessage}}
+                <a class="item item-icon-left ion-ios7-camera-outline" ng-hide="imageUploadingMessage" ng-click="takePhoto()">
+                    Tomar foto 
                 </a>
+                <div class="item item-icon-left ion-ios7-camera-outline" ng-show="imageUploadingMessage">
+                    {{imageUploadingMessage}}
+                </div>                
                 <a class="item item-icon-left positive" ng-click="sendEmail(reporte.CreatedDate.$date, reporte.LocationDescription, reporte.Location[0], reporte.Location[1])">
                     Enviar por correo este incendio
                 </a>
