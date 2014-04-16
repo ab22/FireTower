@@ -41,6 +41,13 @@
                 $scope.imageUploadingMessage = 'Guardando foto... ';
                 pictureService.takePicture()
                     .then(function(imageUri) {
+                        $scope.uploadIndicator = $ionicLoading.show({
+                            content: $scope.imageUploadingMessage,
+                            animation: 'fade-in',
+                            showBackdrop: false,
+                            maxWidth: 200,
+                            showDelay: 500
+                        });
 
                         var progress = function (e) {
                             var complete = 0;
@@ -48,16 +55,15 @@
                                 complete = e.loaded / e.total;
                             } else {
                                 complete++;
-                            }
-                            $scope.percentComplete = complete * 100;
-                            $scope.imageUploadingMessage = 'Guardando foto... ' + complete + "%";
+                            }                            
+                            //$scope.uploadIndicator.content = 'Guardando foto... ' + complete + "%";
                         };
 
                         disasterService.SaveImageToDisaster(disasterId, imageUri, progress).then(function() {
                             $scope.reporte.Images.push(imageUri);
-                            $scope.imageUploadingMessage = "";
+                            $scope.uploadIndicator.hide();                            
                         }).catch(function() {
-                            $scope.imageUploadingMessage = "";
+                            $scope.uploadIndicator.hide();
                             showMessage('Error', 'La foto no se pudo ser guardada.');
                         });
 
