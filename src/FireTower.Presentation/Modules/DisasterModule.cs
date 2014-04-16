@@ -34,6 +34,10 @@ namespace FireTower.Presentation.Modules
                         {
                             file.Value.CopyTo(stream);
                             var req = this.Bind<CreateNewDisasterRequest>();
+                            
+                            if (string.IsNullOrEmpty(req.LocationDescription))
+                                throw new UserInputPropertyMissingException("LocationDescription");
+
                             commandDispatcher.Dispatch(this.UserSession(),
                                                        new CreateNewDisaster(req.LocationDescription,
                                                                              req.Latitude, req.Longitude, stream, req.FetchToken));
