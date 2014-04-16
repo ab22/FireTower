@@ -23,7 +23,7 @@
             delete newDisaster.ImageUri;
             newDisaster.token = token;
             var action = upload.uploadImage(settings.baseUrl + '/Disasters', imageUri, newDisaster, onProgress);
-            alert("upload action: " + JSON.stringify(action));
+            alert("upload action: " + action.then);
             return action;
         };
 
