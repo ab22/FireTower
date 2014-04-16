@@ -8,7 +8,8 @@
             options.fileName = fileUri.substr(fileUri.lastIndexOf('/') + 1);
             options.mimeType = "image/jpeg";
             options.params = payload;
-
+            alert("Uploading with params: " + JSON.stringify(payload));
+            
             var ft = new FileTransfer();
             ft.onprogress = onProgress;
             ft.upload(fileUri, encodeURI(targetUrl), function (r) {
