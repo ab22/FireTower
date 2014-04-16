@@ -85,10 +85,12 @@
                 });
 
                 action
-                    .success(function() {
+                    .success(function () {
+                        alert("disaster created. Querying newest disasters...");
                         queryNewestDisasterUntilWeFindThisOne();
                     })
-                    .error(function() {
+                    .error(function (err) {
+                        alert("Error creating disaster: " + JSON.stringify(err));
                         showMessage('Error', 'Error creando el reporte.');
                     })
                     .finally(function() {
@@ -104,7 +106,9 @@
 
                 viewModels.getUser().success(function(me) {
                     var interval = setInterval(function() {
-                        viewModels.getMyLastReport(me.userId).success(function(lastReport) {
+                        viewModels.getMyLastReport(me.userId).success(function (lastReport) {
+                            alert("Got latest: " + JSON.stringify(lastReport));
+                            
                             if (lastReport.length == 0) return;
 
                             if (moment(lastReport[0].CreatedDate.$date).add('seconds', 10) > moment()) {
