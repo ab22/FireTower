@@ -41,13 +41,13 @@
                 $scope.imageUploadingMessage = 'Guardando foto... ';
                 pictureService.takePicture()
                     .then(function (imageUri) {
-                        alert("Working with image " + imageUri);
                         $scope.loading = $ionicLoading.show({
                             content: $scope.imageUploadingMessage,
                             showBackdrop: false
                         });
 
-                        var progress = function(e) {
+                        alert("Working with image " + imageUri);
+                        var progress = function (e) {
                             if (e.lengthComputable) {
                                 $scope.imageUploadProgress = e.loaded / e.total;
                             } else {
@@ -56,7 +56,9 @@
                             $scope.imageUploadingMessage = 'Guardando foto... ' + $scope.imageUploadProgress + "%";
                         };
 
-                        setTimeout(function() {
+                        alert("Waiting 5 seconds...");
+                        setTimeout(function () {
+                            alert("Done waiting. Saving image...");
                             var save = disasterService.SaveImageToDisaster(disasterId, imageUri, progress);
 
                             save.then(function() {
