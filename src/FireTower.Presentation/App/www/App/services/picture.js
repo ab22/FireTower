@@ -25,7 +25,8 @@
                 };
 
                 navigator.camera.getPicture(
-                    function(imageUri) {
+                    function (imageUri) {
+                        alert("got photo: " + imageUri);
                         def.resolve(imageUri);
                     },
                     function(err) {

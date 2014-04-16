@@ -39,35 +39,37 @@
             $scope.takePhoto = function() {
 
                 $scope.imageUploadingMessage = 'Guardando foto... ';
-                pictureService.takePicture().then(function(imageUri) {
-                    $scope.loading = $ionicLoading.show({
-                        content: $scope.imageUploadingMessage,
-                        showBackdrop: false
-                    });
-
-                    var progress = function(e) {
-                        if (e.lengthComputable) {
-                            $scope.imageUploadProgress = e.loaded / e.total;
-                        } else {
-                            $scope.imageUploadProgress++;
-                        }
-                        $scope.imageUploadingMessage = 'Guardando foto... ' + $scope.imageUploadProgress + "%";
-                    };
-
-                    setTimeout(function () {
-                        var save = disasterService.SaveImageToDisaster(disasterId, imageUri, progress);
-
-                        save.then(function () {
-                            $scope.reporte.Images.push(imageUri);
-                            alert("success");
-                        }).catch(function (err) {
-                            showMessage('Error', 'La foto no se pudo ser guardada.');
-                            alert("error: " + err);
-                        }).finally(function () {
-                            $scope.loading.hide();
+                pictureService.takePicture()
+                    .then(function (imageUri) {
+                        alert("Working with image " + imageUri);
+                        $scope.loading = $ionicLoading.show({
+                            content: $scope.imageUploadingMessage,
+                            showBackdrop: false
                         });
-                    }, 5000);
-                });
+
+                        var progress = function(e) {
+                            if (e.lengthComputable) {
+                                $scope.imageUploadProgress = e.loaded / e.total;
+                            } else {
+                                $scope.imageUploadProgress++;
+                            }
+                            $scope.imageUploadingMessage = 'Guardando foto... ' + $scope.imageUploadProgress + "%";
+                        };
+
+                        setTimeout(function() {
+                            var save = disasterService.SaveImageToDisaster(disasterId, imageUri, progress);
+
+                            save.then(function() {
+                                $scope.reporte.Images.push(imageUri);
+                                alert("success");
+                            }).catch(function(err) {
+                                showMessage('Error', 'La foto no se pudo ser guardada.');
+                                alert("error: " + err);
+                            }).finally(function() {
+                                $scope.loading.hide();
+                            });
+                        }, 5000);
+                    });
             };
 
             var showMessage = function(title, message) {
