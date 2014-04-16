@@ -26,8 +26,7 @@
         };
 
         factory.SaveImageToDisaster = function (disasterId, base64Image) {
-            base64Image.token = token;
-            throw new Error("Test");
+            base64Image.token = token;            
             alert(settings.baseUrl + '/disasters/' + disasterId + '/image -- Image size: ' + base64Image.length);
             return $http.post(settings.baseUrl + '/disasters/' + disasterId + '/image', base64Image);
         };
