@@ -5,8 +5,11 @@
             var setDisasterPosition = function(lat, lng) {
                 $scope.location = { latitude: lat, longitude: lng };
                 locationService.getLocationAddress(lat, lng)
-                    .then(function(locationData) {
-                        $scope.LocationDescription = locationData.address;
+                    .then(function (locationDescription) {
+                        $scope.LocationDescription = locationDescription;
+                    }).catch(function () {
+                        alert("Lo sentimos, pero no se puede crear un reporte sin ubicacion.");
+                        $location.path('/app');
                     });
             };
 
