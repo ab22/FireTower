@@ -1,6 +1,8 @@
 src/packages
 src/FireTower.Presentation/[wW]eb.config
 src/DatabaseDeploymentTool/[aA]pp.config
+src/FireTower.Presentation/app/platforms/*.*
+src/FireTower.Presentation/app/plugins/*.*
 
 .sass-cache/*
 codekit-config.json
