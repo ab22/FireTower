@@ -37,7 +37,7 @@
                 initializeMap();
 
                 pictureService.takePicture().then(function(imageUri) {
-                    $scope.imageUrl = imageUri;
+                    $scope.imageUri = imageUri;
                 }).finally(function() {
 
                     locationService.getCurrentPosition()
