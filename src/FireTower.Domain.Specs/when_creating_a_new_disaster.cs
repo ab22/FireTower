@@ -41,7 +41,7 @@ namespace FireTower.Domain.Specs
                     Mock.Get(_timeProvider).Setup(x => x.Now()).Returns(_now);
 
                     _command = new CreateNewDisaster("LocationDescription1", 123.34, 456.32,
-                                                     new MemoryStream());
+                                                     new MemoryStream(), "fetchToken");
 
                     _disasterToCreate =
                         Builder<Disaster>.CreateNew()
@@ -69,7 +69,7 @@ namespace FireTower.Domain.Specs
 
                     _expectedDisasterCreatedEvent = new NewDisasterCreated(User.Id, _createdDisaster.Id, _now,
                                                                            _command.LocationDescription,
-                                                                           _command.Latitude, _command.Longitude);
+                                                                           _command.Latitude, _command.Longitude, _command.FetchToken);
 
                     Mock.Get(_imageRepository).Setup(x => x.Save(_command.ImageStream)).Returns(new Uri("http://www.image.com/"));
                     _expectedImageAddedEvent = new NewImageAddedToDisaster(User.Id, _createdDisaster.Id, "http://www.image.com/");

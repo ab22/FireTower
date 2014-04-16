@@ -71,26 +71,41 @@
                 init();
             });
 
+            function makeid() {
+                var text = "";
+                var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+                for (var i = 0; i < 5; i++)
+                    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+                return text;
+            }
+
+            var fetchToken;
+
             $scope.createDisaster = function() {
                 $scope.loading = $ionicLoading.show({
                     content: 'Guardando reporte...',
                     showBackdrop: false
                 });
 
+                fetchToken = makeid();
+
                 var newDisaster = {
                     LocationDescription: $scope.LocationDescription,
                     Latitude: $scope.location.latitude,
                     Longitude: $scope.location.longitude,
-                    ImageUri: $scope.imageUri
+                    ImageUri: $scope.imageUri,
+                    FetchToken: fetchToken
                 };
 
                 disasterService.CreateDisaster(newDisaster)
-                    .then(function () {
+                    .then(function() {
                         queryNewestDisasterUntilWeFindThisOne();
                     });
-                
+
                 action
-                    .catch(function (err) {
+                    .catch(function(err) {
                         alert("Error creating disaster: " + JSON.stringify(err));
                         showMessage('Error', 'Error creando el reporte.');
                     });
@@ -107,21 +122,15 @@
                     showBackdrop: false
                 });
 
-                viewModels.getUser().success(function(me) {
-                    var interval = setInterval(function() {
-                        viewModels.getMyLastReport(me.userId).success(function (lastReport) {
-                            if (lastReport.length == 0) return;
+                var interval = setInterval(function() {
+                    viewModels.getDisasterByFetchToken(fetchToken).success(function(lastReport) {
+                        if (lastReport.length == 0) return;
 
-                            alert(lastReport[0].CreatedDate.$date);
-                            
-                            if (moment(lastReport[0].CreatedDate.$date).add('seconds', 10) > moment()) {
-                                alert("Found it!");
-                                clearInterval(interval);
-                                showDetails(lastReport[0].DisasterId);
-                            }
-                        });
-                    }, 1000);
-                });
+                        alert("Found it!");
+                        clearInterval(interval);
+                        showDetails(lastReport[0].DisasterId);
+                    });
+                }, 1000);
             };
 
             var showDetails = function(disasterId) {

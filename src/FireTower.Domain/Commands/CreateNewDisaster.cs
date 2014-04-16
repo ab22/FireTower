@@ -4,8 +4,12 @@ namespace FireTower.Domain.Commands
 {
     public class CreateNewDisaster
     {
-        public CreateNewDisaster(string locationDescription, double lat, double lng, MemoryStream fileStream)
+        public readonly string FetchToken;
+
+        public CreateNewDisaster(string locationDescription, double lat, double lng, MemoryStream fileStream,
+                                 string fetchToken)
         {
+            FetchToken = fetchToken;
             LocationDescription = locationDescription;
             Latitude = lat;
             Longitude = lng;

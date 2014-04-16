@@ -43,7 +43,7 @@ namespace FireTower.Domain.CommandHandlers
             var newDisaster = _writeableRepository.Create(itemToCreate);
             NotifyObservers(new NewDisasterCreated(u.User.Id, newDisaster.Id, newDisaster.CreatedDate,
                                                    c.LocationDescription,
-                                                   c.Latitude, c.Longitude));
+                                                   c.Latitude, c.Longitude, c.FetchToken));
             return newDisaster;
         }
 

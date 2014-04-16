@@ -12,8 +12,8 @@
             return $http.get(url);
         };
 
-        factory.getMyLastReport = function(userId) {
-            var url = baseUrl + db + '/collections/' + collection + '?apiKey=' + apiKey + '&q={"UserId":"' + userId + '"}&l=1&s={"CreatedDate":-1}';
+        factory.getDisasterByFetchToken = function (fetchToken) {
+            var url = baseUrl + db + '/collections/' + collection + '?apiKey=' + apiKey + '&q={"FetchToken":"' + fetchToken + '"}';
             return $http.get(url);
         };
 
