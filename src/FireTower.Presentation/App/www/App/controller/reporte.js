@@ -86,7 +86,7 @@
                 });
 
                 data.getReportById($stateParams.reporteId)
-                    .success(function(data) {
+                    .success(function (data) {
                         formatAndBindData(data[0]);
                     })
                     .error(function(error) {
@@ -108,7 +108,9 @@
                 };
             };
 
-            var formatAndBindData = function(data) {
+            var formatAndBindData = function (data) {
+                alert(JSON.stringify(data));
+
                 disasterId = data.DisasterId;
                 alert("Disaster " + disasterId);
                 var formattedDate = data.CreatedDate.$date;
