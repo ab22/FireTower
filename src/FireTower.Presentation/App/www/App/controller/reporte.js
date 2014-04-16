@@ -43,12 +43,12 @@
                     .then(function(imageUri) {
                         var progress = function (e) {
                             alert(JSON.stringify(e));
-                            if (e.lengthComputable) {
-                                $scope.imageUploadProgress = e.loaded / e.total;
-                            } else {
-                                $scope.imageUploadProgress++;
-                            }
-                            $scope.imageUploadingMessage = 'Guardando foto... ' + $scope.imageUploadProgress + "%";
+                            //if (e.lengthComputable) {
+                            //    $scope.imageUploadProgress = e.loaded / e.total;
+                            //} else {
+                            //    $scope.imageUploadProgress++;
+                            //}
+                            //$scope.imageUploadingMessage = 'Guardando foto... ' + $scope.imageUploadProgress + "%";
                         };
 
                         $scope.loading = $ionicLoading.show({
