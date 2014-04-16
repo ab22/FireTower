@@ -1,5 +1,5 @@
 ﻿angular.module('firetower')
-    .factory('PictureService', ['$q', function($q) {
+    .factory('UploadService', ['$q', function($q) {
 
         var uploadImage = function (targetUrl, fileURI, payload) {
             var def = $q.defer();

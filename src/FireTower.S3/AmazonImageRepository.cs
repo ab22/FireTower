@@ -40,12 +40,5 @@ namespace FireTower.S3
                               };
             return request;
         }
-
-        static MemoryStream GetMemoryStreamFromBase64(string base64ImageString)
-        {
-            byte[] data = Convert.FromBase64String(base64ImageString);
-            var ms = new MemoryStream(data);
-            return ms;
-        }
     }
 }

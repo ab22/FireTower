@@ -1,5 +1,5 @@
 ﻿angular.module('firetower')
-    .factory('DisasterService', ['upload', '$http','settings', function (upload, $http, settings) {
+    .factory('DisasterService', ['UploadService', '$http', 'settings', function (upload, $http, settings) {
         var factory = {};
         var token = localStorage.getItem('firetowertoken');
 
@@ -21,10 +21,11 @@
         };
 
         factory.CreateDisaster = function (newDisaster) {
+            var imageUri = newDisaster.ImageUri;
+            delete newDisaster.ImageUri;
             newDisaster.token = token;
             alert(settings.baseUrl + '/Disasters' + " json: " + JSON.stringify(newDisaster));
-            alert("Image size: " + newDisaster.FirstImageBase64.length);
-            return $http.post(settings.baseUrl + '/Disasters', newDisaster);
+            return upload.uploadImage(settings.baseUrl + '/Disasters', imageUri, newDisaster);
         };
 
         factory.SaveImageToDisaster = function (disasterId, imageUri) {            

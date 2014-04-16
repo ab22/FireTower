@@ -1,5 +1,6 @@
 ﻿angular.module('firetower')
-    .controller('ReporteController', ['$location', '$scope', '$stateParams', '$ionicLoading', 'data', 'Math', 'DisasterService', '$ionicPopup', '$http', function($location, $scope, $stateParams, $ionicLoading, data, Math, DisasterService, $ionicPopup, $http) {
+    .controller('ReporteController', ['PictureService', '$location', '$scope', '$stateParams', '$ionicLoading', 'data', 'Math', 'DisasterService', '$ionicPopup', '$http',
+        function (pictureService, $location, $scope, $stateParams, $ionicLoading, data, math, disasterService, $ionicPopup, $http) {
 
         $scope.startCount = 5;
         var disasterId = -1;
@@ -16,7 +17,7 @@
         };
 
         $scope.saveSeverity = function(severityScore) {
-            DisasterService.SaveSeverity({
+            disasterService.SaveSeverity({
                 DisasterId: disasterId,
                 Severity: severityScore
             })
@@ -31,54 +32,29 @@
                 });
         };
 
-        var pictureSource;
-        var destinationType;
-
         ionic.Platform.ready(function() {
-            if (!navigator.camera) {
-                return;
-            }
-            pictureSource = navigator.camera.PictureSourceType.PHOTOLIBRARY;
-            destinationType = navigator.camera.DestinationType.FILE_URI;
+            pictureService.init();
         });
 
         $scope.takePhoto = function() {
 
-            var successCallback = function (imageUri) {
-
+            pictureService.takePicture().then(function(imageUri) {
                 $scope.loading = $ionicLoading.show({
                     content: 'Guardando foto...',
                     showBackdrop: false
                 });
 
-                DisasterService.SaveImageToDisaster(disasterId, imageUri)
+                disasterService.SaveImageToDisaster(disasterId, imageUri)
                     .success(function() {
                         $scope.reporte.Images.push(imageUri);
-                        $scope.loading.hide();
                     })
                     .error(function() {
-                        $scope.loading.hide();
                         showMessage('Error', 'La foto no se pudo ser guardada.');
+                    })
+                    .finally(function() {
+                        $scope.loading.hide();
                     });
-            };
-
-            var options = {
-                quality: 50,
-                destinationType: destinationType,
-                sourceType: pictureSource,
-                encodingType: 0
-            };
-            if (!navigator.camera) {
-                var photo = "http://stephenleahy.files.wordpress.com/2012/03/forest-fire.jpg";
-                successCallback(photo);
-                return;
-            }
-            navigator.camera.getPicture(
-                successCallback,
-                function(err) {
-                },
-                options);
-
+            });
         };
 
         var showMessage = function(title, message) {
@@ -123,7 +99,7 @@
             var formattedDate = data.CreatedDate.$date;
             formattedDate = moment((new Date()).toLocaleDateString()).fromNow();
             data.CreatedDate.$dateformatted = formattedDate;
-            data.SeverityAverage = Math.Average(data.SeverityVotes);
+            data.SeverityAverage = math.Average(data.SeverityVotes);
 
             $scope.filedStars = getArray(data.SeverityAverage, 1);
             $scope.blankStars = getArray(5 - data.SeverityAverage, 1 + data.SeverityAverage);
@@ -188,7 +164,7 @@
             else
                 $scope.isControlled = true;
 
-            DisasterService.VoteControlled({ DisasterId: disasterId, IsControlled: $scope.isControlled })
+            disasterService.VoteControlled({ DisasterId: disasterId, IsControlled: $scope.isControlled })
                 .success(function(response) {
                     console.log(response);
                 })
@@ -208,7 +184,7 @@
             else
                 $scope.hasBeenPutOut = true;
 
-            DisasterService.VotePutOut({ DisasterId: disasterId, IsPutOut: $scope.hasBeenPutOut })
+            disasterService.VotePutOut({ DisasterId: disasterId, IsPutOut: $scope.hasBeenPutOut })
                 .success(function(response) {
                     console.log(response);
                 })
