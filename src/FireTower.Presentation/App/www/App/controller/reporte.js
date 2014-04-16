@@ -1,6 +1,7 @@
 ﻿angular.module('firetower')
     .controller('ReporteController', ['$location', '$scope', '$stateParams', '$ionicLoading', 'data', 'Math', 'DisasterService', '$ionicPopup', '$http', function($location, $scope, $stateParams, $ionicLoading, data, Math, DisasterService, $ionicPopup, $http) {
 
+        $scope.Menu
         $scope.startCount = 5;
         var disasterId = -1;
 
