@@ -45,27 +45,30 @@
                 $scope.imageUploadingMessage = 'Guardando foto... ';
                 pictureService.takePicture()
                     .then(function(imageUri) {
-                        var progress = function (e) {
-                            alert(JSON.stringify(e));
-                            if (e.lengthComputable) {
-                                $scope.imageUploadProgress = e.loaded / e.total;
-                            } else {
-                                $scope.imageUploadProgress++;
-                            }
-                            $scope.imageUploadingMessage = 'Guardando foto... ' + $scope.imageUploadProgress + "%";
-                        };
-
-                        $scope.loading = $ionicLoading.show({
+                        $scope.uploadIndicator = $ionicLoading.show({
                             content: $scope.imageUploadingMessage,
-                            showBackdrop: false
+                            animation: 'fade-in',
+                            showBackdrop: false,
+                            maxWidth: 200,
+                            showDelay: 500
                         });
+
+                        var progress = function (e) {
+                            var complete = 0;
+                            if (e.lengthComputable) {
+                                complete = e.loaded / e.total;
+                            } else {
+                                complete++;
+                            }                            
+                            //$scope.uploadIndicator.content = 'Guardando foto... ' + complete + "%";
+                        };
 
                         disasterService.SaveImageToDisaster(disasterId, imageUri, progress).then(function() {
                             $scope.reporte.Images.push(imageUri);
+                            $scope.uploadIndicator.hide();                            
                         }).catch(function() {
+                            $scope.uploadIndicator.hide();
                             showMessage('Error', 'La foto no se pudo ser guardada.');
-                        }).finally(function() {
-                            $scope.loading.hide();
                         });
 
                     });
