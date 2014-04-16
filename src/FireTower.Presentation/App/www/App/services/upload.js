@@ -2,14 +2,15 @@
     .factory('UploadService', ['$q', function($q) {
 
         var uploadImage = function (targetUrl, fileUri, payload, onProgress) {
-            alert("Starting upload...");
             var def = $q.defer();
             var options = new FileUploadOptions();
             options.fileKey = "file";
             options.fileName = fileUri.substr(fileUri.lastIndexOf('/') + 1);
             options.mimeType = "image/jpeg";
             options.params = payload;
-            
+
+            alert("Starting upload...");
+
             var ft = new FileTransfer();
             ft.onprogress = onProgress;
             alert("Uploading to " + encodeURI(targetUrl));
