@@ -38,13 +38,23 @@
 
         $scope.takePhoto = function() {
 
+            $scope.imageUploadingMessage = 'Guardando foto... ';
             pictureService.takePicture().then(function(imageUri) {
                 $scope.loading = $ionicLoading.show({
-                    content: 'Guardando foto...',
+                    content: $scope.imageUploadingMessage,
                     showBackdrop: false
                 });
 
-                disasterService.SaveImageToDisaster(disasterId, imageUri)
+                var progress = function(e) {
+                    if (e.lengthComputable) {
+                        $scope.imageUploadProgress = e.loaded / e.total;                        
+                    } else {
+                        $scope.imageUploadProgress++;                        
+                    }
+                    $scope.imageUploadingMessage = 'Guardando foto... ' + $scope.imageUploadProgress + "%";
+                };
+                
+                disasterService.SaveImageToDisaster(disasterId, imageUri, progress)
                     .success(function() {
                         $scope.reporte.Images.push(imageUri);
                     })

@@ -24,10 +24,8 @@
                     MediaType: 0 //IMAGE
                 };
 
-                alert("PictureService: getting picture");
                 navigator.camera.getPicture(
                     function(imageUri) {
-                        alert("PictureService: got picture");
                         def.resolve(imageUri);
                     },
                     function(err) {

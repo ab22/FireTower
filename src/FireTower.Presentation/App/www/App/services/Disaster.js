@@ -3,8 +3,6 @@
         var factory = {};
         var token = localStorage.getItem('firetowertoken');
 
-        
-        
         factory.SaveSeverity = function (severity) {
             severity.token = token;
             return $http.post(settings.baseUrl + '/votes/severity', severity);
@@ -20,16 +18,15 @@
             return $http.post(settings.baseUrl + '/votes/putout', putOutRequest);
         };
 
-        factory.CreateDisaster = function (newDisaster) {
+        factory.CreateDisaster = function (newDisaster, onProgress) {
             var imageUri = newDisaster.ImageUri;
             delete newDisaster.ImageUri;
             newDisaster.token = token;
-            alert(settings.baseUrl + '/Disasters' + " json: " + JSON.stringify(newDisaster));
-            return upload.uploadImage(settings.baseUrl + '/Disasters', imageUri, newDisaster);
+            return upload.uploadImage(settings.baseUrl + '/Disasters', imageUri, newDisaster, onProgress);
         };
 
-        factory.SaveImageToDisaster = function (disasterId, imageUri) {            
-            return upload.uploadImage(settings.baseUrl + '/disasters/' + disasterId + '/image', imageUri, { token: token });
+        factory.SaveImageToDisaster = function (disasterId, imageUri, onProgress) {            
+            return upload.uploadImage(settings.baseUrl + '/disasters/' + disasterId + '/image', imageUri, { token: token }, onProgress);
         };
 
         return factory;

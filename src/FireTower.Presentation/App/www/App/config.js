@@ -5,7 +5,6 @@ angular.module('firetower', ['ionic', 'google-maps'])
                 StatusBar.hide();
             }
             
-            //load cordova.js if not already present
             if (!ionic.Platform.isCordova()) {
                 
                 function loadScript(url, callback) {
