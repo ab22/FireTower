@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Linq;
 using FireTower.Domain;
 using FireTower.Domain.Commands;
 using FireTower.Domain.Entities;
 using FireTower.Infrastructure;
+using FireTower.Infrastructure.Exceptions;
 using FireTower.Mailgun;
 using FireTower.Presentation.EmailSubjects;
 using FireTower.Presentation.EmailTemplates;
@@ -18,17 +22,29 @@ namespace FireTower.Presentation.Modules
         public DisasterModule(ICommandDispatcher commandDispatcher)
         {
             Post["/Disasters"] =
-                Request =>
+                r =>
                     {
-                        var req = this.Bind<CreateNewDisasterRequest>();
-                        commandDispatcher.Dispatch(this.UserSession(),
-                                                   new CreateNewDisaster(req.LocationDescription,
-                                                                         req.Latitude, req.Longitude, req.FirstImageBase64));
-                        return new Response().WithStatusCode(HttpStatusCode.OK);
+                        HttpFile file = Request.Files.FirstOrDefault();
+                        if (file == null)
+                        {
+                            throw new UserInputPropertyMissingException("file");
+                        }
+                        
+                        using (var stream = new MemoryStream())
+                        {
+                            file.Value.CopyTo(stream);
+                            var req = this.Bind<CreateNewDisasterRequest>();
+                            commandDispatcher.Dispatch(this.UserSession(),
+                                                       new CreateNewDisaster(req.LocationDescription,
+                                                                             req.Latitude, req.Longitude, stream));
+                        }
+
+
+                        return null;
                     };
 
             Post["/SendDisasterByEmail"] =
-                Request =>
+                r =>
                     {
                         var emailInfo = this.Bind<SendDisasterByEmailRequest>();
                         try

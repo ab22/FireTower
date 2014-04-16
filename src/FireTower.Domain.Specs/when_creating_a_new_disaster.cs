@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using AcklenAvenue.Testing.Moq.ExpectedObjects;
 using FireTower.Domain.CommandHandlers;
 using FireTower.Domain.Commands;
@@ -39,7 +40,8 @@ namespace FireTower.Domain.Specs
                     _now = DateTime.Now;
                     Mock.Get(_timeProvider).Setup(x => x.Now()).Returns(_now);
 
-                    _command = new CreateNewDisaster("LocationDescription1", 123.34, 456.32, "first image base 64");
+                    _command = new CreateNewDisaster("LocationDescription1", 123.34, 456.32,
+                                                     new MemoryStream());
 
                     _disasterToCreate =
                         Builder<Disaster>.CreateNew()
@@ -69,7 +71,7 @@ namespace FireTower.Domain.Specs
                                                                            _command.LocationDescription,
                                                                            _command.Latitude, _command.Longitude);
 
-                    Mock.Get(_imageRepository).Setup(x => x.Save(_command.FirstImageBase64)).Returns(new Uri("http://www.image.com/"));
+                    Mock.Get(_imageRepository).Setup(x => x.Save(_command.ImageStream)).Returns(new Uri("http://www.image.com/"));
                     _expectedImageAddedEvent = new NewImageAddedToDisaster(User.Id, _createdDisaster.Id, "http://www.image.com/");
                 };
 

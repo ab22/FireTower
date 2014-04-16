@@ -39,21 +39,21 @@
                 return;
             }
             pictureSource = navigator.camera.PictureSourceType.PHOTOLIBRARY;
-            destinationType = navigator.camera.DestinationType.DATA_URL;
+            destinationType = navigator.camera.DestinationType.FILE_URI;
         });
 
         $scope.takePhoto = function() {
 
-            var successCallback = function(base64foto) {
+            var successCallback = function (imageUri) {
 
                 $scope.loading = $ionicLoading.show({
                     content: 'Guardando foto...',
                     showBackdrop: false
                 });
 
-                DisasterService.SaveImageToDisaster(disasterId, { Base64Image: base64foto })
+                DisasterService.SaveImageToDisaster(disasterId, imageUri)
                     .success(function() {
-                        $scope.reporte.Images.push("data:image/jpeg;base64," + base64foto);
+                        $scope.reporte.Images.push(imageUri);
                         $scope.loading.hide();
                     })
                     .error(function() {
@@ -69,7 +69,7 @@
                 encodingType: 0
             };
             if (!navigator.camera) {
-                var photo = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAACXBIWXMAAAsTAAALEwEAmpwYAAAABGdBTUEAALGOfPtRkwAAACBjSFJNAAB6JQAAgIMAAPn/AACA6QAAdTAAAOpgAAA6mAAAF2+SX8VGAAABLElEQVR42qSTQStFURSFP7f3XygyoAwoYSYMPCIpk2egMFSmUvwCRpSRDIwYGbwyVuYykB9y914m951z7nHe6J26dc9u77XXWmdvJLF7/audqx9JYuvyW92LL0li8K2df2r17CPEVk7ftXTclyQqAMmRCwC5I3fS42a4W7y74VYDNAAuJA8AaXIsSACsDgAdAJeFrnnyoMBygKZJJ3b1It0AmsTMDPdEgrujJqHEwCxqznMaD2KgyCDRnEuo8qJhHvx/hcQDbzGoix5Yi4G1TcwZWNEDKwJU+WDkhg2ToDaD+M65YcVB8jg3Y5IY5VQAyyf9gLJw+CqAuYNnAczsPQpgevtBU937kDexcdssj8Ti0ZskMd97CRs3u//U2sjJzbtwH1+/Cf8jS/gbAMmWc42HzdIjAAAAAElFTkSuQmCC";
+                var photo = "http://stephenleahy.files.wordpress.com/2012/03/forest-fire.jpg";
                 successCallback(photo);
                 return;
             }

@@ -6,8 +6,6 @@ namespace FireTower.Presentation.Requests
 
         public double Latitude { get; set; }
 
-        public double Longitude { get; set; }
-
-        public string FirstImageBase64 { get; set; }
+        public double Longitude { get; set; }        
     }
 }

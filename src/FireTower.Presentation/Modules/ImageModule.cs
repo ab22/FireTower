@@ -1,11 +1,11 @@
 using System;
+using System.IO;
+using System.Linq;
 using FireTower.Domain;
 using FireTower.Domain.Commands;
 using FireTower.Domain.Entities;
 using FireTower.Infrastructure;
-using FireTower.Presentation.Requests;
 using Nancy;
-using Nancy.ModelBinding;
 
 namespace FireTower.Presentation.Modules
 {
@@ -16,11 +16,16 @@ namespace FireTower.Presentation.Modules
             Post["/disasters/{disasterId}/image"] =
                 r =>
                     {
-                        var req = this.Bind<AddImageRequest>();
-                        UserSession userSession = this.UserSession();
-                        commandDispatcher.Dispatch(userSession,
-                                                   new AddImageToDisaster(Guid.Parse((string) r.disasterId),
-                                                                          req.Base64Image));
+                        HttpFile file = Request.Files.First();
+                        using (var stream = new MemoryStream())
+                        {
+                            file.Value.CopyTo(stream);
+                            UserSession userSession = this.UserSession();
+                            commandDispatcher.Dispatch(userSession,
+                                                       new AddImageToDisaster(Guid.Parse((string) r.disasterId),
+                                                                              stream));
+                        }
+
                         return null;
                     };
         }

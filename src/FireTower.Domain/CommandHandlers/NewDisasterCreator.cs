@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using FireTower.Domain.Commands;
 using FireTower.Domain.Entities;
 using FireTower.Domain.Events;
@@ -48,7 +49,7 @@ namespace FireTower.Domain.CommandHandlers
 
         void AddImage(CreateNewDisaster c, UserSession u, Disaster newDisaster)
         {
-            Uri imageUrl = _imageRepository.Save(c.FirstImageBase64);
+            Uri imageUrl = _imageRepository.Save(c.ImageStream);
             newDisaster.AddImage(imageUrl.ToString());
             NotifyObservers(new NewImageAddedToDisaster(u.User.Id, newDisaster.Id, imageUrl.ToString()));
         }

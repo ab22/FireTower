@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AcklenAvenue.Testing.AAT;
 using FireTower.Domain.Commands;
+using FireTower.Presentation.Requests;
 using FireTower.ViewStore;
 using Machine.Specifications;
 using MongoDB.Driver;
@@ -26,8 +27,12 @@ namespace FireTower.API.AAT
                 {
                     _token = Login().Token;
                     _locationName = "Santa Ana"+ new Random().Next(9999999);
-                    Client.Post("/disasters", new CreateNewDisaster(_locationName, 123.45, 456.32, "first image base 64"),
-                                _token);
+                    _imageUrl = "http://www.wildlandfire.com/pics/wall/wildfire_elkbath.jpg";
+                    Client.UploadFile("/disasters",
+                                      _imageUrl,
+                                      _token,
+                                      new CreateNewDisasterRequest
+                                          {LocationDescription = _locationName, Latitude = 123.45, Longitude = 456.32});
 
                     var db = MongoDatabase();
                     _disasterViewModelCollection = db.GetCollection<DisasterViewModel>("DisasterViewModel");
@@ -60,5 +65,7 @@ namespace FireTower.API.AAT
                         _disasterViewModelCollection.Remove(Query<DisasterViewModel>.EQ(x => x.DisasterId, _disaster.DisasterId));
                     }*/
                 };
+
+        static string _imageUrl;
     }
 }
