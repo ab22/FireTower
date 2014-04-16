@@ -84,12 +84,8 @@
                     ImageUri: $scope.imageUri
                 };
 
-                var action = disasterService.CreateDisaster(newDisaster);
-                alert(action.catch);
-                alert(action.finally);
-                action
-                    .then(function (resp) {
-                        alert("Disaster created. Querying newest disasters... " + JSON.stringify(resp));
+                disasterService.CreateDisaster(newDisaster)
+                    .then(function () {
                         queryNewestDisasterUntilWeFindThisOne();
                     });
                 
@@ -114,11 +110,12 @@
                 viewModels.getUser().success(function(me) {
                     var interval = setInterval(function() {
                         viewModels.getMyLastReport(me.userId).success(function (lastReport) {
-                            alert("Got latest: " + JSON.stringify(lastReport));
-                            
                             if (lastReport.length == 0) return;
 
+                            alert(lastReport[0].CreatedDate.$date);
+                            
                             if (moment(lastReport[0].CreatedDate.$date).add('seconds', 10) > moment()) {
+                                alert("Found it!");
                                 clearInterval(interval);
                                 showDetails(lastReport[0].DisasterId);
                             }
