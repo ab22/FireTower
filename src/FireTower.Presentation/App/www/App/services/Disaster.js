@@ -22,9 +22,7 @@
             var imageUri = newDisaster.ImageUri;
             delete newDisaster.ImageUri;
             newDisaster.token = token;
-            var action = upload.uploadImage(settings.baseUrl + '/Disasters', imageUri, newDisaster, onProgress);
-            alert("upload action: " + action.then);
-            return action;
+            return upload.uploadImage(settings.baseUrl + '/Disasters', imageUri, newDisaster, onProgress);
         };
 
         factory.SaveImageToDisaster = function (disasterId, imageUri, onProgress) {            

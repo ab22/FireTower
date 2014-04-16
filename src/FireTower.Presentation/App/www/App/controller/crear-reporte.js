@@ -85,7 +85,8 @@
                 };
 
                 var action = disasterService.CreateDisaster(newDisaster);
-                alert(JSON.stringify(action));
+                alert(action.then);
+                alert(action.success);
                 action
                     .then(function () {
                         alert("disaster created. Querying newest disasters...");
