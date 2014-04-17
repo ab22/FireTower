@@ -4,7 +4,13 @@ angular.module('firetower')
         $scope.viewReport = function(disasterId) {
             $location.path("/app/reporte/" + disasterId);
         };
-        
+
+        $scope.refreshReports = function(){
+            getAllReports();
+            $scope.$broadcast('scroll.refreshComplete');
+            $scope.$broadcast('scroll.resize');
+        };
+
         var getAllReports = function () {
             $scope.loadingFires = $ionicLoading.show({
                 content: 'Cargando datos de incendios...',
