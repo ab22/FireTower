@@ -8,7 +8,10 @@
         var collection = 'DisasterViewModel';
 
         factory.getAllReports = function() {
-            var url = baseUrl + db + '/collections/' + collection + '?apiKey=' + apiKey;
+            //5 hours before
+            var fiveHoursBefore = moment().add("hours", -5).toISOString();
+            var now = moment().toISOString();
+            var url = baseUrl + db + '/collections/' + collection + '?apiKey=' + apiKey + '&q={"CreatedDate":{$gte:"' + fiveHoursBefore + '",$lt:"' + now + '"}}';
             return $http.get(url);
         };
 
