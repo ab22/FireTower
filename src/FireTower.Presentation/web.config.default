@@ -10,7 +10,7 @@
     </httpHandlers>
   </system.web>
   <appSettings>
-    <add key="Roles" value="worker" />
+    <add key="Roles" value="api" />
     <add key="Environment" value="local"/>
     <add key="current_session_context_class" value="web" />
     <add key="PasswordExpirationDays" value="10" />
