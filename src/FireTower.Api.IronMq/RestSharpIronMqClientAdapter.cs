@@ -1,6 +1,5 @@
 using System;
 using System.Net;
-using Blacksmith.Core;
 using FireTower.Domain;
 using Newtonsoft.Json;
 using RestSharp;
@@ -10,7 +9,7 @@ namespace FireTower.IronMq
     public class RestSharpIronMqClientAdapter : IIronMqPusher
     {
         const string DevToken = "Gi_V3JqWFJ6u4kghrrTs46sVAWk";
-        const string ProjectId = "533b4de5669fbf000900008c";
+        const string ProjectId = "533b4de5669fbf000900008c";        
         readonly RestClient _client;
         readonly string _queueName;
 
@@ -42,20 +41,20 @@ namespace FireTower.IronMq
         RestRequest GetRequest(Guid userSessionId, object command)
         {
             string resource = string.Format("/queues/{0}/messages", _queueName);
-            var restRequest = new RestRequest(resource, Method.POST) { RequestFormat = DataFormat.Json };
+            var restRequest = new RestRequest(resource, Method.POST) {RequestFormat = DataFormat.Json};
             restRequest.AddHeader("Authorization", "OAuth " + DevToken);
-            var type = command.GetType();
+            Type type = command.GetType();
             dynamic obj = command.ToDynamic();
             obj.Token = userSessionId;
             obj.Type = type.AssemblyQualifiedName;
-            var serializeObject = (string)JsonConvert.SerializeObject(obj);
+            var serializeObject = (string) JsonConvert.SerializeObject(obj);
             var message = new
-            {
-                messages = new[]
+                              {
+                                  messages = new[]
                                                  {
                                                      new {body = serializeObject}
                                                  }
-            };
+                              };
             restRequest.AddBody(message);
             return restRequest;
         }

@@ -9,13 +9,11 @@ namespace FireTower.Domain.CommandHandlers
 {
     public class DisasterImageAdder : ICommandHandler
     {
-        readonly IImageRepository _imageRepository;
         readonly IReadOnlyRepository _readOnlyRepo;
 
-        public DisasterImageAdder(IReadOnlyRepository readOnlyRepo, IImageRepository imageRepository)
+        public DisasterImageAdder(IReadOnlyRepository readOnlyRepo)
         {
             _readOnlyRepo = readOnlyRepo;
-            _imageRepository = imageRepository;
         }
 
         #region ICommandHandler Members
@@ -30,10 +28,9 @@ namespace FireTower.Domain.CommandHandlers
             var c = (AddImageToDisaster) command;
             var u = (UserSession) userSessionIssuingCommand;
 
-            Uri imageUrl = _imageRepository.Save(c.ImageStream);
             var disaster = _readOnlyRepo.GetById<Disaster>(c.DisasterId);
-            disaster.AddImage(imageUrl.ToString());
-            NotifyObservers(new NewImageAddedToDisaster(u.User.Id, c.DisasterId, imageUrl.ToString()));
+            disaster.AddImage(c.ImageUri.ToString());
+            NotifyObservers(new NewImageAddedToDisaster(u.User.Id, c.DisasterId, c.ImageUri.ToString()));
         }
 
         public event DomainEvent NotifyObservers;

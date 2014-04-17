@@ -5,8 +5,8 @@ namespace FireTower.IronMq
 {
     public class IronMqSubscriber : IIronMqSubscriber
     {
-        const string DevToken = "RchaMp7bPTv2VZ_tptENRwzGw7g";
-        const string ProjectId = "531779c7cf0dd7000900000e";
+        const string DevToken = "Gi_V3JqWFJ6u4kghrrTs46sVAWk";
+        const string ProjectId = "533b4de5669fbf000900008c";
         readonly Client _client;
 
         public IronMqSubscriber()

@@ -112,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BodyExtensions.cs" />
+    <Compile Include="CannotResolveModuleException.cs" />
     <Compile Include="given_an_image_module.cs" />
     <Compile Include="given_a_disaster_module.cs" />
     <Compile Include="given_a_vote_module.cs" />

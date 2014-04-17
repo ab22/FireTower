@@ -4,11 +4,10 @@ using System.IdentityModel;
 using FireTower.Domain;
 using FireTower.Domain.Exceptions;
 using FireTower.Infrastructure;
-using Nancy;
 
 namespace FireTower.Presentation.Modules
 {
-    public class WorkModule : NancyModule
+    public class WorkModule : NancyWorkerModule
     {
         public WorkModule(ICommandDispatcher dispatcher, ICommandDeserializer deserializer)
         {

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.IdentityModel;
 using System.Linq;
@@ -14,19 +16,46 @@ using Nancy.Bootstrapper;
 using Nancy.Conventions;
 using Nancy.Security;
 using Newtonsoft.Json;
-using Nancy.Conventions;
 
 namespace FireTower.Presentation
 {
     public class ApiBootstrapper : Bootstrapper
     {
+        const string QueueName = "commands";
+
         public ApiBootstrapper()
         {
-            AddBootstrapperTask(new ConfigureApiDependencies());
-            AddBootstrapperTask(new ConfigureWorkerDependencies());
-            AddBootstrapperTask(new ConfigureNotificationEmails());
-            AddBootstrapperTask(new ConfigureEventHandlerDependencies());
-            AddBootstrapperTask(new ConfigureAutomapperMappings());
+            if (IsWorker())
+            {
+                AddBootstrapperTask(new ConfigureWorkerDependencies(QueueName));
+                AddBootstrapperTask(new ConfigureNotificationEmails());
+                AddBootstrapperTask(new ConfigureEventHandlerDependencies());
+            }
+            else
+            {
+                AddBootstrapperTask(new ConfigureApiDependencies(QueueName));
+                AddBootstrapperTask(new ConfigureAutomapperMappings());
+            }
+        }
+
+        static bool IsWorker()
+        {
+            bool isWorkerAndShouldHandleCommandsSynchronously
+                = (ConfigurationManager.AppSettings["Roles"] ?? "").ToLower().Contains("worker");
+            return isWorkerAndShouldHandleCommandsSynchronously;
+        }
+
+        protected override IEnumerable<INancyModule> GetAllModules(ILifetimeScope container)
+        {
+            Type workerModuleType = typeof (NancyWorkerModule);
+            if (IsWorker())
+            {
+                return base.GetAllModules(container).Where(x => x.GetType().BaseType == workerModuleType);
+            }
+            else
+            {
+                return base.GetAllModules(container).Where(x => x.GetType().BaseType != workerModuleType);
+            }
         }
 
         protected override void ApplicationStartup(ILifetimeScope container, IPipelines pipelines)
@@ -58,21 +87,20 @@ namespace FireTower.Presentation
 
                             if (hasToken)
                             {
-                                    var apiUserMapper = container.Resolve<IApiUserMapper<Guid>>();
-                                    Guid tokenGuid;
-                                    if (!string.IsNullOrEmpty(token) && Guid.TryParse(token, out tokenGuid))
+                                var apiUserMapper = container.Resolve<IApiUserMapper<Guid>>();
+                                Guid tokenGuid;
+                                if (!string.IsNullOrEmpty(token) && Guid.TryParse(token, out tokenGuid))
+                                {
+                                    try
                                     {
-                                        try
-                                        {
-                                            IUserIdentity userFromAccessToken =
-                                                apiUserMapper.GetUserFromAccessToken(tokenGuid);
-                                            return userFromAccessToken;
-                                        }
-                                        catch (TokenDoesNotExistException)
-                                        {
-                                        }
+                                        IUserIdentity userFromAccessToken =
+                                            apiUserMapper.GetUserFromAccessToken(tokenGuid);
+                                        return userFromAccessToken;
                                     }
-                                
+                                    catch (TokenDoesNotExistException)
+                                    {
+                                    }
+                                }
                             }
 
                             return new FireTowerUserIdentity(new VisitorSession());
@@ -209,7 +237,7 @@ namespace FireTower.Presentation
             }
 
             //if we get to this point, we need to log the exception...
-            var exceptionFormatterLogger = new ExceptionFormatterLogger();            
+            var exceptionFormatterLogger = new ExceptionFormatterLogger();
             exceptionFormatterLogger.LogException(err, ctx);
 
             if (err is NotImplementedException)

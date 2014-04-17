@@ -237,6 +237,7 @@
     <Compile Include="Modules\VerificationModule.cs" />
     <Compile Include="Modules\VoteModule.cs" />
     <Compile Include="Modules\WorkModule.cs" />
+    <Compile Include="NancyWorkerModule.cs" />
     <Compile Include="Requests\CreateNewDisasterRequest.cs" />
     <Compile Include="Requests\SendDisasterByEmailRequest.cs" />
     <Compile Include="Requests\BasicLoginRequest.cs" />
