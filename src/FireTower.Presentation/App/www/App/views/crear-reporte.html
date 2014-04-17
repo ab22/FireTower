@@ -9,11 +9,22 @@
                 <marker coords="marker.coords" options="marker.options" events="marker.events"></marker>
             </markers>
         </google-map>
+        
+        
     </ion-content>
-
+    
+    <ion-content class="has-header" ng-hide="imageSource">
+        <h1 class="title">Paso #1: Foto</h1>
+        
+        <button class="button button-block button-positive" ng-click="setImageSource('camera')">
+            <i class="icon ion-ios7-camera-outline"></i> Camera
+        </button>
+        <button class="button button-block button-calm" ng-click="setImageSource('library')">
+            <i class="icon ion-android-image"></i> Biblioteca
+        </button>        
+    </ion-content>
+        
     <div style="margin-bottom: 20px" class="bar bar-footer">
-        <button ng-hide="imageSource" class="button button-block button-positive" ng-click="setImageSource('camera')">Camera</button>
-        <button ng-hide="imageSource" class="button button-block button-calm" ng-click="setImageSource('library')">Biblioteca</button>
-        <button ng-show="readyToCreate" class="button button-block button-positive" ng-click="createDisaster()">Reportalo!</button>        
+        <button ng-show="readyToCreate" class="button button-large button-block button-positive" ng-click="createDisaster()">Reportalo!</button>        
     </div>   
 </ion-view>
