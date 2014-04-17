@@ -13,13 +13,17 @@
                     };
                 }
             },
-            takePicture: function() {
+            takePicture: function(source) {
                 var def = $q.defer();
 
+                var sourceType = 0; //library
+                if (source == "camera")
+                    sourceType = 1;
+                
                 var options = {
                     quality: 50,
                     destinationType: 1, //FILE_URI
-                    sourceType: 0, //PHOTOLIBRARY
+                    sourceType: sourceType,
                     encodingType: 0, //JPEG
                     MediaType: 0 //IMAGE
                 };
