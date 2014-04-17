@@ -28,9 +28,10 @@
                     }
             };
             
-            var url = baseUrl + db + '/collections/' + collection + '?apiKey=' + apiKey + '&q=' + JSON.stringify(query);
-            alert(url);
-            return $http.get(url);            
+            var url = baseUrl + db + '/collections/' + collection + '?apiKey=' + apiKey + '&q=' + JSON.stringify(query);            
+            return $http.get(url).error(function(err) {
+                alert("http error: " + err);
+            });
         };
 
         factory.getDisasterByFetchToken = function(fetchToken) {
