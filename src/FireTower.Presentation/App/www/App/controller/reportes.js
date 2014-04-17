@@ -31,22 +31,23 @@ angular.module('firetower')
                     showDelay: 500
                 });
 
-                cache.get("reports").then(function(cachedData) {
-                    if (cachedData) {
-                        setIncendios(cachedData);
+                cache.get("reports")
+                    .then(function(cachedData) {
+                        if (cachedData) {
+                            setIncendios(cachedData);
+                            $scope.loadingFires.hide();
+                        }
+                    }).catch(function(err) {
                         $scope.loadingFires.hide();
-                    }else {
-                        alert("No cache.");
-                    }
-                }).catch(function (err) {                    
-                    $scope.loadingFires.hide();
-                    alert(err);
-                });
+                        alert(err);
+                    });
 
                 locationService.getCurrentPosition()
-                    .then(function (locationResponse) {
+                    .then(function(locationResponse) {
+                        alert("Got location");
                         viewStore.getAllReports(locationResponse)
                             .success(function (dataFromServer) {
+                                alert("Got fires");
                                 alert(JSON.stringify(dataFromServer));
                                 cache.set("reports", dataFromServer);
                                 setIncendios(dataFromServer);
@@ -56,7 +57,8 @@ angular.module('firetower')
                                 $scope.loadingFires.hide();
                                 showMessage('Error', 'No hemos podido cargar los reportes. Estas conectado a internet?');
                             });
-                    }).catch(function () {
+                        
+                    }).catch(function() {
                         $scope.loadingFires.hide();
                         alert("Your location could not be determined. Data could not be loaded.");
                     });
