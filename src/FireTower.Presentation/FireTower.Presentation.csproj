@@ -122,6 +122,7 @@
     <Content Include="App\www\App\js\angular\angular-route.js" />
     <Content Include="App\www\App\js\angular\angular.js" />
     <Content Include="App\www\App\js\pubnub.min.js" />
+    <Content Include="App\www\App\services\cache.js" />
     <Content Include="App\www\App\services\locationService.js" />
     <Content Include="App\www\App\services\upload.js" />
     <Content Include="App\www\App\services\UserService.js" />
