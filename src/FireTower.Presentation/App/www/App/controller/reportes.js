@@ -1,6 +1,6 @@
 angular.module('firetower')
-    .controller('ReportesController', ['cache', '$scope', '$ionicLoading', 'data', 'Math', '$ionicPopup', '$http', '$location',
-        function(cache, $scope, $ionicLoading, data, Math, $ionicPopup, $http, $location) {
+    .controller('ReportesController', ['LocationService', 'cache', '$scope', '$ionicLoading', 'data', 'Math', '$ionicPopup', '$http', '$location',
+        function(locationService, cache, $scope, $ionicLoading, data, Math, $ionicPopup, $http, $location) {
 
             $scope.viewReport = function(disasterId) {
                 $location.path("/app/reporte/" + disasterId);
@@ -21,7 +21,7 @@ angular.module('firetower')
 
                 $scope.reportes = data;
             };
-            
+
             var getAllReports = function() {
                 $scope.loadingFires = $ionicLoading.show({
                     content: 'Cargando datos de incendios...',
@@ -31,23 +31,29 @@ angular.module('firetower')
                     showDelay: 500
                 });
 
-                cache.get("reports").then(function (cachedData) {
+                cache.get("reports").then(function(cachedData) {
                     if (cachedData) {
                         setIncendios(cachedData);
                         $scope.loadingFires.hide();
                     }
                 });
 
-                data.getAllReports()
-                    .success(function (dataFromServer) {
-                        cache.set("reports", dataFromServer);
-                        setIncendios(dataFromServer);
-                        $scope.loadingFires.hide();
-                    })
-                    .error(function() {
-                        $scope.loadingFires.hide();
-                        showMessage('Error', 'No hemos podido cargar los reportes. Estas conectado a internet?');
+                locationService.getCurrentPosition()
+                    .then(function(locationResponse) {
+                        data.getAllReports(locationResponse)
+                            .success(function(dataFromServer) {
+                                cache.set("reports", dataFromServer);
+                                setIncendios(dataFromServer);
+                                $scope.loadingFires.hide();
+                            })
+                            .error(function() {
+                                $scope.loadingFires.hide();
+                                showMessage('Error', 'No hemos podido cargar los reportes. Estas conectado a internet?');
+                            });
+                    }).catch(function () {
+                        alert("Your location could not be determined. Data could not be loaded.");
                     });
+
             };
 
             var showMessage = function(title, message) {
