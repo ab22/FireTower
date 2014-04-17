@@ -5,12 +5,15 @@ angular.module('firetower')
             $location.path("/app/reporte/" + disasterId);
         };
         
-        var getAllReports = function() {
-            $scope.loading = $ionicLoading.show({
+        var getAllReports = function () {
+            $scope.loadingFires = $ionicLoading.show({
                 content: 'Cargando datos de incendios...',
-                showBackdrop: false
+                animation: 'fade-in',
+                showBackdrop: false,
+                maxWidth: 200,
+                showDelay: 500
             });
-           
+
             data.getAllReports()
                 .success(function(data) {
                     $scope.reportes = data;
@@ -21,10 +24,10 @@ angular.module('firetower')
                         $scope.reportes[i].SeverityAverage = Math.Average($scope.reportes[i].SeverityVotes);
                     }
 
-                    $scope.loading.hide();
+                    $scope.loadingFires.hide();
                 })
-                .error(function(error) {
-                    $scope.loading.hide();
+                .error(function() {
+                    $scope.loadingFires.hide();
                     showMessage('Error', 'No hemos podido cargar los reportes. Estas conectado a internet?');
                 });
         };
