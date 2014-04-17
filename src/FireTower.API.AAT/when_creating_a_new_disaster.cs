@@ -1,7 +1,11 @@
 using System;
+using System.Linq;
+using System.Threading;
 using AcklenAvenue.Testing.AAT;
 using FireTower.Presentation.Requests;
+using FireTower.ViewStore;
 using Machine.Specifications;
+using MongoDB.Driver.Linq;
 using RestSharp;
 
 namespace FireTower.API.AAT
@@ -11,6 +15,7 @@ namespace FireTower.API.AAT
         static Guid _token;
         static IRestResponse _result;
         static string _imageUrl;
+        static string _fetchToken;
 
         Establish context =
             () =>
@@ -18,6 +23,8 @@ namespace FireTower.API.AAT
                     _token = Login().Token;
 
                     _imageUrl = "http://www.wildlandfire.com/pics/wall/wildfire_elkbath.jpg";
+
+                    _fetchToken = new Random().Next(999999999).ToString();
                 };
 
         Because of =
@@ -30,11 +37,27 @@ namespace FireTower.API.AAT
                                   {
                                       LocationDescription = "Santa Ana",
                                       Latitude = 123.45,
-                                      Longitude = 31.32
+                                      Longitude = 31.32,
+                                      FetchToken = _fetchToken
                                   });
 
         It should_put_a_disaster_in_the_view_model_store =
-            () => { };
+            () =>
+                {
+                    DateTime startLoop = DateTime.Now;
+                    DisasterViewModel disaster = null;
+                    while (DateTime.Now < startLoop.AddSeconds(30))
+                    {
+                        disaster =
+                            MongoDatabase().GetCollection<DisasterViewModel>("DisasterViewModel").AsQueryable().
+                                FirstOrDefault(x => x.FetchToken == _fetchToken);
+
+                        Console.WriteLine("Looking for viewModel with FetchToken '{0}'...", _fetchToken);
+                        if (disaster != null) break;
+                        Thread.Sleep(1000);
+                    }
+                    disaster.ShouldNotBeNull();
+                };
 
         It should_return_ok =
             () => _result.ShouldBeOk();

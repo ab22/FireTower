@@ -24,7 +24,6 @@ namespace FireTower.Domain.Specs
         static ITimeProvider _timeProvider;
         static DateTime _now;
         static readonly User User = new User {Id = Guid.NewGuid()};
-        static IImageRepository _imageRepository;
         static List<object> _eventsRaised;
         static Disaster _createdDisaster;
         static NewImageAddedToDisaster _expectedImageAddedEvent;
@@ -34,15 +33,14 @@ namespace FireTower.Domain.Specs
                 {
                     _writeableRepository = Mock.Of<IWriteableRepository>();
                     _timeProvider = Mock.Of<ITimeProvider>();
-                    _imageRepository = Mock.Of<IImageRepository>();
-                    _commandHandler = new NewDisasterCreator(_writeableRepository, _timeProvider, _imageRepository);
+                    _commandHandler = new NewDisasterCreator(_writeableRepository, _timeProvider);
 
                     _now = DateTime.Now;
                     Mock.Get(_timeProvider).Setup(x => x.Now()).Returns(_now);
 
                     _command = new CreateNewDisaster("LocationDescription1", 123.34, 456.32,
-                                                     new MemoryStream(), "fetchToken");
-
+                                                     new Uri("http://image.com"), "fetchToken");
+                    
                     _disasterToCreate =
                         Builder<Disaster>.CreateNew()
                             .With(x => x.Id, Guid.Empty)
@@ -71,8 +69,7 @@ namespace FireTower.Domain.Specs
                                                                            _command.LocationDescription,
                                                                            _command.Latitude, _command.Longitude, _command.FetchToken);
 
-                    Mock.Get(_imageRepository).Setup(x => x.Save(_command.ImageStream)).Returns(new Uri("http://www.image.com/"));
-                    _expectedImageAddedEvent = new NewImageAddedToDisaster(User.Id, _createdDisaster.Id, "http://www.image.com/");
+                    _expectedImageAddedEvent = new NewImageAddedToDisaster(User.Id, _createdDisaster.Id, _command.ImageUri.ToString());
                 };
 
         Because of =
@@ -89,6 +86,6 @@ namespace FireTower.Domain.Specs
             () => _eventsRaised[0].ShouldBeLike(_expectedDisasterCreatedEvent);
 
         It should_raise_the_expected_image_added_event =
-            () => _eventsRaised[1].ShouldBeLike(_expectedImageAddedEvent);
+            () => _eventsRaised[1].ShouldBeLike(_expectedImageAddedEvent);        
     }
 }

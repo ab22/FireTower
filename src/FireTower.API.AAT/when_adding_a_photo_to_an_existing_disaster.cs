@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Threading;
 using AcklenAvenue.Testing.AAT;
 using FireTower.Presentation.Requests;
 using FireTower.ViewStore;
@@ -33,13 +34,23 @@ namespace FireTower.API.AAT
                                           {
                                               LocationDescription = _locationDescription,
                                               Latitude = 123.45,
-                                              Longitude = 456.32
+                                              Longitude = 456.32,
+                                              FetchToken = rnd.ToString()
                                           });
 
-                    IQueryable<DisasterViewModel> disasterViewModelCollection =
-                        MongoDatabase().GetCollection<DisasterViewModel>("DisasterViewModel").AsQueryable();
-                    DisasterViewModel disaster =
-                        disasterViewModelCollection.First(x => x.LocationDescription == _locationDescription);
+
+                    DateTime startLoop = DateTime.Now;
+                    DisasterViewModel disaster = null;
+                    while (DateTime.Now < startLoop.AddSeconds(30))
+                    {
+                        disaster =
+                            MongoDatabase().GetCollection<DisasterViewModel>("DisasterViewModel").AsQueryable().
+                                FirstOrDefault(x => x.FetchToken == rnd.ToString());
+
+                        Console.WriteLine("Looking for viewModel with FetchToken '{0}'...", rnd);
+                        if (disaster != null) break;
+                        Thread.Sleep(1000);
+                    }
                     _disasterId = disaster.DisasterId;
                     _imageCount = disaster.Images.Count();
                 };

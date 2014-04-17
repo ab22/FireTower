@@ -23,8 +23,7 @@ namespace FireTower.Api.Specs
 
                     var containerBuilder = new ContainerBuilder();
                     new ConfigureCommonDependencies().Task(containerBuilder);
-                    new ConfigureApiDependencies().Task(containerBuilder);
-                    new ConfigureWorkerDependencies().Task(containerBuilder);
+                    new ConfigureWorkerDependencies("test_queue").Task(containerBuilder);
                     new ConfigureDatabaseWiring().Task(containerBuilder);
                     new ConfigureEventHandlerDependencies().Task(containerBuilder);
                     new ConfigureNotificationEmails().Task(containerBuilder);
