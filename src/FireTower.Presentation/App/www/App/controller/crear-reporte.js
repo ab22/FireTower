@@ -36,37 +36,36 @@
                 };
             };
 
-            var init = function() {
+            var getLocation = function () {
+                locationService.getCurrentPosition()
+                    .catch(function(err) {
+                        alert("Lo sentimos, pero no se puede crear un reporte sin ubicacion.");
+                        $location.path('/app/');
+                    })
+                    .then(function(locationData) {
 
-                initializeMap();
+                        setDisasterPosition(locationData.lat, locationData.lng);
 
-                pictureService.takePicture()
+                        $scope.map = {
+                            center: $scope.location,
+                            zoom: 15,
+                            maptype: "satellite"
+                        };
+
+                        $scope.marker.coords = {
+                            latitude: $scope.location.latitude,
+                            longitude: $scope.location.longitude
+                        };
+                    });
+            };
+            
+            var takePicture = function() {
+                return pictureService.takePicture()
                     .catch(function() {
                         $location.path('/app/');
                     })
                     .then(function(imageUri) {
                         $scope.imageUri = imageUri;
-
-                        locationService.getCurrentPosition()
-                            .catch(function(err) {
-                                alert("Lo sentimos, pero no se puede crear un reporte sin ubicacion.");
-                                $location.path('/app/');
-                            })
-                            .then(function(locationData) {
-
-                                setDisasterPosition(locationData.lat, locationData.lng);
-
-                                $scope.map = {
-                                    center: $scope.location,
-                                    zoom: 15,
-                                    maptype: "satellite"
-                                };
-
-                                $scope.marker.coords = {
-                                    latitude: $scope.location.latitude,
-                                    longitude: $scope.location.longitude
-                                };
-                            });
                     });
             };
             
