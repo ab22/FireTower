@@ -36,17 +36,11 @@
                 };
             };
 
-            var takePicture = function(source) {
-                return pictureService.takePicture(source).then(function(imageUri) {
-                    $scope.imageUri = imageUri;
-                });
-            };
-
-            var getLocation = function() {
+            var getLocation = function () {
                 locationService.getCurrentPosition()
                     .catch(function(err) {
                         alert("Lo sentimos, pero no se puede crear un reporte sin ubicacion.");
-                        $location.path('/app');
+                        $location.path('/app/');
                     })
                     .then(function(locationData) {
 
@@ -64,7 +58,17 @@
                         };
                     });
             };
-
+            
+            var takePicture = function() {
+                return pictureService.takePicture()
+                    .catch(function() {
+                        $location.path('/app/');
+                    })
+                    .then(function(imageUri) {
+                        $scope.imageUri = imageUri;
+                    });
+            };
+            
             $scope.setImageSource = function (source) {
                 $scope.imageSource = source;
                 takePicture(source)

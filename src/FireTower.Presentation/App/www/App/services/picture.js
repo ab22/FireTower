@@ -33,7 +33,6 @@
                         def.resolve(imageUri);
                     },
                     function(err) {
-                        alert("There was an error when taking a photo with the device's camera. " + err);
                         def.reject(err);
                     },
                     options);
