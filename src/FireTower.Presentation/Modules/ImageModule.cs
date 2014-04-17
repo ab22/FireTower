@@ -1,7 +1,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 using FireTower.Domain;
 using FireTower.Domain.Commands;
 using FireTower.Domain.Entities;
@@ -30,14 +29,11 @@ namespace FireTower.Presentation.Modules
                         file.Value.CopyTo(stream);
                         UserSession userSession = this.UserSession();
 
-                        Task.Run(() =>
-                                     {
-                                         Uri uri = imageRepository.Save(stream);
-                                         commandDispatcher.Dispatch(userSession,
-                                                                    new AddImageToDisaster(disasterId,
-                                                                                           uri));
-                                         stream.Dispose();
-                                     });
+                        Uri uri = imageRepository.Save(stream);
+                        commandDispatcher.Dispatch(userSession,
+                                                   new AddImageToDisaster(disasterId,
+                                                                          uri));
+                        stream.Dispose();
 
                         return null;
                     };
