@@ -1,6 +1,10 @@
 angular.module('firetower', ['ionic', 'google-maps'])
+
     .run(function($ionicPlatform) {
+
+
         $ionicPlatform.ready(function() {
+
             if (window.StatusBar) {
                 //StatusBar.hide();
                 StatusBar.styleDefault();
@@ -31,6 +35,7 @@ angular.module('firetower', ['ionic', 'google-maps'])
             }
         });
     })
+
     .config(['$httpProvider', function($httpProvider) {
         $httpProvider.interceptors.push(['$q', '$location', function($q, $location) {
             return {
@@ -97,10 +102,15 @@ angular.module('firetower', ['ionic', 'google-maps'])
                     }
                 }
             })
+            .state('app.login',{
+                url: "/login",
+                templateUrl: "App/views/login.html",
+                controller: "LoginController"
+            })
             .state('otherwise', {
                 url: '*path',
-                templateUrl: 'App/views/login.html',
-                controller: 'LoginController'
+                templateUrl: 'App/views/splash.html',
+                controller: 'SplashController'
             });
         OAuth.initialize('qZ4UVmAtk2MBWw1E5M4W1ru8QhA');
 
