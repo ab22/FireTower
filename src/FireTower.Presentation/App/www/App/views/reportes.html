@@ -8,8 +8,7 @@
             <div ng-click="viewReport(reporte.DisasterId)">
                 <div style="height: 35%" class="item item-image">
                     <img class="full-image" ng-src="{{reporte.Images[0]}}">
-                    <span class="custombadge">{{reporte.SeverityAverage}}</span>
-                    <!--<p><span>Severidad: </span></p>-->
+                    <span ng-show="reporte.SeverityAverage" class="custombadge">{{reporte.SeverityAverage}}</span>                    
                 </div>
                 <div class="row item">
                     <div class="col col-67">
