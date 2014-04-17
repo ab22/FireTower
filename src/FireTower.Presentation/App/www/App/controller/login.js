@@ -6,8 +6,8 @@ angular.module('firetower').controller('LoginController', ['$scope', '$timeout',
     $scope.facebookReady = false;
     
     //if the user is logged in, send them to home
-    if (localStorage.getItem("firetowertoken"))
-        $location.path("/app/reportes");
+//    if (localStorage.getItem("firetowertoken"))
+//        $location.path("/app/reportes");
     
     $scope.login = function () {
         OAuth.popup('facebook', function (err, result) {
