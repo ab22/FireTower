@@ -41,9 +41,9 @@
                 initializeMap();
 
                 pictureService.takePicture()
-                    .catch(function(err) {
-                        alert("camera error: " + err);
-                        $location.path('/app');
+                    .catch(function() {
+                        $location.path('/app/');
+                        alert("should be redirected to list.");
                     })
                     .then(function(imageUri) {
                         $scope.imageUri = imageUri;
