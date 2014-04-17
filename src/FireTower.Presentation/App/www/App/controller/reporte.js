@@ -83,9 +83,12 @@
 
             var init = function() {
 
-                $scope.loading = $ionicLoading.show({
+                $scope.loadingFire = $ionicLoading.show({
                     content: 'Cargando datos del incendio...',
-                    showBackdrop: false
+                    animation: 'fade-in',
+                    showBackdrop: false,
+                    maxWidth: 200,
+                    showDelay: 500
                 });
 
                 data.getReportById($stateParams.reporteId)
@@ -129,7 +132,7 @@
                     zoom: 15,
                     refresh: true
                 };
-                $scope.loading.hide();
+                $scope.loadingFire.hide();
             };
 
             $scope.isValidEmail = function(email) {
