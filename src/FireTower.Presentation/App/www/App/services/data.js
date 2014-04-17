@@ -31,6 +31,8 @@
             var url = baseUrl + db + '/collections/' + collection + '?apiKey=' + apiKey + '&q=' + JSON.stringify(query);            
             return $http.get(url).error(function(err) {
                 alert("http error: " + err);
+            }).success(function (d) {
+                alert("got data: " + d);
             });
         };
 
