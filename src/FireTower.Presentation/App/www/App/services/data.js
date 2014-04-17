@@ -17,15 +17,16 @@
                     {
                         $gte: fiveHoursBefore,
                         $lt: now
-                    },
-                "Location":
-                    {
-                        $near:
-                            {
-                                $geometry: { type: "Point", coordinates: [location.lat, location.lng] },
-                                $maxDistance: 500
-                            }
                     }
+                //,
+                //"Location":
+                //    {
+                //        $near:
+                //            {
+                //                $geometry: { type: "Point", coordinates: [location.lat, location.lng] },
+                //                $maxDistance: 500
+                //            }
+                //    }
             };
             
             var url = baseUrl + db + '/collections/' + collection + '?apiKey=' + apiKey + '&q=' + JSON.stringify(query);            
