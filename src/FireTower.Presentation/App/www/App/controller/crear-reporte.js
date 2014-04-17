@@ -42,7 +42,7 @@
 
                 pictureService.takePicture()
                     .catch(function(err) {
-                        alert(err);
+                        alert("camera error: " + err);
                         $location.path('/app');
                     })
                     .then(function(imageUri) {
@@ -51,7 +51,7 @@
                         locationService.getCurrentPosition()
                             .catch(function(err) {
                                 alert("Lo sentimos, pero no se puede crear un reporte sin ubicacion.");
-                                $location.path('/app');
+                                $location.path('/app/');
                             })
                             .then(function(locationData) {
 
