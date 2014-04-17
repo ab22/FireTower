@@ -27,9 +27,9 @@
                             }
                     }
             };
-
+            
             var url = baseUrl + db + '/collections/' + collection + '?apiKey=' + apiKey + '&q=' + JSON.stringify(query);
-            return $http.get(url);
+            return $http.get(url);            
         };
 
         factory.getDisasterByFetchToken = function(fetchToken) {

@@ -35,6 +35,8 @@ angular.module('firetower')
                     if (cachedData) {
                         setIncendios(cachedData);
                         $scope.loadingFires.hide();
+                    }else {
+                        alert("No cache.");
                     }
                 }).catch(function (err) {                    
                     $scope.loadingFires.hide();
@@ -43,9 +45,9 @@ angular.module('firetower')
 
                 locationService.getCurrentPosition()
                     .then(function (locationResponse) {
-                        alert(JSON.stringify(locationResponse));
                         viewStore.getAllReports(locationResponse)
-                            .success(function(dataFromServer) {
+                            .success(function (dataFromServer) {
+                                alert(JSON.stringify(dataFromServer));
                                 cache.set("reports", dataFromServer);
                                 setIncendios(dataFromServer);
                                 $scope.loadingFires.hide();
