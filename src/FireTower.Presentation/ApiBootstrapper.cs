@@ -31,7 +31,8 @@ namespace FireTower.Presentation
                 AddBootstrapperTask(new ConfigureNotificationEmails());
                 AddBootstrapperTask(new ConfigureEventHandlerDependencies());
             }
-            else
+
+            if(IsApi())
             {
                 AddBootstrapperTask(new ConfigureApiDependencies(QueueName));
                 AddBootstrapperTask(new ConfigureAutomapperMappings());
@@ -40,9 +41,12 @@ namespace FireTower.Presentation
 
         static bool IsWorker()
         {
-            bool isWorkerAndShouldHandleCommandsSynchronously
-                = (ConfigurationManager.AppSettings["Roles"] ?? "").ToLower().Contains("worker");
-            return isWorkerAndShouldHandleCommandsSynchronously;
+            return (ConfigurationManager.AppSettings["Roles"] ?? "").ToLower().Contains("worker");
+        }
+
+        static bool IsApi()
+        {
+            return (ConfigurationManager.AppSettings["Roles"] ?? "").ToLower().Contains("api");
         }
 
         protected override IEnumerable<INancyModule> GetAllModules(ILifetimeScope container)
