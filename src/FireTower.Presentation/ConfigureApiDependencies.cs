@@ -30,6 +30,7 @@ namespace FireTower.Presentation
                                builder.RegisterType<ApiUserMapper>().As<IApiUserMapper<Guid>>();
                                builder.RegisterType<AmazonImageRepository>().As<IImageRepository>();
                                builder.RegisterType<PubNubNotificationPublisher>().As<INotificationPublisher>();
+                               builder.RegisterInstance(new RestSharpIronMqClientAdapter("commands"));
 
                                ChooseCommandDispatcherBasedOnRoleType(builder);
                                SelfSubscribeWorkerToQueue();
