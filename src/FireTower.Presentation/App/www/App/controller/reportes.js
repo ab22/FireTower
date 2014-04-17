@@ -39,7 +39,8 @@ angular.module('firetower')
                 });
 
                 locationService.getCurrentPosition()
-                    .then(function(locationResponse) {
+                    .then(function (locationResponse) {
+                        debugger;
                         data.getAllReports(locationResponse)
                             .success(function(dataFromServer) {
                                 cache.set("reports", dataFromServer);
