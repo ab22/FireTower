@@ -19,7 +19,7 @@ namespace FireTower.ViewStore
             CreatedDate = createdDate;
             LocationDescription = locationDescription;
             FetchToken = fetchToken;
-            Location = new Location {Latitude = latitude, Longitude = longitude};
+            Location = new[] {longitude, latitude};
             SeverityVotes = new int[] {};
             Images = new string[] {};
         }
@@ -29,7 +29,7 @@ namespace FireTower.ViewStore
         public DateTime CreatedDate { get; set; }
         public string LocationDescription { get; set; }
         public string FetchToken { get; set; }
-        public Location Location { get; set; }
+        public double[] Location { get; set; }
         public int[] SeverityVotes { get; set; }
         public string[] Images { get; set; }
 
