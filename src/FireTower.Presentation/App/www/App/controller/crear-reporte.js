@@ -43,7 +43,6 @@
                 pictureService.takePicture()
                     .catch(function() {
                         $location.path('/app/');
-                        alert("should be redirected to list.");
                     })
                     .then(function(imageUri) {
                         $scope.imageUri = imageUri;
