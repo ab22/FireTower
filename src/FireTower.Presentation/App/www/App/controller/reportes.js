@@ -36,6 +36,9 @@ angular.module('firetower')
                         setIncendios(cachedData);
                         $scope.loadingFires.hide();
                     }
+                }).catch(function (err) {                    
+                    $scope.loadingFires.hide();
+                    alert(err);
                 });
 
                 locationService.getCurrentPosition()
@@ -51,6 +54,7 @@ angular.module('firetower')
                                 showMessage('Error', 'No hemos podido cargar los reportes. Estas conectado a internet?');
                             });
                     }).catch(function () {
+                        $scope.loadingFires.hide();
                         alert("Your location could not be determined. Data could not be loaded.");
                     });
 
