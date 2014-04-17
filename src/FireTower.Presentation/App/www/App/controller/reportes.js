@@ -1,6 +1,6 @@
 angular.module('firetower')
     .controller('ReportesController', ['LocationService', 'cache', '$scope', '$ionicLoading', 'data', 'Math', '$ionicPopup', '$http', '$location',
-        function(locationService, cache, $scope, $ionicLoading, data, Math, $ionicPopup, $http, $location) {
+        function(locationService, cache, $scope, $ionicLoading, viewStore, Math, $ionicPopup, $http, $location) {
 
             $scope.viewReport = function(disasterId) {
                 $location.path("/app/reporte/" + disasterId);
@@ -42,8 +42,9 @@ angular.module('firetower')
                 });
 
                 locationService.getCurrentPosition()
-                    .then(function (locationResponse) {                        
-                        data.getAllReports(locationResponse)
+                    .then(function (locationResponse) {
+                        alert(JSON.stringify(locationResponse));
+                        viewStore.getAllReports(locationResponse)
                             .success(function(dataFromServer) {
                                 cache.set("reports", dataFromServer);
                                 setIncendios(dataFromServer);
