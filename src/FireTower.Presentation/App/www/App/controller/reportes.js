@@ -44,7 +44,6 @@ angular.module('firetower')
 
                 locationService.getCurrentPosition()
                     .then(function(locationResponse) {
-                        alert("Got location");
                         viewStore.getAllReports(locationResponse)
                             .success(function (dataFromServer) {
                                 alert("Got fires");
