@@ -1,4 +1,13 @@
-﻿.angular-google-map-container{
+﻿.incendio-card {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    box-shadow: 2px 2px 5px #EEEEEE;
+}
+.incendio-card .incendio-card-footer { padding-top: 0px; }
+.location-description { font-weight: bold;padding-top: 7px; }
+.incendio-age { text-align: right;width: 100%;padding-top: 7px;padding-bottom: 3px;font-size: .8em;color: #666666;}
+
+.angular-google-map-container{
     height: 81%
 }
 
