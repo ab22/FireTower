@@ -40,33 +40,35 @@
 
                 initializeMap();
 
-                pictureService.takePicture().then(function(imageUri) {
-                    $scope.imageUri = imageUri;
-                }).catch(function() {
-                    $location.path('/app');
-                }).then(function() {
+                pictureService.takePicture()
+                    .catch(function(err) {
+                        alert(err);
+                        $location.path('/app');
+                    })
+                    .then(function(imageUri) {
+                        $scope.imageUri = imageUri;
 
-                    locationService.getCurrentPosition()
-                        .catch(function(err) {
-                            alert("Lo sentimos, pero no se puede crear un reporte sin ubicacion.");
-                            $location.path('/app');
-                        })
-                        .then(function(locationData) {
+                        locationService.getCurrentPosition()
+                            .catch(function(err) {
+                                alert("Lo sentimos, pero no se puede crear un reporte sin ubicacion.");
+                                $location.path('/app');
+                            })
+                            .then(function(locationData) {
 
-                            setDisasterPosition(locationData.lat, locationData.lng);
+                                setDisasterPosition(locationData.lat, locationData.lng);
 
-                            $scope.map = {
-                                center: $scope.location,
-                                zoom: 15,
-                                maptype: "satellite"
-                            };
+                                $scope.map = {
+                                    center: $scope.location,
+                                    zoom: 15,
+                                    maptype: "satellite"
+                                };
 
-                            $scope.marker.coords = {
-                                latitude: $scope.location.latitude,
-                                longitude: $scope.location.longitude
-                            };
-                        });
-                });
+                                $scope.marker.coords = {
+                                    latitude: $scope.location.latitude,
+                                    longitude: $scope.location.longitude
+                                };
+                            });
+                    });
             };
             
             $scope.setImageSource = function (source) {
