@@ -39,7 +39,7 @@ angular.module('firetower')
                 });
 
                 data.getAllReports()
-                    .success(function(dataFromServer) {
+                    .success(function (dataFromServer) {
                         cache.set("reports", dataFromServer);
                         setIncendios(dataFromServer);
                         $scope.loadingFires.hide();
