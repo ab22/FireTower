@@ -52,14 +52,20 @@ namespace FireTower.Presentation
         protected override IEnumerable<INancyModule> GetAllModules(ILifetimeScope container)
         {
             Type workerModuleType = typeof (NancyWorkerModule);
+
+            var nancyModules = new List<INancyModule>();
+
             if (IsWorker())
             {
-                return base.GetAllModules(container).Where(x => x.GetType().BaseType == workerModuleType);
+                nancyModules.AddRange(base.GetAllModules(container).Where(x => x.GetType().BaseType == workerModuleType));
             }
-            else
+
+            if(IsApi())
             {
-                return base.GetAllModules(container).Where(x => x.GetType().BaseType != workerModuleType);
+                nancyModules.AddRange(base.GetAllModules(container).Where(x => x.GetType().BaseType != workerModuleType));
             }
+
+            return nancyModules;
         }
 
         protected override void ApplicationStartup(ILifetimeScope container, IPipelines pipelines)
