@@ -26,7 +26,7 @@
                 </p>
                 <ul class="list">
 
-                    <li class="item item-toggle">
+                    <li ng-hide class="item item-toggle">
                         Controlado
                         <label class="toggle toggle-assertive">
                             <input ng-model="isControlled" ng-change="updateControlledFire()" type="checkbox">
@@ -35,7 +35,7 @@
                             </div>
                         </label>
                     </li>
-                    <li class="item item-toggle">
+                    <li ng-hide class="item item-toggle">
                         Apagado
                         <label class="toggle toggle-assertive">
                             <input ng-model="hasBeenPutOut" ng-change="updatePutOutFire()"type="checkbox">
