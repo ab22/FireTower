@@ -110,8 +110,7 @@
 
             var formatAndBindData = function(data) {
                 disasterId = data.DisasterId;
-                var formattedDate = data.CreatedDate.$date;
-                formattedDate = moment((new Date()).toLocaleDateString()).fromNow();
+                var formattedDate = moment(data.CreatedDate.$date).fromNow();
                 data.CreatedDate.$dateformatted = formattedDate;
                 data.SeverityAverage = math.Average(data.SeverityVotes);
 
