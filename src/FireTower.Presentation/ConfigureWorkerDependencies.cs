@@ -1,4 +1,5 @@
 using System;
+using System.Configuration;
 using System.Web;
 using Autofac;
 using BlingBag;
@@ -61,7 +62,10 @@ namespace FireTower.Presentation
         {
             if (HttpContext.Current != null)
             {
-                Uri url = HttpContext.Current.Request.Url;
+                var urlFromConfig = ConfigurationManager.AppSettings["hostname"];
+                Uri url = !string.IsNullOrEmpty(urlFromConfig)
+                              ? new Uri(urlFromConfig)
+                              : HttpContext.Current.Request.Url;
                 new IronMqSubscriber().Subscribe(_queueName,
                                                  string.Format("{0}://{1}:{2}/work", url.Scheme,
                                                                url.Host, url.Port));

@@ -7,15 +7,37 @@
         var db = 'appharbor_ab50c767-930d-4b7d-9571-dd2a0b62d5a9';
         var collection = 'DisasterViewModel';
 
-        factory.getAllReports = function() {
-            //5 hours before
+        factory.getAllReports = function(location) {
+
             var fiveHoursBefore = moment().add("hours", -5).toISOString();
             var now = moment().toISOString();
-            var url = baseUrl + db + '/collections/' + collection + '?apiKey=' + apiKey + '&q={"CreatedDate":{$gte:"' + fiveHoursBefore + '",$lt:"' + now + '"}}';
-            return $http.get(url);
+
+            var query = {
+                "CreatedDate":
+                    {
+                        $gte: fiveHoursBefore,
+                        $lt: now
+                    }
+                ,
+                "Location":
+                    {
+                        $near:
+                            {
+                                $geometry: { type: "Point", coordinates: [location.lat, location.lng] },
+                                $maxDistance: 10000
+                            }
+                    }
+            };
+            
+            var url = baseUrl + db + '/collections/' + collection + '?apiKey=' + apiKey + '&q=' + encodeURIComponent(JSON.stringify(query));
+            return $http.get(url).error(function(err) {
+                alert("http error: " + err);
+            }).success(function (d) {
+                alert("got data: " + d);
+            });
         };
 
-        factory.getDisasterByFetchToken = function (fetchToken) {
+        factory.getDisasterByFetchToken = function(fetchToken) {
             var url = baseUrl + db + '/collections/' + collection + '?apiKey=' + apiKey + '&q={"FetchToken":"' + fetchToken + '"}';
             return $http.get(url);
         };

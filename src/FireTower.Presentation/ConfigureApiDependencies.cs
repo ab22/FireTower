@@ -31,8 +31,8 @@ namespace FireTower.Presentation
                                builder.RegisterType<TokenExpirationProvider>().As<ITokenExpirationProvider>();
                                builder.RegisterType<AmazonImageRepository>().As<IImageRepository>();                               
                                builder.RegisterType<ApiUserMapper>().As<IApiUserMapper<Guid>>();
-                               builder.RegisterType<IronMqCommandDispatcher>().As<ICommandDispatcher>();
-                               builder.RegisterInstance(new RestSharpIronMqClientAdapter(_queueName)).As<IIronMqPusher>();
+                               //builder.RegisterType<IronMqCommandDispatcher>().As<ICommandDispatcher>();
+                               //builder.RegisterInstance(new RestSharpIronMqClientAdapter(_queueName)).As<IIronMqPusher>();
                            };
             }
         }

@@ -25,38 +25,48 @@ namespace FireTower.Presentation
 
         public ApiBootstrapper()
         {
-            if (IsWorker())
-            {
+            //if (IsWorker())
+            //{
                 AddBootstrapperTask(new ConfigureWorkerDependencies(QueueName));
                 AddBootstrapperTask(new ConfigureNotificationEmails());
                 AddBootstrapperTask(new ConfigureEventHandlerDependencies());
-            }
-            else
-            {
+            //}
+
+            //if(IsApi())
+            //{
                 AddBootstrapperTask(new ConfigureApiDependencies(QueueName));
                 AddBootstrapperTask(new ConfigureAutomapperMappings());
-            }
+            //}
         }
 
-        static bool IsWorker()
-        {
-            bool isWorkerAndShouldHandleCommandsSynchronously
-                = (ConfigurationManager.AppSettings["Roles"] ?? "").ToLower().Contains("worker");
-            return isWorkerAndShouldHandleCommandsSynchronously;
-        }
+        //static bool IsWorker()
+        //{
+        //    return (ConfigurationManager.AppSettings["Roles"] ?? "").ToLower().Contains("worker");
+        //}
 
-        protected override IEnumerable<INancyModule> GetAllModules(ILifetimeScope container)
-        {
-            Type workerModuleType = typeof (NancyWorkerModule);
-            if (IsWorker())
-            {
-                return base.GetAllModules(container).Where(x => x.GetType().BaseType == workerModuleType);
-            }
-            else
-            {
-                return base.GetAllModules(container).Where(x => x.GetType().BaseType != workerModuleType);
-            }
-        }
+        //static bool IsApi()
+        //{
+        //    return (ConfigurationManager.AppSettings["Roles"] ?? "").ToLower().Contains("api");
+        //}
+
+        //protected override IEnumerable<INancyModule> GetAllModules(ILifetimeScope container)
+        //{
+        //    Type workerModuleType = typeof (NancyWorkerModule);
+
+        //    var nancyModules = new List<INancyModule>();
+
+        //    if (IsWorker())
+        //    {
+        //        nancyModules.AddRange(base.GetAllModules(container).Where(x => x.GetType().BaseType == workerModuleType));
+        //    }
+
+        //    if(IsApi())
+        //    {
+        //        nancyModules.AddRange(base.GetAllModules(container).Where(x => x.GetType().BaseType != workerModuleType));
+        //    }
+
+        //    return nancyModules;
+        //}
 
         protected override void ApplicationStartup(ILifetimeScope container, IPipelines pipelines)
         {
