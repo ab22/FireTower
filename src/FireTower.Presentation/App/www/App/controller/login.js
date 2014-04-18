@@ -1,7 +1,7 @@
 ﻿/// <reference path="login.js" />
 angular.module('firetower').controller('LoginController',
     ['$scope', '$timeout', '$location', 'userManagement', 'loginService', '$ionicLoading',
-        function($scope, $timeout, $location, user, loginService, $ionicLoading) {            
+        function($scope, $timeout, $location, user, loginService, $ionicLoading) {
             $scope.logged = false;
             $scope.salutation = false;
             $scope.byebye = false;
@@ -10,17 +10,27 @@ angular.module('firetower').controller('LoginController',
             if (localStorage.getItem("firetowertoken"))
                 $location.path("/app/reportes");
 
-            $scope.data = {};
+            $scope.data = { };
 
             $scope.facebookLogin = function() {
-                OAuth.popup('facebook', function(err, result) {
-                    result.get('/me').done(function(data) {
-                        user.setUser(data);
+                openFB.login('email',
+                    function() {
+                        openFB.api({
+                            path: '/me',
+                            success: function(data) {
+                                user.setUser(data);
+                            },
+                            error: function(error) {
+                                alert('Facebook /me failed: ' + error.error_description);
+                            }
+                        });
+                    },
+                    function(error) {
+                        alert('Facebook login failed: ' + error.error_description);
                     });
-                });
             };
 
-            $scope.basicLogin = function () {
+            $scope.basicLogin = function() {
                 $scope.loginLoading = $ionicLoading.show({
                     content: 'Iniciando Sesion...',
                     animation: 'fade-in',
