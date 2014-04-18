@@ -17,11 +17,15 @@
                 </span>
             </div>
             <div class="item item-image">
-                <google-map center="map.center" zoom="map.zoom" refresh="map.refresh">
-                    <markers>
-                        <marker coords="marker.coords"></marker>
-                    </markers>
-                </google-map>
+                <a ng-href="{{coordsFormat}}" target="_blank">
+
+                    <google-map center="map.center" zoom="map.zoom" refresh="map.refresh">
+                        <markers>
+                            <marker coords="marker.coords"></marker>
+                        </markers>
+                    </google-map>
+                </a>
+
             </div>
 
             <!--<div class="item item-body">              -->
