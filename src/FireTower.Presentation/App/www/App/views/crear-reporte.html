@@ -1,6 +1,5 @@
 <ion-view title="Reportar un incendio">
     <ion-content class="has-header" ng-show="imageSource">
-        Arrastra el pin con tu dedo hacia la ubicacion del incendio.
         <div class="item item-text-wrap">
             {{LocationDescription}}
         </div>
@@ -9,6 +8,7 @@
                 <marker coords="marker.coords" options="marker.options" events="marker.events"></marker>
             </markers>
         </google-map>
+        <p style="font-weight: bold; font-size: 9pt; text-align: center;color: #88888;margin-top: 5px;">Arrastra el pin con tu dedo hacia la ubicacion del incendio.</p>
         
         
     </ion-content>
