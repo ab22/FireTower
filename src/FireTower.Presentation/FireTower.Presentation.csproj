@@ -175,6 +175,7 @@
     <Content Include="App\www\Content\js\ionic.min.js" />
     <Content Include="App\www\Content\js\jquery-2.1.0.min.js" />
     <Content Include="App\www\Content\js\moment.min.js" />
+    <Content Include="App\www\Content\js\oauth-phonegap.js" />
     <Content Include="App\www\Content\js\oauth.min.js" />
     <Content Include="App\www\Content\js\underscore-min.js" />
     <Content Include="App\www\Content\login_1.png" />
