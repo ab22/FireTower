@@ -8,8 +8,8 @@ angular
                 if (localStorage.getItem("firetowertoken")){
                     $location.path("/app/reportes");
                 }
-                else{
-                    $location.path("/app/login");
+                else{                    
+                    $location.path("/login");
                 }
 
 

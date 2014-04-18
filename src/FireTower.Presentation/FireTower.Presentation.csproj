@@ -118,6 +118,7 @@
     <Content Include="App\www\App\controller\menu.js" />
     <Content Include="App\www\App\controller\reporte.js" />
     <Content Include="App\www\App\controller\reportes.js" />
+    <Content Include="App\www\App\controller\splash.js" />
     <Content Include="App\www\App\filters\reverse.js" />
     <Content Include="App\www\App\js\angular\angular-route.js" />
     <Content Include="App\www\App\js\angular\angular.js" />
@@ -140,6 +141,7 @@
     <Content Include="App\www\App\views\menu.html" />
     <Content Include="App\www\App\views\reporte.html" />
     <Content Include="App\www\App\views\reportes.html" />
+    <Content Include="App\www\App\views\splash.html" />
     <Content Include="App\www\Content\css\ionic.css" />
     <Content Include="App\www\Content\css\ionic.min.css" />
     <Content Include="App\www\Content\css\style.css" />

@@ -29,7 +29,7 @@ angular.module('firetower', ['ionic', 'google-maps'])
                 }
 
                 loadScript("app/js/cordova-2.0.0.js", function () {
-                    alert("Loaded cordova-2.0.0.js");
+                    //alert("Loaded cordova-2.0.0.js");
                 });
 
             }
@@ -56,12 +56,22 @@ angular.module('firetower', ['ionic', 'google-maps'])
                 'request': function(config) {
                     console.log(config.method + " " + config.url);
                     return config || $q.when(config);
-                }
+                },
+                'requestError': function (rejection) {
+                    debugger;
+                    console.log(rejection);
+                    return $q.reject(rejection);
+            }
             };
         }]);
     }])
     .config(['$stateProvider', function($stateProvider) {
         $stateProvider
+            .state('login', {
+                url: "/login",
+                templateUrl: "App/views/login.html",
+                controller: "LoginController"
+            })
             .state('app', {
                 url: "/app",
                 templateUrl: "App/views/menu.html",
@@ -101,11 +111,6 @@ angular.module('firetower', ['ionic', 'google-maps'])
                         controller: 'NewReportController'
                     }
                 }
-            })
-            .state('app.login',{
-                url: "/login",
-                templateUrl: "App/views/login.html",
-                controller: "LoginController"
             })
             .state('otherwise', {
                 url: '*path',
