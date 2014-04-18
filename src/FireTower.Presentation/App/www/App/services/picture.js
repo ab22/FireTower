@@ -21,11 +21,13 @@
                     sourceType = 1;
                 
                 var options = {
-                    quality: 50,
+                    quality: 40,
                     destinationType: 1, //FILE_URI
                     sourceType: sourceType,
                     encodingType: 0, //JPEG
-                    MediaType: 0 //IMAGE
+                    MediaType: 0, //IMAGE
+                    targetWidth:320,
+                    targetHeight:300
                 };
 
                 navigator.camera.getPicture(
