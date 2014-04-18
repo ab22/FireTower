@@ -20,7 +20,12 @@
                 $scope.map = {
                     center: $scope.location,
                     zoom: 1,
-                    maptype: "satellite"
+                    options: {
+                        draggable: false,
+                        minZoom: 15,
+                        disableDefaultUI: true,
+                        mapTypeId: google.maps.MapTypeId.HYBRID
+                    }
                 };
 
                 $scope.marker = {
@@ -36,20 +41,18 @@
                 };
             };
 
-            var getLocation = function () {
+            var getLocation = function() {
                 locationService.getCurrentPosition()
                     .catch(function(err) {
                         alert("Lo sentimos, pero no se puede crear un reporte sin ubicacion.");
                         $location.path('/app/');
                     })
                     .then(function(locationData) {
-
                         setDisasterPosition(locationData.lat, locationData.lng);
 
                         $scope.map = {
                             center: $scope.location,
-                            zoom: 15,
-                            maptype: "satellite"
+                            zoom: 15,                            
                         };
 
                         $scope.marker.coords = {
@@ -58,7 +61,7 @@
                         };
                     });
             };
-            
+
             var takePicture = function() {
                 return pictureService.takePicture()
                     .catch(function() {
@@ -68,15 +71,15 @@
                         $scope.imageUri = imageUri;
                     });
             };
-            
-            $scope.setImageSource = function (source) {
+
+            $scope.setImageSource = function(source) {
                 $scope.imageSource = source;
                 takePicture(source)
                     .then(function() {
                         getLocation();
                     });
             };
-            
+
             var init = function() {
                 initializeMap();
             };
