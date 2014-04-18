@@ -111,7 +111,9 @@
       <Link>AutoMapper.Net4.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="App\config.xml" />
+    <Content Include="App\config.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="App\www\App\config.js" />
     <Content Include="App\www\App\controller\crear-reporte.js" />
     <Content Include="App\www\App\controller\login.js" />
@@ -179,6 +181,7 @@
     <Content Include="App\www\Content\js\oauth.min.js" />
     <Content Include="App\www\Content\js\underscore-min.js" />
     <Content Include="App\www\Content\login_1.png" />
+    <Content Include="App\www\cordova.js" />
     <Content Include="App\www\index.html" />
     <Content Include="App\www\App\services\settings.js" />
     <Content Include="Content\css\ionic.css" />
