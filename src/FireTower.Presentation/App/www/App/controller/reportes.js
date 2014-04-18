@@ -7,9 +7,10 @@ angular.module('firetower')
             };
 
             $scope.refreshReports = function() {
-                getAllReports();
-                $scope.$broadcast('scroll.refreshComplete');
-                $scope.$broadcast('scroll.resize');
+                getAllReports(function () {
+                    $scope.$broadcast('scroll.refreshComplete');
+                    $scope.$broadcast('scroll.resize');
+                });                
             };
 
             var setIncendios = function(data) {
@@ -22,15 +23,17 @@ angular.module('firetower')
                 $scope.reportes = data;
             };
 
-            var getAllReports = function() {
-                $scope.loadingFires = $ionicLoading.show({
-                    content: 'Cargando datos de incendios...',
-                    animation: 'fade-in',
-                    showBackdrop: false,
-                    maxWidth: 200,
-                    showDelay: 500
-                });
-
+            var getAllReports = function(callback) {
+                if (!callback) {
+                    $scope.loadingFires = $ionicLoading.show({
+                        content: 'Cargando datos de incendios...',
+                        animation: 'fade-in',
+                        showBackdrop: false,
+                        maxWidth: 200,
+                        showDelay: 500
+                    });
+                }
+                
                 cache.get("reports")
                     .then(function(cachedData) {
                         if (cachedData) {
@@ -39,7 +42,6 @@ angular.module('firetower')
                         }
                     }).catch(function(err) {
                         $scope.loadingFires.hide();
-                        alert(err);
                     });
 
                 var getDisastersForThisPosition = function(locationResponse) {
@@ -48,10 +50,12 @@ angular.module('firetower')
                             cache.set("reports", dataFromServer);
                             setIncendios(dataFromServer);
                             $scope.loadingFires.hide();
+                            if (callback) callback();
                         })
                         .error(function() {
                             $scope.loadingFires.hide();
                             showMessage('Error', 'No hemos podido cargar los reportes. Estas conectado a internet?');
+                            if (callback) callback();
                         });
 
                 };
