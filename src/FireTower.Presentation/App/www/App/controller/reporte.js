@@ -117,6 +117,7 @@
 
                 $scope.reporte = data;
                 $scope.marker.coords = { latitude: data.Location[1], longitude: data.Location[0] };
+                $scope.coordsFormat = "http://maps.google.com/maps?q="+$scope.marker.coords.latitude+","+$scope.marker.coords.longitude;
 
                 $scope.map = {
                     center: $scope.marker.coords,
@@ -125,6 +126,10 @@
                 };
                 $scope.loadingFire.hide();
             };
+
+            $scope.loadMaps = function(){
+                window.location = $scope.coordsFormat;
+            }
 
             $scope.isValidEmail = function(email) {
                 var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
