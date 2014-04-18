@@ -36,8 +36,8 @@ namespace FireTower.API.AAT
                               new CreateNewDisasterRequest
                                   {
                                       LocationDescription = "Santa Ana",
-                                      Latitude = 123.45,
-                                      Longitude = 31.32,
+                                      Latitude = 14.083300000000001,
+                                      Longitude = -87.2167,
                                       FetchToken = _fetchToken
                                   });
 

@@ -16,7 +16,7 @@ namespace FireTower.ViewStore
         {
             DisasterId = disasterId.ToString();
             UserId = userId.ToString();
-            CreatedDate = createdDate;
+            CreatedDate = createdDate.ToUniversalTime();
             LocationDescription = locationDescription;
             FetchToken = fetchToken;
             Location = new[] {longitude, latitude};

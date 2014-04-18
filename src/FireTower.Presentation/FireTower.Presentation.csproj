@@ -144,9 +144,11 @@
     <Content Include="App\www\Content\css\ionic.min.css" />
     <Content Include="App\www\Content\css\style.css" />
     <Content Include="App\www\Content\facebook_small.png" />
-    <Content Include="App\www\Content\firebackground.jpg" />
-    <Content Include="App\www\Content\fireLogo.png" />
-    <Content Include="App\www\Content\FireWatch_logo.png" />
+    <Content Include="App\www\Content\flame1.png" />
+    <Content Include="App\www\Content\flame2.png" />
+    <Content Include="App\www\Content\flame3.png" />
+    <Content Include="App\www\Content\flame4.png" />
+    <Content Include="App\www\Content\flame5.png" />
     <Content Include="App\www\Content\fonts\ionicons.svg" />
     <Content Include="App\www\Content\js\angular-facebook-phonegap.js" />
     <Content Include="App\www\Content\js\angular-facebook.js" />

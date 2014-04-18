@@ -1,65 +1,90 @@
-﻿.incendio-card {
-    margin-top: 5px;
-    margin-bottom: 15px;
+﻿.severity-selector { padding: 30px; }
+
+.severity {
+    padding-top: 2px;
+    padding-left: 2px;
+    margin: auto 20px;
+}
+
+.severity .selected {
+    background-color: white;
+    border: solid 3px orange;
+    border-radius: 30px;
+    box-shadow: 2px 2px 2px #666666;
+    color: white;        
+}
+
+.incendio-card {
     box-shadow: 2px 2px 5px #EEEEEE;
+    margin-bottom: 15px;
+    margin-top: 5px;
 }
+
 .incendio-card .incendio-card-footer { padding-top: 0px; }
-.location-description { font-weight: bold;padding-top: 7px; }
-.incendio-age { text-align: right;width: 100%;padding-top: 7px;padding-bottom: 3px;font-size: .8em;color: #666666;}
 
-.angular-google-map-container{
-    height: 81%
+.location-description {
+    font-weight: bold;
+    padding-top: 7px;
 }
 
-.card-image {
-    height: 200px;
+.incendio-age {
+    color: #666666;
+    font-size: .8em;
+    padding-bottom: 3px;
+    padding-top: 7px;
+    text-align: right;
+    width: 100%;
 }
+
+.angular-google-map-container { height: 81% }
+
+.card-image { height: 200px; }
 
 .facebook_button {
-    display: inline-block;
-
     background: #627aac url(facebook_small.png) left no-repeat;
 
-    border-top: 1px solid #29447e;
-    border-right: 1px solid #29447e;
     border-bottom: 1px solid #1a356e;
+
     border-left: none;
-
-    height: 40px;
-
-    padding-right: 7px;
-    padding-left: 29px;
-
-    font-weight: bold;
-    font-size: 20px;
+    border-right: 1px solid #29447e;
+    border-top: 1px solid #29447e;
     color: white;
-    text-decoration: none;
-    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
-    line-height: 22px;
 
     cursor: pointer;
-}
 
-.custombadge{
-    color:white;
-    background-color:red;
-    border: solid 3px white;
-    bottom: 15px;
-    right: 15px;
-    z-index: 1;
-    position:absolute;
-    border-radius: 30px;
-    width:50px;
-    height:50px;
-    text-align: center;
-    line-height: 45px;
+    display: inline-block;
+    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+
+    font-size: 20px;
     font-weight: bold;
-    font-size: 40px;
-    box-shadow: 2px 2px 2px #666666;
+    height: 40px;
+    line-height: 22px;
+    padding-left: 29px;
+    padding-right: 7px;
+
+    text-decoration: none;
 }
 
-#loginContent{
+.custombadge {
+    background-color: red;
+    border: solid 3px white;
+    border-radius: 30px;
+    bottom: 15px;
+    box-shadow: 2px 2px 2px #666666;
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    height: 50px;
+    line-height: 45px;
+    position: absolute;
+    right: 15px;
+    text-align: center;
+    width: 50px;
+    z-index: 1;
+}
+
+#loginContent {
     background-color: #ffa10c;
-    background-size:cover;
-    position:fixed;
+    background-size: cover;
+    position: fixed;
 }

@@ -11,10 +11,10 @@
             <div class="item item-divider">
                 ¿Qué tan severo es el fuego?
             </div>
-            <div class="item tabs tabs-secondary tabs-icon-left">
-                <a class="tab-item" ng-repeat="value in Severities" ng-click="saveSeverity(value)">
-                    <i class="icon">{{value}}</i>
-                </a>
+            <div class="severity-selector">
+                <span class="severity" ng-repeat="value in Severities" ng-click="saveSeverity(value)">
+                    <img ng-class="{selected:value==selectedSeverity}" src="Content/flame{{value}}.png"/>                    
+                </span>
             </div>
             <div class="item item-image">
                 <google-map center="map.center" zoom="map.zoom" refresh="map.refresh">
