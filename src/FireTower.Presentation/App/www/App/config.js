@@ -117,7 +117,9 @@ angular.module('firetower', ['ionic', 'google-maps'])
                 templateUrl: 'App/views/splash.html',
                 controller: 'SplashController'
             });
-        OAuth.initialize('qZ4UVmAtk2MBWw1E5M4W1ru8QhA');
 
+
+        //OAuth.initialize('qZ4UVmAtk2MBWw1E5M4W1ru8QhA');
+        openFB.init('294203754077185');
 
     }]);

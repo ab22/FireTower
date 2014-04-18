@@ -179,9 +179,11 @@
     <Content Include="App\www\Content\js\moment.min.js" />
     <Content Include="App\www\Content\js\oauth-phonegap.js" />
     <Content Include="App\www\Content\js\oauth.min.js" />
+    <Content Include="App\www\Content\js\openFB.js" />
     <Content Include="App\www\Content\js\underscore-min.js" />
     <Content Include="App\www\Content\login_1.png" />
     <Content Include="App\www\cordova.js" />
+    <Content Include="App\www\oauthcallback.html" />
     <Content Include="App\www\index.html" />
     <Content Include="App\www\App\services\settings.js" />
     <Content Include="Content\css\ionic.css" />
