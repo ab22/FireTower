@@ -15,12 +15,13 @@
                     <span ng-show="reporte.SeverityAverage" class="custombadge">{{reporte.SeverityAverage}}</span>                    
                 </div>
                 <div class="row item incendio-card-footer">
-                    <div class="col col-67 location-description">
+                    <div class="col location-description">
+                        <div class="incendio-age">
+                            {{reporte.CreatedDate.$dateformatted}}
+                        </div>
                         {{reporte.LocationDescription}}
                     </div>
-                    <div class="col incendio-age">
-                        {{reporte.CreatedDate.$dateformatted}}
-                    </div>
+                    
                 </div>
             </div>
         </div>

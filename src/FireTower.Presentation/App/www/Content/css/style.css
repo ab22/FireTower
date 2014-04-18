@@ -19,7 +19,7 @@
 .incendio-card {
     box-shadow: 2px 2px 5px #EEEEEE;
     margin-bottom: 15px;
-    margin-top: 5px;
+    margin-top: 5px;        
 }
 
 .incendio-card .incendio-card-footer { padding-top: 0px; }
@@ -27,15 +27,16 @@
 .location-description {
     font-weight: bold;
     padding-top: 7px;
+    white-space: normal;
 }
 
 .incendio-age {
     color: #666666;
     font-size: .8em;
-    padding-bottom: 3px;
-    padding-top: 7px;
+    padding-bottom: 5px;
     text-align: right;
-    width: 100%;
+    width: 100px;
+    float: right;    
 }
 
 .angular-google-map-container { height: 81% }
