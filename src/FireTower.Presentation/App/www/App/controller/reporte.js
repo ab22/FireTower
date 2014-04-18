@@ -96,12 +96,15 @@
                 };
 
                 $scope.map = {
-                    center: {
-                        latitude: 0,
-                        longitude: 1
-                    },
+                    center: { latitude: 0, longitude: 0},
                     zoom: 15,
-                    refresh: false
+                    refresh: false,
+                    options: {
+                        draggable: false,
+                        minZoom: 15,
+                        disableDefaultUI: true,
+                        mapTypeId: google.maps.MapTypeId.HYBRID
+                    }                    
                 };
             };
 
