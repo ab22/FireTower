@@ -1,10 +1,9 @@
 ﻿.severity-selector { padding: 30px; }
 
-.severity {
-    padding-top: 2px;
-    padding-left: 2px;
-    margin: auto 20px;
-}
+.severity-selector table{ width: 100%;}
+.severity-selector table td{padding: 5px;text-align: center;}
+
+.severity { display: block;}
 
 .severity .selected {
     background-color: white;
