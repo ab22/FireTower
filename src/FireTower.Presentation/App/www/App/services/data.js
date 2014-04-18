@@ -24,7 +24,7 @@
                         $near:
                             {
                                 $geometry: { type: "Point", coordinates: [location.lat, location.lng] },
-                                $maxDistance: 500
+                                $maxDistance: 10000
                             }
                     }
             };
