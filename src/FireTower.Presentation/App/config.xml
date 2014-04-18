@@ -16,7 +16,6 @@
     <preference name="auto-hide-splash-screen" value="true" />
     <feature name="StatusBar">
         <param name="ios-package" value="CDVStatusBar" onload="true" />
-
     </feature>
-
+  <access origin="http://graph.facebook.com" />
 </widget>
