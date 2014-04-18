@@ -1,5 +1,5 @@
 ﻿angular.module('firetower')
-    .factory('LocationService', ['$q', '$location', function ($q) {
+    .factory('LocationService', ['cache', '$q', '$location', function (cache, $q) {
 
         var getLocationAddress = function (lat, lng) {
             var def = $q.defer();
@@ -16,20 +16,23 @@
                 } else {
                     alert('Geocoder failed due to: ' + status);
                     def.reject('Geocoder failed due to: ' + status);
-                }
+                }                
             });
             return def.promise;
         };
 
         var getCurrentPosition = function() {
             var def = $q.defer();
-            if (navigator.geolocation) {
+            var lastPosition = cache.get("lastPosition");
+            def.resolve(lastPosition);
+            if (navigator.geolocation) {                    
                 navigator.geolocation.getCurrentPosition(function (position) {
-                    var data = {
+                    var newPosition = {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
                     };
-                    def.resolve(data);                    
+                    cache.set("lastPosition", newPosition);
+                    def.resolve(newPosition);                    
                 }, function (err) {
                     debugger;
                     def.reject(err);

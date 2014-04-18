@@ -2,38 +2,29 @@
     .controller('ReporteController', ['PictureService', '$location', '$scope', '$stateParams', '$ionicLoading', 'data', 'Math', 'DisasterService', '$ionicPopup', '$http',
         function(pictureService, $location, $scope, $stateParams, $ionicLoading, data, math, disasterService, $ionicPopup, $http) {
 
-        $scope.startCount = 5;
-        var disasterId = -1;
+            $scope.startCount = 5;
+            var disasterId = -1;
 
-        $scope.filedStars = [];
-        $scope.blankStars = [];
-        $scope.Severities = [1, 2, 3, 4, 5];
+            $scope.filedStars = [];
+            $scope.blankStars = [];
+            $scope.Severities = [1, 2, 3, 4, 5];
 
-        var getArray = function(n, startingNumber) {
-            var arr = [];
-            for (var i = 0; i < n; i++)
-                arr.push(startingNumber++);
-            return arr;
-        };
+            var getArray = function(n, startingNumber) {
+                var arr = [];
+                for (var i = 0; i < n; i++)
+                    arr.push(startingNumber++);
+                return arr;
+            };
 
-        $scope.saveSeverity = function(severityScore) {
-            DisasterService.SaveSeverity({
-                DisasterId: disasterId,
-                Severity: severityScore
-            })
-                .success(function(response) {
-                    $ionicPopup.alert({
-                        title: 'Exito',
-                        content: 'Su voto ha sido registrado.'
-                    });
-                })
-                .error(function(error) {
-                    alert(error);
-                });
-        };
+            $scope.saveSeverity = function(severityScore) {
 
-        var pictureSource;
-        var destinationType;
+                $scope.selectedSeverity = severityScore;
+
+                disasterService.SaveSeverity({
+                    DisasterId: disasterId,
+                    Severity: severityScore
+                });                    
+            };
 
 
             ionic.Platform.ready(function() {
@@ -53,19 +44,19 @@
                             showDelay: 500
                         });
 
-                        var progress = function (e) {
+                        var progress = function(e) {
                             var complete = 0;
                             if (e.lengthComputable) {
                                 complete = e.loaded / e.total;
                             } else {
                                 complete++;
-                            }                            
+                            }
                             //$scope.uploadIndicator.content = 'Guardando foto... ' + complete + "%";
                         };
 
                         disasterService.SaveImageToDisaster(disasterId, imageUri, progress).then(function() {
                             $scope.reporte.Images.push(imageUri);
-                            $scope.uploadIndicator.hide();                            
+                            $scope.uploadIndicator.hide();
                         }).catch(function() {
                             $scope.uploadIndicator.hide();
                             showMessage('Error', 'La foto no se pudo ser guardada.');

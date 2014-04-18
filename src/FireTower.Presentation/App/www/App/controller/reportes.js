@@ -42,25 +42,27 @@ angular.module('firetower')
                         alert(err);
                     });
 
+                var getDisastersForThisPosition = function(locationResponse) {
+                    viewStore.getAllReports(locationResponse)
+                        .success(function(dataFromServer) {
+                            cache.set("reports", dataFromServer);
+                            setIncendios(dataFromServer);
+                            $scope.loadingFires.hide();
+                        })
+                        .error(function() {
+                            $scope.loadingFires.hide();
+                            showMessage('Error', 'No hemos podido cargar los reportes. Estas conectado a internet?');
+                        });
+
+                };
+
+                var handleFailure = function() {
+                    $scope.loadingFires.hide();
+                    alert("Your location could not be determined. Data could not be loaded.");
+                };
+
                 locationService.getCurrentPosition()
-                    .then(function(locationResponse) {
-                        viewStore.getAllReports(locationResponse)
-                            .success(function (dataFromServer) {
-                                alert("Got fires");
-                                alert(JSON.stringify(dataFromServer));
-                                cache.set("reports", dataFromServer);
-                                setIncendios(dataFromServer);
-                                $scope.loadingFires.hide();
-                            })
-                            .error(function() {
-                                $scope.loadingFires.hide();
-                                showMessage('Error', 'No hemos podido cargar los reportes. Estas conectado a internet?');
-                            });
-                        
-                    }).catch(function() {
-                        $scope.loadingFires.hide();
-                        alert("Your location could not be determined. Data could not be loaded.");
-                    });
+                    .then(getDisastersForThisPosition, handleFailure, getDisastersForThisPosition);
 
             };
 

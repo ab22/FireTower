@@ -8,22 +8,13 @@
         var collection = 'DisasterViewModel';
 
         factory.getAllReports = function(location) {
-
-            var fiveHoursBefore = moment().add("hours", -5).toISOString();
-            var now = moment().toISOString();
-
-            var query = {
-                "CreatedDate":
-                    {
-                        $gte: fiveHoursBefore,
-                        $lt: now
-                    }
-                ,
+            
+            var query = {                
                 "Location":
                     {
                         $near:
                             {
-                                $geometry: { type: "Point", coordinates: [location.lat, location.lng] },
+                                $geometry: { type: "Point", coordinates: [location.lng, location.lat] },
                                 $maxDistance: 10000
                             }
                     }
@@ -33,7 +24,7 @@
             return $http.get(url).error(function(err) {
                 alert("http error: " + err);
             }).success(function (d) {
-                alert("got data: " + d);
+                console.log("got view model data: " + JSON.stringify(d));
             });
         };
 
