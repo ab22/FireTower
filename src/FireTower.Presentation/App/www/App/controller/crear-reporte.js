@@ -62,8 +62,8 @@
                     });
             };
 
-            var takePicture = function() {
-                return pictureService.takePicture()
+            var takePicture = function (source) {
+                return pictureService.takePicture(source)
                     .catch(function() {
                         $location.path('/app/');
                     })
