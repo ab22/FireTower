@@ -44,6 +44,7 @@ task :installios do
     sh "cordova plugin add org.apache.cordova.file-transfer"
     sh "cordova plugin add org.apache.cordova.geolocation"
     sh "cordova plugin add org.apache.cordova.statusbar"
+    sh "cordova plugin add org.apache.cordova.inappbrowser"
   end
 end
 
