@@ -34,7 +34,7 @@ namespace FireTower.Api.Specs.Users
                                         Name = "Byron Sommardahl",
                                         Email = _emailEmcilCom,
                                         EncryptedPassword = encryptedPassword.Password,
-                                        FacebookId = 123456,
+                                        FacebookId = "123456",
                                         Locale = "es_ES",
                                         Username = "bsommardahl",
                                         Verified = true

@@ -11,7 +11,7 @@ namespace FireTower.API.AAT
         static IRestResponse _result;
 
         Because of =
-            () => _result = Client.Execute("/login/facebook", Method.POST, new FacebookLoginRequest { FacebookId = 1817134133});
+            () => _result = Client.Execute("/login/facebook", Method.POST, new FacebookLoginRequest { FacebookId = "1817134133"});
 
         It should_be_unauthorized =
             () => _result.StatusCode.ShouldEqual(HttpStatusCode.Unauthorized);

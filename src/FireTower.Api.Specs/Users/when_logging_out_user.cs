@@ -12,7 +12,7 @@ namespace FireTower.Api.Specs.Users
 {
     public class when_logging_out_user : given_a_login_module_context
     {
-        const long FacebookId = 123456;
+        const string FacebookId = "123456";
         static readonly Guid Token = Guid.NewGuid();
         static BrowserResponse _result;
         static UserSession _matching;

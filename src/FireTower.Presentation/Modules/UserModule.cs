@@ -22,7 +22,7 @@ namespace FireTower.Presentation.Modules
                 {
                     bool exists = false;
                     bool activated = false;
-                    var facebookid = (long)Request.Query.facebookid;
+                    var facebookid = (string)Request.Query.facebookid;
                     try
                     {
                         var user =

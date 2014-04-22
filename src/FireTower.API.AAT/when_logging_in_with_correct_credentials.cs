@@ -10,7 +10,7 @@ namespace FireTower.API.AAT
     public class when_logging_in_with_facebook : given_an_api_server_context<CurrentlyDeveloping>
     {
         static IRestResponse<SuccessfulLoginResponse<Guid>> _result;
-        static long _facebookId;
+        static string _facebookId;
 
         Establish context = () => { _facebookId = RegisterUser(); };
 

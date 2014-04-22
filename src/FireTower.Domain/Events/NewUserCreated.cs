@@ -2,9 +2,9 @@ namespace FireTower.Domain.Events
 {
     public class NewUserCreated
     {
-        public long FacebookId { get; private set; }
+        public string FacebookId { get; private set; }
 
-        public NewUserCreated(long facebookId)
+        public NewUserCreated(string facebookId)
         {
             FacebookId = facebookId;
         }

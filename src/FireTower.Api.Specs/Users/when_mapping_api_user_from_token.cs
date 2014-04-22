@@ -19,7 +19,7 @@ namespace FireTower.Api.Specs.Users
         Establish context =
             () =>
             {
-                _validClientLoginSession = new UserSession { Id = AccessToken, User = new User { FacebookId = 123456 } };
+                _validClientLoginSession = new UserSession { Id = AccessToken, User = new User { FacebookId = "123456" } };
                 Mock.Get(_readOnlyRepo).Setup(
                     x => x.First(ThatHas.AnExpressionFor<UserSession>()
                                      .ThatMatches(_validClientLoginSession)

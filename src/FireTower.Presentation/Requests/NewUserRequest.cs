@@ -8,7 +8,7 @@ namespace FireTower.Presentation.Requests
 
         public string Name { get; set; }
 
-        public long FacebookId { get; set; }
+        public string FacebookId { get; set; }
 
         public string Locale { get; set; }
 

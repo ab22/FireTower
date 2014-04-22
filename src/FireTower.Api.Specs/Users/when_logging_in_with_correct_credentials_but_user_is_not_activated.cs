@@ -33,7 +33,7 @@ namespace FireTower.Api.Specs.Users
                                         FirstName = "Byron",
                                         LastName = "Sommardahl",
                                         Name = "Byron Sommardahl",
-                                        FacebookId = 123456,
+                                        FacebookId = "123456",
                                         Email = _email,
                                         EncryptedPassword = encryptedPassword.Password,
                                         Locale = "es_ES",

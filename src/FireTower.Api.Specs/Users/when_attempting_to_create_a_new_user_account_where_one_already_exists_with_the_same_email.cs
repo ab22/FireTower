@@ -26,7 +26,7 @@ namespace FireTower.Api.Specs.Users
                                        FirstName = "Byron",
                                        LastName = "Sommardahl",
                                        Name = "Byron Sommardahl",
-                                       FacebookId = 1817134138,
+                                       FacebookId = "1817134138",
                                        Locale = "es_ES",
                                        Username = "bsommardahl",
                                        Verified = true

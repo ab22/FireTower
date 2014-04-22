@@ -25,7 +25,7 @@ namespace FireTower.API.AAT
 
         It should_say_that_the_user_exists = () => _result.Data.ShouldBeLike(new MeResponse
                                                                                  {
-                                                                                     FacebookId = 1817134138
+                                                                                     FacebookId = "1817134138"
                                                                                  });
     }
 }
