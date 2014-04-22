@@ -4,7 +4,7 @@ namespace FireTower.Domain.Entities
 {
     public class User : IEntity
     {
-        public virtual long FacebookId { get; set; }
+        public virtual string FacebookId { get; set; }
         public virtual string Name { get; set; }
         public virtual string FirstName { get; set; }
         public virtual string LastName { get; set; }

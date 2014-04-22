@@ -20,12 +20,13 @@ namespace FireTower.Presentation.Modules
                 r =>
                     {
                         var loginInfo = this.Bind<FacebookLoginRequest>();
+                        if (string.IsNullOrEmpty(loginInfo.FacebookId))
+                            throw new UserInputPropertyMissingException("FacebookId");
+
                         try
                         {
                             var user =
                                 readOnlyRepository.First<User>(x => x.FacebookId == loginInfo.FacebookId);
-
-                            //if (!user.Verified) return new Response().WithStatusCode(HttpStatusCode.Forbidden);
 
                             UserSession userSession = userSessionFactory.Create(user);
 
